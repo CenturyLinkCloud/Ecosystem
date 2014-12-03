@@ -1,3 +1,3 @@
-Ecosystem
+Cloud Ecosystem Program
 =========
 This is the repository we will use for code snippets, automation scripts and integration best practices for the Cloud Ecosystem team (ecosystem@centurylinkcloud.com)...
