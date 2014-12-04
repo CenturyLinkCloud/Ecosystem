@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>77abb844-579d-478d-8955-c69a94a7ba1a</UUID>
+        <Name>Linux Update Notification</Name>
+        <Description>
+		CenturyLink Cloud Blueprint that periodically checks whether server
+		it as the latest patch level.  Accomplished via either yum or apt-get
+		as appropriate.  Sends an email to the specified address when updates are
+		available.</Description>
+    </Metadata>
+    <Parameters>
+        <Parameter Name="Email" Hint="Enter email address that will receive notifications" Type="String" Variable="Email" Prompt="Design" Required="true"/>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install.sh ${Email}</Command>
+    </Execution>
+</Manifest>
