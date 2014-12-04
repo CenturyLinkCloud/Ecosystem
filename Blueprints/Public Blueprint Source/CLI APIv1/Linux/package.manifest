@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>a56a2e1b-c14b-4377-bff8-c433aa306203</UUID>
+        <Name>Install CenturyLink Cloud CLI Tool on Linux</Name>
+        <Description>
+		  Download, install, and configure the CenturyLink Cloud CLI tool for APIv1 onto the specified Linux server.
+		  Pre-requisite is a recent version of Python 2.7.  Have an APIv1 keypair generated prior to installing as
+		  these keys will be registered on your host.
+	    </Description>
+    </Metadata>
+    <Parameters>
+        <Parameter Name="API Key" Hint="Enter APIv1 Key" Type="String" Variable="api_key" Prompt="Build" Required="true"/>
+        <Parameter Name="API Password" Hint="Enter APIv1 Password" Type="String" Variable="api_passwd" Prompt="Build" Required="true"/>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install_clc-cli.sh '${api_key}' '${api_passwd}'</Command>
+    </Execution>
+</Manifest>
