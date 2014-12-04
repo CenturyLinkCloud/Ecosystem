@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>775bb824-579d-4c8d-8955-c69a94a2ba1a</UUID>
+        <Name>Install Puppet Agent Bridge on Linux</Name>
+        <Description>Installs Puppet agent and points node towards specified Puppet master.  RPM-based systems obtain latest agent directly from Puppet Labs, Debian-based systems use the latest version available from default apt repositories.</Description>
+    </Metadata>
+    <Parameters>
+        <Parameter Name="Puppet Master" Hint="Enter FQDN for target puppet master.  Make sure puppet master certificate matches this FQDN" Type="String" Variable="PuppetMaster" Prompt="Design" Required="true"/>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install.sh ${PuppetMaster}</Command>
+    </Execution>
+</Manifest>

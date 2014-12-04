@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>735bb844-579d-4c8d-8255-c69a94a2ba1a</UUID>
+        <Name>Install Puppet Agent Bridge on Windows</Name>
+        <Description>Installs Puppet agent and points node towards specified Puppet master.  Downloads and installs specified version directly from Puppet Labs repo.</Description>
+    </Metadata>
+    <Parameters>
+        <Parameter Name="Puppet Master" Hint="Enter FQDN for target puppet master.  Make sure puppet master certificate matches this FQDN" Type="String" Variable="PuppetMaster" Prompt="Design" Required="true"/>
+    </Parameters>
+    <Execution>
+        <Mode>Command</Mode>
+        <Command>install.ps1 ${PuppetMaster}</Command>
+    </Execution>
+</Manifest>
