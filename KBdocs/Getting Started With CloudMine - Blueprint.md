@@ -1,3 +1,5 @@
+[CM1]: http://ca.tier3.io/ecokb/CM1.png
+
 Updated: December 2, 2014
 
 **Partner Profile**
@@ -34,7 +36,7 @@ Follow these step by step instructions to get started with a single-server Cloud
 
     *   Starting from the CenturyLink Control Panel, navigate to the Blueprints Library.
     *   Search for “CloudMine” in the keyword search on the right side of the page.
-    *   ![CM1.png](http://ca.tier3.io/ecokb/CM1.png)
+    *   ![CM1.png][CM1]
     *   Click the “CloudMine Single Server” blueprint.
     *   ![CM2.png](/attachments/token/bwYULRqYHsobb5jyg1jPtOS8W/?name=CM2.png)
 
@@ -105,3 +107,5 @@ Where do I obtain my CloudMine License?
 
 *   For issues related to deploying the CloudMine Blueprint on CenturyLink Cloud, please contact [CenturyLinksupport@cloudmine.me](mailto:CenturyLinksupport@cloudmine.me)
 *   For issues related to cloud infrastructure (VM’s, network, etc), please open a ticket using the CenturyLink Cloud [Support Process](https://t3n.zendesk.com/entries/23610702-How-do-I-report-a-support-issue-).
+
+
