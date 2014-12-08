@@ -1,6 +1,4 @@
-[CM1]: http://ca.tier3.io/ecokb/CM1.png
-
-Updated: December 2, 2014
+Updated: December 8, 2014
 
 **Partner Profile**
 
@@ -36,14 +34,14 @@ Follow these step by step instructions to get started with a single-server Cloud
 
     *   Starting from the CenturyLink Control Panel, navigate to the Blueprints Library.
     *   Search for “CloudMine” in the keyword search on the right side of the page.
-    *   ![CM1.png][CM1]
+    *   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.1.png)
     *   Click the “CloudMine Single Server” blueprint.
-    *   ![CM2.png](/attachments/token/bwYULRqYHsobb5jyg1jPtOS8W/?name=CM2.png)
+    *   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.2.png)
 
 2.  _Choose the Blueprint_. 
 
     *   Click on the "Deploy Blueprint" button.
-    *   ![CM3.png](/attachments/token/7w7WQEjwMFz4HocjlmwncK5zD/?name=CM3.png)
+    *   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.3.png)
 
 3.  _Configure the Blueprint_. 
 
@@ -54,7 +52,7 @@ Follow these step by step instructions to get started with a single-server Cloud
     *   Set DNS to “Manually Specify” and use “8.8.8.8” (or any other public DNS server of your choice).
     *   Optionally set the server name prefix.
     *   Read and accept the CloudMine terms of service (https://cloudmine.me/eula/centurylink).
-    *   The default values are fine for every other option.*   ![CM4.png](/attachments/token/ZXYoYubqKeri9E4zQVk6zjZtd/?name=CM4.png)
+    *   The default values are fine for every other option.*   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.4.png)
 
 4.  _Review and Confirm the Blueprint_. 
 
@@ -78,10 +76,11 @@ Follow these step by step instructions to get started with a single-server Cloud
 
 *   Before navigating to the web interface, you will need to run a script on the server to let the server know what public IP address it was assigned. To do this, ssh into the public IP address as root, using the password set in step 5.
 
-*   ![cm7.png](/attachments/token/sfFfNITb1wPq7Zg1hvFmtWxfw/?name=cm7.png)
+*   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.7.png)
 *   Once in the server, you will need to run a script in root’s home directory like so:
-*   ![cm8.png](/attachments/token/7UnKb2QnZVFmsmhdTVbJKm9q2/?name=cm8.png)
-*   After a couple seconds, the script should complete. You are now ready to use CloudMine!8.  Access The CloudMine Interface
+*   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.8.png)
+*   After a couple seconds, the script should complete. You are now ready to use CloudMine!
+*   8.  Access The CloudMine Interface
 
 #  
 
