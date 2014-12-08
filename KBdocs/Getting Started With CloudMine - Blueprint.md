@@ -34,7 +34,7 @@ Follow these step by step instructions to get started with a single-server Cloud
 
     *   Starting from the CenturyLink Control Panel, navigate to the Blueprints Library.
     *   Search for “CloudMine” in the keyword search on the right side of the page.
-    *   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.1.png)
+    *   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.1.jpg)
     *   Click the “CloudMine Single Server” blueprint.
     *   ![](https://github.com/CenturyLinkCloud/Ecosystem/blob/master/KBdocs/images/cm/cm1.2.png)
 
