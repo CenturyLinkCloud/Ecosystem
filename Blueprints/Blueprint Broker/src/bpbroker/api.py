@@ -10,6 +10,7 @@ import Queue
 import json
 import BaseHTTPServer, SimpleHTTPServer
 import ssl
+import time
 
 import bpbroker
 
@@ -24,11 +25,9 @@ default_config = {
 
 #####################################################
 
-#class API():
 
-
-#	def __init__
-
+class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
+	timeout = 1
 
 
 class APIThread(threading.Thread):
@@ -42,14 +41,12 @@ class APIThread(threading.Thread):
 
 
 	def join(self,timeout=None):
-		print "join"
 		self._stop_event.set()
 		threading.Thread.join(self, timeout)
 
 
 	def run(self):
-		self.web_server = BaseHTTPServer.HTTPServer((self.config['listen_ip'], self.config['listen_port']), SimpleHTTPServer.SimpleHTTPRequestHandler)
-		#self.web_server.socket.timeout = 1
+		self.web_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), SimpleHTTPServer.SimpleHTTPRequestHandler)
 		self.web_server.socket = ssl.wrap_socket (self.web_server.socket, 
 									 			  server_side=True,
 									 			  certfile=self.config['ssl_cert'],
@@ -59,8 +56,14 @@ class APIThread(threading.Thread):
 		while not self._stop_event.is_set():
 			print "a"
 			self.web_server.handle_request()
+			self.HealthCheck()
+			
 			print "xx"
 		print "b"
+
+
+	def HealthCheck(self):
+		self.health_queue.put_nowait({'thread': 'API', 'ts': int(time.time())})
 
 
 
