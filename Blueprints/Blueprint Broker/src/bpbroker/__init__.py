@@ -10,7 +10,7 @@ Package Github page:
 
 """
 
-#from clc.queue import Queue
+from bpbroker.API import API
 
 
 ####### module/object vars #######

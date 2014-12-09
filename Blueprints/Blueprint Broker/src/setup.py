@@ -8,7 +8,7 @@
 from setuptools import setup, find_packages
 
 setup(
-	name = "bp-broker",
+	name = "bpbroker",
 	version = "0.1",
 	packages = find_packages("."),
 
