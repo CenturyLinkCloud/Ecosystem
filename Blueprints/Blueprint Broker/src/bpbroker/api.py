@@ -42,19 +42,25 @@ class APIThread(threading.Thread):
 
 
 	def join(self,timeout=None):
+		print "join"
 		self._stop_event.set()
 		threading.Thread.join(self, timeout)
 
 
 	def run(self):
-		self.web_server = BaseHTTPServer.HTTPServer(('localhost', 20443), SimpleHTTPServer.SimpleHTTPRequestHandler)
+		self.web_server = BaseHTTPServer.HTTPServer((self.config['listen_ip'], self.config['listen_port']), SimpleHTTPServer.SimpleHTTPRequestHandler)
+		#self.web_server.socket.timeout = 1
 		self.web_server.socket = ssl.wrap_socket (self.web_server.socket, 
 									 			  server_side=True,
-									 			  certfile="bpbroker/dummy_api.crt",
-									 			  keyfile="bpbroker/dummy_api.key")
+									 			  certfile=self.config['ssl_cert'],
+									 			  keyfile=self.config['ssl_key'],
+												  )
+		print "t"
 		while not self._stop_event.is_set():
-			self.web_server.serve_one()
+			print "a"
+			self.web_server.handle_request()
 			print "xx"
+		print "b"
 
 
 
