@@ -17,7 +17,7 @@ import bpbroker
 
 default_config = {
 	'listen_port': 20443,
-	'listen_ip': '127.0.0.1',
+	'listen_ip': '',	# default bind to all interfaces
 	'ssl_cert': 'bpbroker/dummy_api.crt',
 	'ssl_key': 'bpbroker/dummy_api.key',
 }
@@ -28,6 +28,18 @@ default_config = {
 
 class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
 	timeout = 1
+
+
+class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+	def log_request(self, code='-', size='-'):
+		pass
+
+
+	def do_GET(s):
+		s.send_response(200)
+		s.end_headers()
+		print s.path
+		print s.headers
 
 
 class APIThread(threading.Thread):
@@ -46,20 +58,16 @@ class APIThread(threading.Thread):
 
 
 	def run(self):
-		self.web_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), SimpleHTTPServer.SimpleHTTPRequestHandler)
+		#self.web_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), SimpleHTTPServer.SimpleHTTPRequestHandler)
+		self.web_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), APIHTTPRequestHandler)
 		self.web_server.socket = ssl.wrap_socket (self.web_server.socket, 
 									 			  server_side=True,
 									 			  certfile=self.config['ssl_cert'],
 									 			  keyfile=self.config['ssl_key'],
 												  )
-		print "t"
 		while not self._stop_event.is_set():
-			print "a"
 			self.web_server.handle_request()
 			self.HealthCheck()
-			
-			print "xx"
-		print "b"
 
 
 	def HealthCheck(self):
