@@ -10,7 +10,7 @@ Package Github page:
 
 """
 
-from bpbroker.API import API
+import bpbroker.api as API
 
 
 ####### module/object vars #######
