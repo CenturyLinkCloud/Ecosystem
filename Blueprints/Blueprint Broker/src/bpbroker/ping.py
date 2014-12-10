@@ -16,8 +16,7 @@ def Ping(var):
 	ro = bpbroker.api.Response()
 	ro.status = 200
 	ro.response = json.dumps({'pong': var})
-
-	print ro
+	
 	return(ro)
 
 

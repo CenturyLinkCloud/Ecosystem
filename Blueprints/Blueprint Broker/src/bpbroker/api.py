@@ -53,18 +53,15 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def ValidateRequest(self):
 		error = False
 		with bpbroker.config.rlock:
-			if self.package not in bpbroker.config.data:  error = True
-			if re.match("_",self.method):  error = True
+			if self.package not in bpbroker.config.data:  error = "Unauthorized package"
+			if re.match("_",self.method):  error = "Unauthorized method"
 			else:
 				try:
-					p = "bpbroker.%s" % self.package
-					#if not hasattr(__import__("bpbroker.%s" % self.package),self.method):  return(False)
-					if not hasattr(__import__(p),self.method):  return(False)
+					if not hasattr(getattr(bpbroker,self.package), self.method):  error = "Unauthorized method"
 				except:
-					print "3"
-					error = True
+					error = "Unauthorized method"
 
-		if error: self.send_error(401, "Unauthorized")
+		if error: self.send_error(401, error)
 
 		return(not error)
 
@@ -78,10 +75,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self.end_headers()
 		self.ParseRequest()
 		if self.ValidateRequest():  
-			#self.send_response(200)
-			p = "bpbroker.%s" % self.package
-			#ro = getattr("bpbroker."+self.package, self.method)(self.qs)
-			ro = getattr(getattr(p), self.method)(self.qs)
+			ro = getattr(getattr(bpbroker,self.package), self.method)(self.qs)
 			print ro
 
 
