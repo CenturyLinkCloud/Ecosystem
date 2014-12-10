@@ -12,6 +12,7 @@ Package Github page:
 
 import bpbroker.api as API
 import bpbroker.ping as ping
+import bpbroker.services as services
 import bpbroker.config as config_class
 
 

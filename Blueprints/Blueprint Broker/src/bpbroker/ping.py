@@ -13,10 +13,16 @@ import bpbroker
 #####################################################
 
 def Ping(rh):
+	"""Echo source host and querystring back in response.
+
+	:param *: No params required
+	:returns src: Requesting IP address
+	:returns pong: Echoes entire provided querystring
+	"""
 	rh.send_response(200)
 	rh.send_header('Content-Type','Application/json')
 	rh.end_headers()
 
-	rh.wfile.write(json.dumps({'from': rh.RequestingHost(), 'pong': rh.qs}))
+	rh.wfile.write(json.dumps({'src': rh.RequestingHost(), 'pong': rh.qs}))
 
 
