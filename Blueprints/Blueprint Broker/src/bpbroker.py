@@ -18,10 +18,16 @@ def Shutdown(signum, fram):
 ####################################################
 
 
-bpbroker.c['test'] = 5
-bpbroker.c.testy = 5
-print bpbroker.c['test']
-print bpbroker.c
+#bpbroker.c['test'] = 5
+#bpbroker.c.testy = 5
+#print bpbroker.c['test']
+#print bpbroker.c
+with bpbroker.config.rlock:
+	print bpbroker.config.data
+with bpbroker.config.rlock:
+	bpbroker.config.data['x'] = 5
+with bpbroker.config.rlock:
+	print bpbroker.config.data
 sys.exit()
 
 
