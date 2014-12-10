@@ -11,6 +11,7 @@ import json
 import BaseHTTPServer, SimpleHTTPServer
 import ssl
 import time
+import re
 from urlparse import urlparse, parse_qs
 
 import bpbroker
@@ -37,21 +38,33 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		pass
 
 
-	def ValidateRequestModule(self):
-		(undef,module,method) = urlparse(self.path).path.split("/",3)
+	def ParseRequest(self):
+		(undef,self.package,self.method) = urlparse(self.path).path.split("/",3)
+		self.qs = parse_qs(urlparse(self.path).query)
+
+
+	def ValidateRequest(self):
+		error = False
 		with bpbroker.config.rlock:
-			if module not in bpbroker.config.data:  return(False)
+			if self.package not in bpbroker.config.data:  error = True
+			if re.match("_",self.method):  error = True
+			else:
+				try:
+					if not hasattr(__import__(self.package),self.method):  return(False)
+				except:
+					error = True
 
-		print module
-		print method
+		if error: self.send_error(401, "Unauthorized")
+
+		return(error)
 
 
-	#def GetModule()
 	def do_GET(self):
 		self.send_response(200)
 		self.end_headers()
+		self.ParseRequest()
+		if self.ValidateRequest():
 		print self.path
-		self.ValidateRequest()
 
 
 class APIThread(threading.Thread):
