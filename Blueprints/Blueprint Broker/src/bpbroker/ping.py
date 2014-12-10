@@ -17,7 +17,6 @@ def Ping(rh):
 	rh.send_header('Content-Type','Application/json')
 	rh.end_headers()
 
-	print rh
-	rh.wfile.write(json.dumps({'pong': rh.qs}))
+	rh.wfile.write(json.dumps({'from': rh.address_string(), 'pong': rh.qs}))
 
 
