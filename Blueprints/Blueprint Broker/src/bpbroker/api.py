@@ -11,6 +11,7 @@ import json
 import BaseHTTPServer, SimpleHTTPServer
 import ssl
 import time
+from urlparse import urlparse, parse_qs
 
 import bpbroker
 
@@ -22,8 +23,6 @@ default_config = {
 	'ssl_key': 'bpbroker/dummy_api.key',
 }
 
-
-shared_dict = False
 
 
 #####################################################
@@ -38,13 +37,21 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		pass
 
 
-	def do_GET(s):
-		s.send_response(200)
-		s.end_headers()
-		print s.path
-		#print s.headers
-		global shared_dict
-		print shared_dict
+	def ValidateRequestModule(self):
+		(undef,module,method) = urlparse(self.path).path.split("/",3)
+		with bpbroker.config.rlock:
+			if module not in bpbroker.config.data:  return(False)
+
+		print module
+		print method
+
+
+	#def GetModule()
+	def do_GET(self):
+		self.send_response(200)
+		self.end_headers()
+		print self.path
+		self.ValidateRequest()
 
 
 class APIThread(threading.Thread):
@@ -54,9 +61,8 @@ class APIThread(threading.Thread):
 		self.worker_queue = worker_queue
 		self.health_queue = health_queue
 		self._stop_event = threading.Event()
+		bpbroker.config.data['hits'] = []
 		self.config = dict(list(default_config.items()) + list(config.items()))
-		global shared_dict
-		shared_dict = {'test': 5}
 
 
 	def join(self,timeout=None):
