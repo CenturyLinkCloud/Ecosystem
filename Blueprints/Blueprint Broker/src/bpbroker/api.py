@@ -33,7 +33,14 @@ class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
 	timeout = 1
 
 
+class Response(object):
+	status = False
+	response = False
+
+
 class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+	def log_error(self, format, *args):
+		pass
 	def log_request(self, code='-', size='-'):
 		pass
 
@@ -50,21 +57,35 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			if re.match("_",self.method):  error = True
 			else:
 				try:
-					if not hasattr(__import__(self.package),self.method):  return(False)
+					p = "bpbroker.%s" % self.package
+					#if not hasattr(__import__("bpbroker.%s" % self.package),self.method):  return(False)
+					if not hasattr(__import__(p),self.method):  return(False)
 				except:
+					print "3"
 					error = True
 
 		if error: self.send_error(401, "Unauthorized")
 
-		return(error)
+		return(not error)
 
 
-	def do_GET(self):
-		self.send_response(200)
+	def do_GET(self):  self.ProcessRequest()
+	def do_POST(self):  self.ProcessRequest()
+	def do_DELETE(self):  self.ProcessRequest()
+
+
+	def ProcessRequest(self):
 		self.end_headers()
 		self.ParseRequest()
-		if self.ValidateRequest():
-		print self.path
+		if self.ValidateRequest():  
+			#self.send_response(200)
+			p = "bpbroker.%s" % self.package
+			#ro = getattr("bpbroker."+self.package, self.method)(self.qs)
+			ro = getattr(getattr(p), self.method)(self.qs)
+			print ro
+
+
+
 
 
 class APIThread(threading.Thread):

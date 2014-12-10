@@ -19,6 +19,9 @@ default_config = {
 	'_global':  {
 		'healthcheck_freq_sec': 10,
 	},
+
+	'ping':  {
+	}
 }
 
 
