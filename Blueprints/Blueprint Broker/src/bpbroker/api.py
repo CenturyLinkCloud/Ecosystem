@@ -62,6 +62,9 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		pass
 
 
+	def RequestingHost(self):  return(self.client_address[:2][0])
+
+
 	def ParseRequest(self):
 		(undef,self.package,self.method) = urlparse(self.path).path.split("/",3)
 		self.qs = parse_qs(urlparse(self.path).query)
