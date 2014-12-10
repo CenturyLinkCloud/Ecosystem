@@ -12,11 +12,12 @@ import bpbroker
 
 #####################################################
 
-def Ping(var):
-	ro = bpbroker.api.Response()
-	ro.status = 200
-	ro.response = json.dumps({'pong': var})
-	
-	return(ro)
+def Ping(rh):
+	rh.send_response(200)
+	rh.send_header('Content-Type','Application/json')
+	rh.end_headers()
+
+	print rh
+	rh.wfile.write(json.dumps({'pong': rh.qs}))
 
 

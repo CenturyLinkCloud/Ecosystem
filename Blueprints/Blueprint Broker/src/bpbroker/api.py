@@ -13,6 +13,7 @@ import ssl
 import time
 import re
 from urlparse import urlparse, parse_qs
+from StringIO import StringIO
 
 import bpbroker
 
@@ -33,12 +34,28 @@ class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
 	timeout = 1
 
 
-class Response(object):
-	status = False
-	response = False
+class Response():
+
+	#status = False
+	#headers = []	# list of dicts: {'keyword': x, 'value': y }
+	#response = False
+
+	def __init__(self,status=False,headers=[],response=False):  
+		print "init"
+		self.status = status
+		self.headers = headers	# list of dicts: {'keyword': x, 'value': y }
+		#self.headers = []
+		self.response = response
+		print self.headers
+		print "end init"
+
+
+	def AddHeader(self,keyword,value):  self.headers.append({'keyword': keyword, 'value': value})
+
 
 
 class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+
 	def log_error(self, format, *args):
 		pass
 	def log_request(self, code='-', size='-'):
@@ -74,11 +91,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def ProcessRequest(self):
 		self.end_headers()
 		self.ParseRequest()
-		if self.ValidateRequest():  
-			ro = getattr(getattr(bpbroker,self.package), self.method)(self.qs)
-			print ro
-
-
+		if self.ValidateRequest():  getattr(getattr(bpbroker,self.package), self.method)(self)
 
 
 
