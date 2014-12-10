@@ -11,9 +11,11 @@ Package Github page:
 """
 
 import bpbroker.api as API
+import bpbroker.config as config
 
 
 ####### module/object vars #######
 #_V1_API_KEY = False
 
+c = config.Config()
 

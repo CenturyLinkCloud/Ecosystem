@@ -23,6 +23,9 @@ default_config = {
 }
 
 
+shared_dict = False
+
+
 #####################################################
 
 
@@ -39,7 +42,9 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		s.send_response(200)
 		s.end_headers()
 		print s.path
-		print s.headers
+		#print s.headers
+		global shared_dict
+		print shared_dict
 
 
 class APIThread(threading.Thread):
@@ -50,6 +55,8 @@ class APIThread(threading.Thread):
 		self.health_queue = health_queue
 		self._stop_event = threading.Event()
 		self.config = dict(list(default_config.items()) + list(config.items()))
+		global shared_dict
+		shared_dict = {'test': 5}
 
 
 	def join(self,timeout=None):

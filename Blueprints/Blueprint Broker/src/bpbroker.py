@@ -18,6 +18,12 @@ def Shutdown(signum, fram):
 ####################################################
 
 
+bpbroker.c['test'] = 5
+bpbroker.c.testy = 5
+print bpbroker.c['test']
+print bpbroker.c
+sys.exit()
+
 
 queue_worker = Queue.Queue()
 queue_health = Queue.Queue()
