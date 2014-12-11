@@ -12,7 +12,7 @@ import BaseHTTPServer, SimpleHTTPServer
 import ssl
 import time
 import re
-from urlparse import urlparse, parse_qs
+from urlparse import urlparse, parse_qs, parse_qsl
 from StringIO import StringIO
 
 import bpbroker
@@ -50,10 +50,10 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		#(undef,self.package,self.method) = urlparse(self.path).path.split("/",3)
 		(undef,self.package,method) = urlparse(self.path).path.split("/",2)
 		self.method = re.sub("/$","",method)
-		self.qs = parse_qs(urlparse(self.path).query)	# Read Get qs
+		self.qs = dict(parse_qsl(urlparse(self.path).query))	# Read Get qs
 		if not self.qs:	
 			length = int(self.headers['Content-Length'])
-			self.qs = parse_qs(self.rfile.read(length).decode('utf-8'))
+			self.qs = dict(parse_qsl(self.rfile.read(length),keep_blank_values=True))
 
 
 	def _ValidateRequest(self):

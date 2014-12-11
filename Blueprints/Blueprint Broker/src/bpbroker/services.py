@@ -28,27 +28,23 @@ def Register(rh):
 
 	# Validate parameters
 	error = False
-	#data = []
-	#try:
-	#	print "a"
-	#	print rh.qs
-	#	print rh.qs['data']
-	#	data = json.loads(rh.qs['data'])
-	#	print "b"
-	#except:
-	#	error = "Invalid json encoding in data"
-	print rh.qs
+	data = []
+	try:
+		data = json.loads(rh.qs['data'])
+	except:
+		error = "Unable to parse data json format"
 	if 'name' not in rh.qs:  error = "Missing name parameter"
 	elif 'data' not in rh.qs:  error = "Missing data parameter"
-	elif 'last_write_ip' in rh.qs['data']:  error = "Used reserved data name last_write_ip"
-	elif 'last_write_ts' in rh.qs['data']:  error = "Used reserved data name last_write_ts"
-	else:  
-		print "xx"
+	elif 'last_write_ip' in data:  error = "Used reserved data name last_write_ip"
+	elif 'last_write_ts' in data:  error = "Used reserved data name last_write_ts"
+	elif data:  
 		with bpbroker.config.rlock:
+			print rh.qs['name']
+			print bpbroker.config.data['services']
 			if rh.qs['name'] in bpbroker.config.data['services']:  error = "Entry exists, cannot register"
 			else:  
 				bpbroker.config.data['services'][rh.qs['name']] = \
-					dict(self.qs['data'].items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
+					dict(data.items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
 
 	if error:  rh.send_error(400, error)
 	else:  Get(rh)
