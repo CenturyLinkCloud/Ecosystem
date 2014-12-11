@@ -23,6 +23,7 @@ def Register(rh):
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
 	:returns success: bool success
+	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
 
@@ -57,6 +58,7 @@ def Replace(rh):
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
 	:returns success: bool success
+	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
 	Delete(rh)
@@ -68,6 +70,7 @@ def Delete(rh):
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:returns success: bool success
+	:returns message: status message
 	"""
 
 
@@ -80,6 +83,7 @@ def Update(rh):
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
 	:returns success: bool success
+	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
 
@@ -91,8 +95,24 @@ def Get(rh):
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:returns success: bool success
+	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
+	# Validate parameters
+	error = False
+	if 'name' not in rh.qs:  error = "Missing name parameter"
+
+	# Get data
+	else:
+		rh.send_response(200)
+		rh.send_header('Content-Type','Application/json')
+		rh.end_headers()
+
+		with bpbroker.config.rlock:
+			if rh.qs['name'] not in bpbroker.config.data['services']: 
+				rh.wfile.write(json.dumps({'success': False, 'message': "Entry not found", 'data': {}}))
+			else:  
+				rh.wfile.write(json.dumps({'success': True, 'message': "Success", 'data': bpbroker.config.data['services'][rh.qs['name']]}))
 
 
 def List(rh):
