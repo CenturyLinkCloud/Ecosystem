@@ -5,6 +5,7 @@ Service registration, listing, and object querying
 """
 
 
+import re
 import time
 import json
 
@@ -27,23 +28,29 @@ def Register(rh):
 
 	# Validate parameters
 	error = False
-	data = None
-	try:
-		data = json.loads(self.qs['data'])
-	except:
-		error = "Invalid json encoding in data"
-	if 'name' not in self.qs:  error = "Missing name parameter"
-	elif 'data' not in self.qs:  error = "Missing data parameter"
-	elif 'last_write_ip' in data:  error = "Used reserved data name last_write_ip"
-	elif 'last_write_ts' in data:  error = "Used reserved data name last_write_ts"
-	elif data:  
+	#data = []
+	#try:
+	#	print "a"
+	#	print rh.qs
+	#	print rh.qs['data']
+	#	data = json.loads(rh.qs['data'])
+	#	print "b"
+	#except:
+	#	error = "Invalid json encoding in data"
+	print rh.qs
+	if 'name' not in rh.qs:  error = "Missing name parameter"
+	elif 'data' not in rh.qs:  error = "Missing data parameter"
+	elif 'last_write_ip' in rh.qs['data']:  error = "Used reserved data name last_write_ip"
+	elif 'last_write_ts' in rh.qs['data']:  error = "Used reserved data name last_write_ts"
+	else:  
+		print "xx"
 		with bpbroker.config.rlock:
-			if name in bpbroker.config.data['services']:  error = "Entry exists, cannot register"
+			if rh.qs['name'] in bpbroker.config.data['services']:  error = "Entry exists, cannot register"
 			else:  
-				bpbroker.config.data['services'][self.qs['name']] = 
-					dict(data.items() + {'last_write_ip': xx, 'last_write_ts': int(time.time())}.items())
+				bpbroker.config.data['services'][rh.qs['name']] = \
+					dict(self.qs['data'].items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
 
-	if error:  self.send_error(400, error)
+	if error:  rh.send_error(400, error)
 	else:  Get(rh)
 
 	# debug
@@ -85,7 +92,7 @@ def Update(rh):
 	"""
 
 
-def Get(rh)
+def Get(rh):
 	"""Return data associated with given key.
 
 	Returns all data associated with key unless specific fields are provided.

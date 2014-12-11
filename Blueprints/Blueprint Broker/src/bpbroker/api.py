@@ -34,25 +34,6 @@ class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
 	timeout = 1
 
 
-class Response():
-
-	#status = False
-	#headers = []	# list of dicts: {'keyword': x, 'value': y }
-	#response = False
-
-	def __init__(self,status=False,headers=[],response=False):  
-		print "init"
-		self.status = status
-		self.headers = headers	# list of dicts: {'keyword': x, 'value': y }
-		#self.headers = []
-		self.response = response
-		print self.headers
-		print "end init"
-
-
-	def AddHeader(self,keyword,value):  self.headers.append({'keyword': keyword, 'value': value})
-
-
 
 class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
@@ -65,12 +46,17 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def RequestingHost(self):  return(self.client_address[:2][0])
 
 
-	def ParseRequest(self):
-		(undef,self.package,self.method) = urlparse(self.path).path.split("/",3)
-		self.qs = parse_qs(urlparse(self.path).query)
+	def _ParseRequest(self):
+		#(undef,self.package,self.method) = urlparse(self.path).path.split("/",3)
+		(undef,self.package,method) = urlparse(self.path).path.split("/",2)
+		self.method = re.sub("/$","",method)
+		self.qs = parse_qs(urlparse(self.path).query)	# Read Get qs
+		if not self.qs:	
+			length = int(self.headers['Content-Length'])
+			self.qs = parse_qs(self.rfile.read(length).decode('utf-8'))
 
 
-	def ValidateRequest(self):
+	def _ValidateRequest(self):
 		error = False
 		with bpbroker.config.rlock:
 			if self.package not in bpbroker.config.data:  error = "Unauthorized package"
@@ -93,8 +79,9 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	def ProcessRequest(self):
 		self.end_headers()
-		self.ParseRequest()
-		if self.ValidateRequest():  getattr(getattr(bpbroker,self.package), self.method)(self)
+		self._ParseRequest()
+		print self.qs
+		if self._ValidateRequest():  getattr(getattr(bpbroker,self.package), self.method)(self)
 
 
 
