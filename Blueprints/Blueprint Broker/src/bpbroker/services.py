@@ -37,22 +37,18 @@ def Register(rh):
 	elif 'data' not in rh.qs:  error = "Missing data parameter"
 	elif 'last_write_ip' in data:  error = "Used reserved data name last_write_ip"
 	elif 'last_write_ts' in data:  error = "Used reserved data name last_write_ts"
+
+	# Set data
 	elif data:  
 		with bpbroker.config.rlock:
-			print rh.qs['name']
-			print bpbroker.config.data['services']
 			if rh.qs['name'] in bpbroker.config.data['services']:  error = "Entry exists, cannot register"
 			else:  
 				bpbroker.config.data['services'][rh.qs['name']] = \
 					dict(data.items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
 
+	# return results
 	if error:  rh.send_error(400, error)
 	else:  Get(rh)
-
-	# debug
-	import pprint
-	pprint.pprint(bpbroker.config.data)
-	# debug
 
 
 def Replace(rh):
