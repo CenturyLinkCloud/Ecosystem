@@ -35,9 +35,27 @@ class Args:
 		parser_sp3 = parser_user.add_subparsers(dest='sub_command')
 
 		## Register
-		parser_user_get = parser_sp3.add_parser('register', help='Register Get details on specified user')
-		parser_user_get.add_argument('--name', required=True, help='Unique key for service broker registration')
-		parser_user_get.add_argument('--data', required=True, help='Data associated with this key')
+		parser_user_register = parser_sp3.add_parser('register', help='Register Get details on specified user')
+		parser_user_register.add_argument('--name', required=True, help='Unique key for service broker registration')
+		parser_user_register.add_argument('--data', required=True, help='Data associated with this key')
+
+		## Replace
+		parser_user_register = parser_sp3.add_parser('register', help='Register Get details on specified user')
+		parser_user_register.add_argument('--name', required=True, help='Unique key for service broker registration')
+		parser_user_register.add_argument('--data', required=True, help='Data associated with this key')
+
+		## Update
+		parser_user_register = parser_sp3.add_parser('register', help='Register Get details on specified user')
+		parser_user_register.add_argument('--name', required=True, help='Unique key for service broker registration')
+		parser_user_register.add_argument('--data', required=True, help='Data associated with this key')
+
+		## Get
+		parser_user_get = parser_sp3.add_parser('get', help='Return data associated with supplied key')
+		parser_user_get.add_argument('--name', required=True, help='Unique key')
+
+		## Delete
+		parser_user_delete = parser_sp3.add_parser('delete', help='Delete key from service broker')
+		parser_user_delete.add_argument('--name', required=True, help='Unique key')
 
 
 		########## Global ###########
