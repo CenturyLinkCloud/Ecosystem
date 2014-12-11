@@ -19,7 +19,7 @@ def Register(rh):
 	Recommend using a name + key to mitigate misplaced overwrites
 
 	:param name: Unique registration name.  Often a name and a unique key.
-	:param *:
+	:param data: json object containing all data to associated with name
 	:returns success: bool success
 	:returns data: query result for key 'name'
 	"""
@@ -34,7 +34,7 @@ def Register(rh):
 	rh.end_headers()
 
 	with bpbroker.config.rlock:
-		bpbroker.config.data['services']['
+		bpbroker.config.data['services']['']
 	rh.wfile.write(json.dumps({'from': rh.RequestingHost(), 'pong': rh.qs}))
 
 
@@ -44,7 +44,11 @@ def Replace(rh):
 
 
 def Delete(rh):
-	"""Remove keyed entry."""
+	"""Remove keyed entry.
+
+	:param name: Unique registration name.  Often a name and a unique key.
+	:returns success: bool success
+	"""
 
 
 def Update(rh):
@@ -59,6 +63,10 @@ def Get(rh)
 	"""Return data associated with given key.
 
 	Returns all data associated with key unless specific fields are provided.
+
+	:param name: Unique registration name.  Often a name and a unique key.
+	:returns success: bool success
+	:returns data: query result for key 'name'
 	"""
 
 
