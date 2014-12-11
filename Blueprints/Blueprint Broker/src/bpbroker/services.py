@@ -15,7 +15,7 @@ import bpbroker
 def Register(rh):
 	"""Registers new service to service broker.
 
-	Registers a new entry or overwrites and existing on if entry already exists for name.
+	Registers a new entry if none exists or returns error if entry already exists.
 	Recommend using a name + key to mitigate misplaced overwrites
 
 	:param name: Unique registration name.  Often a name and a unique key.
@@ -39,7 +39,14 @@ def Register(rh):
 
 
 def Replace(rh):
-	"""Alias for Register."""
+	"""Replacing existing content (if any).
+
+	:param name: Unique registration name.  Often a name and a unique key.
+	:param data: json object containing all data to associated with name
+	:returns success: bool success
+	:returns data: query result for key 'name'
+	"""
+	Delete(rh)
 	Register(rh)
 
 
@@ -56,6 +63,11 @@ def Update(rh):
 
 	If no entry exists insert it.  If entry already exists for given key then merge data together with
 	new data taking precedence.
+
+	:param name: Unique registration name.  Often a name and a unique key.
+	:param data: json object containing all data to associated with name
+	:returns success: bool success
+	:returns data: query result for key 'name'
 	"""
 
 
