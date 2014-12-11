@@ -28,7 +28,6 @@ def Register(rh):
 	"""
 
 	# Validate parameters
-	error = False
 	data = []
 	try:
 		data = json.loads(rh.qs['data'])
@@ -104,6 +103,28 @@ def Update(rh):
 	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
+
+	# Validate parameters
+	data = []
+	try:
+		data = json.loads(rh.qs['data'])
+	except:
+		rh.send_error(400, "Unable to parse data json format")
+		return()
+	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
+	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
+	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
+	elif 'last_write_ts' in data:  rh.send_error(400,"Used reserved data name last_write_ts")
+
+	# Set data
+	elif data:  
+		with bpbroker.config.rlock:
+			if rh.qs['name'] not in bpbroker.config.data['services']:  bpbroker.config.data['services'][rh.qs['name']] = {}
+			bpbroker.config.data['services'][rh.qs['name']] = \
+				dict(bpbroker.config.data['services'][rh.qs['name']].items() + data.items() + 
+				     {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
+			Get(rh)
+
 
 
 def Get(rh):
