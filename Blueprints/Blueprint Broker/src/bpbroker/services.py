@@ -5,6 +5,7 @@ Service registration, listing, and object querying
 """
 
 
+import time
 import json
 
 import bpbroker
@@ -25,17 +26,30 @@ def Register(rh):
 	"""
 
 	# Validate parameters
+	error = False
+	data = None
+	try:
+		data = json.loads(self.qs['data'])
+	except:
+		error = "Invalid json encoding in data"
+	if 'name' not in self.qs:  error = "Missing name parameter"
+	elif 'data' not in self.qs:  error = "Missing data parameter"
+	elif 'last_write_ip' in data:  error = "Used reserved data name last_write_ip"
+	elif 'last_write_ts' in data:  error = "Used reserved data name last_write_ts"
+	elif data:  
+		with bpbroker.config.rlock:
+			if name in bpbroker.config.data['services']:  error = "Entry exists, cannot register"
+			else:  
+				bpbroker.config.data['services'][self.qs['name']] = 
+					dict(data.items() + {'last_write_ip': xx, 'last_write_ts': int(time.time())}.items())
 
-	# Replace entry
+	if error:  self.send_error(400, error)
+	else:  Get(rh)
 
-	# 
-	rh.send_response(200)
-	rh.send_header('Content-Type','Application/json')
-	rh.end_headers()
-
-	with bpbroker.config.rlock:
-		bpbroker.config.data['services']['']
-	rh.wfile.write(json.dumps({'from': rh.RequestingHost(), 'pong': rh.qs}))
+	# debug
+	import pprint
+	pprint.pprint(bpbroker.config.data)
+	# debug
 
 
 def Replace(rh):
