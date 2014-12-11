@@ -61,17 +61,33 @@ def Replace(rh):
 	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
-	Delete(rh)
+	Delete(rh,silent=True)
 	Register(rh)
 
 
-def Delete(rh):
+def Delete(rh,silent=False):
 	"""Remove keyed entry.
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:returns success: bool success
 	:returns message: status message
 	"""
+	# Validate parameters
+	error = False
+	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
+
+	# Get data
+	else:
+		if not silent:
+			rh.send_response(200)
+			rh.send_header('Content-Type','Application/json')
+			rh.end_headers()
+
+		with bpbroker.config.rlock:
+			if rh.qs['name'] in bpbroker.config.data['services']:  del(bpbroker.config.data['services'][rh.qs['name']])
+			if not silent:
+				rh.wfile.write(json.dumps({'success': True, 'message': "Success"}))
+
 
 
 def Update(rh):
@@ -100,7 +116,7 @@ def Get(rh):
 	"""
 	# Validate parameters
 	error = False
-	if 'name' not in rh.qs:  error = "Missing name parameter"
+	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 
 	# Get data
 	else:
