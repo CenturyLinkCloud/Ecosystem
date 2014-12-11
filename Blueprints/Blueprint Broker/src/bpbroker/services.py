@@ -1,7 +1,7 @@
 """
-bp_broker ping module.
+bp_broker service broker bundle.
 
-Basic package to test end to end communication
+Service registration, listing, and object querying
 """
 
 
@@ -20,7 +20,15 @@ def Register(rh):
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param *:
-	:returns :
+	:returns success: bool success
+	:returns data: query result for key 'name'
+	"""
+
+	# Validate parameters
+
+	# Replace entry
+
+	# 
 	rh.send_response(200)
 	rh.send_header('Content-Type','Application/json')
 	rh.end_headers()
@@ -28,5 +36,34 @@ def Register(rh):
 	with bpbroker.config.rlock:
 		bpbroker.config.data['services']['
 	rh.wfile.write(json.dumps({'from': rh.RequestingHost(), 'pong': rh.qs}))
+
+
+def Replace(rh):
+	"""Alias for Register."""
+	Register(rh)
+
+
+def Delete(rh):
+	"""Remove keyed entry."""
+
+
+def Update(rh):
+	"""Update existing entry.
+
+	If no entry exists insert it.  If entry already exists for given key then merge data together with
+	new data taking precedence.
+	"""
+
+
+def Get(rh)
+	"""Return data associated with given key.
+
+	Returns all data associated with key unless specific fields are provided.
+	"""
+
+
+def List(rh):
+	"""Alias for Get."""
+	Get(rh)
 
 
