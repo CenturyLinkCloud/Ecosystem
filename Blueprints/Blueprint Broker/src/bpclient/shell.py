@@ -58,6 +58,15 @@ class Args:
 		parser_user_delete.add_argument('--name', required=True, help='Unique key')
 
 
+		########## Discovery ###########
+
+
+		########## Email ###########
+
+
+		########## Poll Account ###########
+
+
 		########## Global ###########
 		#parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
 		#parser.add_argument('--config', '-c', help='Ini config file')
