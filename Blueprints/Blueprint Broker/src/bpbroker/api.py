@@ -47,7 +47,6 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 	def _ParseRequest(self):
-		#(undef,self.package,self.method) = urlparse(self.path).path.split("/",3)
 		(undef,self.package,method) = urlparse(self.path).path.split("/",2)
 		self.method = re.sub("/$","",method)
 		self.qs = dict(parse_qsl(urlparse(self.path).query))	# Read Get qs
@@ -91,7 +90,6 @@ class APIThread(threading.Thread):
 		self.worker_queue = worker_queue
 		self.health_queue = health_queue
 		self._stop_event = threading.Event()
-		bpbroker.config.data['hits'] = []
 		self.config = dict(list(default_config.items()) + list(config.items()))
 
 
@@ -101,15 +99,14 @@ class APIThread(threading.Thread):
 
 
 	def run(self):
-		#self.web_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), SimpleHTTPServer.SimpleHTTPRequestHandler)
-		self.web_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), APIHTTPRequestHandler)
-		self.web_server.socket = ssl.wrap_socket (self.web_server.socket, 
+		self.api_server = TimeoutBaseHTTPServer((self.config['listen_ip'], self.config['listen_port']), APIHTTPRequestHandler)
+		self.api_server.socket = ssl.wrap_socket (self.api_server.socket, 
 									 			  server_side=True,
 									 			  certfile=self.config['ssl_cert'],
 									 			  keyfile=self.config['ssl_key'],
 												  )
 		while not self._stop_event.is_set():
-			self.web_server.handle_request()
+			self.api_server.handle_request()
 			self.HealthCheck()
 
 
