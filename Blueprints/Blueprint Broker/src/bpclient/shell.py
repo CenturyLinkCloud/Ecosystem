@@ -13,8 +13,8 @@ class Args:
 		bpclient.args = self
 		self.ParseArgs()
 		#self.ImportIni()
-		#self.MergeEnvironment()
-		#self.MergeCommands()
+		self.MergeEnvironment()
+		self.MergeCommands()
 
 
 	def ParseArgs(self):
@@ -22,12 +22,8 @@ class Args:
 		parser_sp1 = parser.add_subparsers(title='Commands',dest='command')
 
 		########## Ping ###########
-		parser_account = parser_sp1.add_parser('ping', help='Connectivity health check')
-		parser_sp2 = parser_account.add_subparsers(dest='sub_command')
-
-		## Get
-		parser_account_get = parser_sp2.add_parser('get', help='Get details on root or specified sub-account')
-		parser_account_get.add_argument('--data', help='Data payload.  This is echoed back from the server on successful test')
+		parser_ping = parser_sp1.add_parser('ping', help='Connectivity health check')
+		parser_ping.add_argument('--data', help='Data payload.  This is echoed back from the server on successful test')
 
 
 		########## Services ###########
@@ -68,6 +64,7 @@ class Args:
 
 
 		########## Global ###########
+		parser.add_argument('--bpbroker', '-b', metavar='host:port', help='BP Broker to communicate with')
 		#parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
 		#parser.add_argument('--config', '-c', help='Ini config file')
 		#parser.add_argument('--quiet', '-q', action='count', help='Supress status output (repeat up to 2 times)')
@@ -85,11 +82,11 @@ class Args:
 
 
 	def MergeEnvironment(self):
-		pass
+		if 'BPBROKER' in os.environ:  bpclient.BPROKER = os.environ['BPROKER']
 
 
 	def MergeCommands(self):
-		pass
+		if self.args.bpbroker:  bpclient.BPBROKER = self.args.bpbroker
 
 
 
@@ -108,7 +105,7 @@ class ExecCommand():
 
 
 	def Ping(self):
-		if bpclient.args.GetArgs().sub_command == 'ping':  self.PingPing()
+		self.PingPing()
 
 
 	def Services(self):
@@ -117,6 +114,19 @@ class ExecCommand():
 		elif bpclient.args.GetArgs().sub_command == 'replace':  self.ServicesReplace()
 		elif bpclient.args.GetArgs().sub_command == 'update':  self.ServicesUpdate()
 		elif bpclient.args.GetArgs().sub_command == 'delete':  self.ServicesDelete()
+
+
+	def PingPing(self):
+		self.Exec('bpclient.ping.Ping',{'data': bpclient.args.args.data})
+
+
+	def Exec(self,function,args=False,cols=None,supress_output=False):
+		try:
+			if args:  r = eval("%s(**%s)" % (function,args))
+			else:  r = eval("%s()" % (function))
+		except Exception as e:
+			print e
+			raise
 
 
 #	def Exec(self,function,args=False,cols=None,supress_output=False):

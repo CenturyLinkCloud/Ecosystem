@@ -5,6 +5,7 @@ Basic package to test end to end communication
 """
 
 
+import requests
 import json
 
 import bpclient
@@ -12,17 +13,13 @@ import bpclient
 
 #####################################################
 
-def Ping(rh):
-	"""Echo source host and querystring back in response.
+def Ping(data):
+	"""Echo to BP Broker host adn recieve back echoed response.
 
-	:param *: No params required
-	:returns src: Requesting IP address
-	:returns pong: Echoes entire provided querystring
+	:param data: Data to be sent/echoed
+	:returns pong: Original data in returned
 	"""
-	rh.send_response(200)
-	rh.send_header('Content-Type','Application/json')
-	rh.end_headers()
-
-	rh.wfile.write(json.dumps({'src': rh.RequestingHost(), 'pong': rh.qs}))
+	r = requests.post("https://%s/Ping/Ping/" % bpclient.BPBROKER,params={'data': data},verify=False)
+	#print "%s: %s" % (bpclient.BPBROKER,data)
 
 
