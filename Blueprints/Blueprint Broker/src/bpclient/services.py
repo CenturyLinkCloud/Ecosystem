@@ -53,14 +53,24 @@ def Register(name,data):
 def Replace(name,data):
 	"""Replacing existing content (if any).
 
+	CLI:
+	> ./bpclient.py  -f text -b 127.0.0.1:20443 service register --name test1 --data 'original data'
+	True	Success	{"last_write_ts": 1418761404, "data": "original data", "last_write_ip": "127.0.0.1"}
+ 	>./bpclient.py  -f text -b 127.0.0.1:20443 service replace --name test1 --data 'new data'
+	True	Success	{"last_write_ts": 1418761411, "data": "new data", "last_write_ip": "127.0.0.1"}
+
+	REPL:
+	>>> bpclient.services.Register(name='test2',data='original data')
+	{u'message': u'Success', u'data': {u'last_write_ts': 1418761514, u'data': u'original data', u'last_write_ip': u'127.0.0.1'}, u'success': True}
+
+	>>> bpclient.services.Replace(name='test2',data='new data')
+	{u'message': u'Success', u'data': {u'last_write_ts': 1418761523, u'data': u'new data', u'last_write_ip': u'127.0.0.1'}, u'success': True}
+
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
-	:returns success: bool success
-	:returns message: status message
-	:returns data: query result for key 'name'
 	"""
-	Delete(name)
-	Register(name,data)
+	r = requests.post("https://%s/services/Replace/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
+	return(r.json())
 
 
 def Delete(name):
@@ -83,39 +93,23 @@ def Delete(name):
 	return(r.json())
 
 
-def Update(rh):
+def Update(name,data):
 	"""Update existing entry.
 
 	If no entry exists insert it.  If entry already exists for given key then merge data together with
-	new data taking precedence.
+	new data taking precedence.  Perform deep merge of data if it is a json object.
+
+	CLI:
+	>
+
+	REPL:
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
-	:returns success: bool success
-	:returns message: status message
-	:returns data: query result for key 'name'
 	"""
 
-	# Validate parameters
-	data = []
-	try:
-		data = json.loads(rh.qs['data'])
-	except:
-		rh.send_error(400, "Unable to parse data json format")
-		return()
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
-	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
-	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
-	elif 'last_write_ts' in data:  rh.send_error(400,"Used reserved data name last_write_ts")
-
-	# Set data
-	elif data:  
-		with bpbroker.config.rlock:
-			if rh.qs['name'] not in bpbroker.config.data['services']:  bpbroker.config.data['services'][rh.qs['name']] = {}
-			bpbroker.config.data['services'][rh.qs['name']] = \
-				dict(bpbroker.config.data['services'][rh.qs['name']].items() + data.items() + 
-				     {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
-			Get(rh)
+	r = requests.post("https://%s/services/Update/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
+	return(r.json())
 
 
 def Get(name):
