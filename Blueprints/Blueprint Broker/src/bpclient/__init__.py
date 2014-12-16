@@ -13,6 +13,7 @@ Package Github page:
 #import bpclient.api as API
 from bpclient.shell import Args, ExecCommand
 import bpclient.ping as ping
+import bpclient.output as output
 #import bpclient.services as services
 import bpclient.config as config_class
 

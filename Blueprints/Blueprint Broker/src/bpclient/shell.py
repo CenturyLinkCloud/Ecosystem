@@ -65,11 +65,11 @@ class Args:
 
 		########## Global ###########
 		parser.add_argument('--bpbroker', '-b', metavar='host:port', help='BP Broker to communicate with')
-		#parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
+		parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
+		parser.add_argument('--format', '-f', choices=['json','text','csv','csv-noheader'], default='json', help='Output result format (json is default)')
 		#parser.add_argument('--config', '-c', help='Ini config file')
 		#parser.add_argument('--quiet', '-q', action='count', help='Supress status output (repeat up to 2 times)')
 		#parser.add_argument('--verbose', '-v', action='count', help='Increase verbosity')
-		#parser.add_argument('--format', '-f', choices=['json','table','text','csv'], default='table', help='Output result format (table is default)')
 		self.args = parser.parse_args()
 
 
@@ -117,42 +117,24 @@ class ExecCommand():
 
 
 	def PingPing(self):
-		self.Exec('bpclient.ping.Ping',{'data': bpclient.args.args.data})
+		self.Exec('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
 
 
-	def Exec(self,function,args=False,cols=None,supress_output=False):
+	def Exec(self,function,args=False,cols=None,output_opts={},supress_output=False):
 		try:
 			if args:  r = eval("%s(**%s)" % (function,args))
 			else:  r = eval("%s()" % (function))
+
+			if bpclient.args.args.cols:  cols = bpclient.args.args.cols
+
+			if not isinstance(r, list):  r = [r]
+			if not supress_output and bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,output_opts)
+			elif not supress_output and bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,output_opts)
+			elif not supress_output and bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
+			elif not supress_output and bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,output_opts)
+
 		except Exception as e:
 			print e
 			raise
-
-
-#	def Exec(self,function,args=False,cols=None,supress_output=False):
-#		try:
-#			if args:  r = eval("%s(**%s)" % (function,args))
-#			else:  r = eval("%s()" % (function))
-#
-#			#  Filter results
-#			if bpclient.args.args.cols:  cols = bpclient.args.args.cols
-#
-#			# Output results
-#			# TODO - how do we differentiate blueprints vs. queue RequestIDs?
-#			if r is not None and 'RequestID' in r and not bpclient.args.args.async:  
-#				r = bpclient.output.RequestBlueprintProgress(r['RequestID'],self._GetLocation(),self._GetAlias(),bpclient.args.args.quiet)
-#				cols = ['Server']
-#
-#			if not isinstance(r, list):  r = [r]
-#			if not supress_output and bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols)
-#			elif not supress_output and bpclient.args.args.format == 'table':  print bpclient.output.Table(r,cols)
-#			elif not supress_output and bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols)
-#			elif not supress_output and bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols)
-#
-#			return(r)
-#		except bpclient.AccountDeletedException:
-#			bpclient.output.Status('ERROR',2,'Unable to process, account in deleted state')
-#		except bpclient.AccountLoginException:
-#			bpclient.output.Status('ERROR',2,'Transient login error.  Please retry')
 
 

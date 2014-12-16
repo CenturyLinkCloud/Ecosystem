@@ -23,8 +23,6 @@ def Ping(data):
 	:returns pong: Original data in returned
 	"""
 	r = requests.post("https://%s/ping/Ping/" % bpclient.BPBROKER,params={'data': data},verify=False)
-	print r.text
-	print r.json
-	#print "%s: %s" % (bpclient.BPBROKER,data)
+	return(r.json())
 
 
