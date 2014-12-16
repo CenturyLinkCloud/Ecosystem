@@ -129,6 +129,15 @@ class ExecCommand():
 		self.Exec('bpclient.services.Get',{'name': bpclient.args.args.name}, ['success','message','data'])
 
 
+	def ServicesDelete(self):
+		self.Exec('bpclient.services.Delete',{'name': bpclient.args.args.name}, ['success','message'])
+
+
+	def ServicesReplace(self):
+		self.Exec('bpclient.services.Replace',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		          ['success','message','data'])
+
+
 	def Exec(self,function,args=False,cols=None,output_opts={},supress_output=False):
 		try:
 			if args:  r = eval("%s(**%s)" % (function,args))

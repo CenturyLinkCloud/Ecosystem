@@ -50,7 +50,7 @@ def Register(name,data):
 	return(r.json())
 
 
-def Replace(rh):
+def Replace(name,data):
 	"""Replacing existing content (if any).
 
 	:param name: Unique registration name.  Often a name and a unique key.
@@ -59,27 +59,22 @@ def Replace(rh):
 	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
-	Delete(rh,silent=True)
-	Register(rh)
+	Delete(name)
+	Register(name,data)
 
 
 def Delete(name):
-	"""Remove keyed entry.
+	"""Remove keyed entry.  
+
+	Returns scuccess=True whether key exists or not.
 
 	CLI:
-	> ./bpclient.py  -f text -b 127.0.0.1:20443 service delete --name test2
-	True	Success	{"last_write_ts": 1418760685, "data": "xxxx", "last_write_ip": "127.0.0.1"}
+	> ./bpclient.py  -f text -b 127.0.0.1:20443 service delete --name test1
+	True	Success
 
 	REPL:
-	>>> bpclient.services.Get('test1')
-	{u'data': {u'data': u'xxxx',
-	           u'last_write_ip': u'127.0.0.1',
-	           u'last_write_ts': 1418760626},
-	 u'message': u'Success',
-	 u'success': True}
-
-	>>> bpclient.services.Get('nokey')
-	{u'message': u'Entry not found', u'data': {}, u'success': False}
+	>>> bpclient.services.Delete('test1')
+	{u'message': u'Success', u'success': True}
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	"""
