@@ -100,9 +100,26 @@ def Update(name,data):
 	new data taking precedence.  Perform deep merge of data if it is a json object.
 
 	CLI:
-	>
+	> ./bpclient.py  -f text -b 127.0.0.1:20443 service update --name test4 --data '{"old_key": "old_data"}'
+	True	Success	{"old_key": "old_data", "last_write_ts": 1418762954, "last_write_ip": "127.0.0.1"}
+ 	>./bpclient.py  -f text -b 127.0.0.1:20443 service update --name test4 --data '{"new_key": "new_data"}'
+	True	Success	{"old_key": "old_data", "last_write_ts": 1418762962, "last_write_ip": "127.0.0.1", "new_key": "new_data"}
 
 	REPL:
+	>>> bpclient.services.Update(name='test3',data='{"orig_key": "orig_data"}')
+	{u'data': {u'last_write_ip': u'127.0.0.1',
+	           u'last_write_ts': 1418762718,
+	           u'orig_key': u'orig_data'},
+	 u'message': u'Success',
+	 u'success': True}
+
+	>>> bpclient.services.Update(name='test3',data='{"new_key": "new_data"}')
+	{u'data': {u'last_write_ip': u'127.0.0.1',
+	           u'last_write_ts': 1418762729,
+	           u'new_key': u'new_data',
+	           u'orig_key': u'orig_data'},
+	 u'message': u'Success',
+	 u'success': True}
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name

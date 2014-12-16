@@ -138,6 +138,11 @@ class ExecCommand():
 		          ['success','message','data'])
 
 
+	def ServicesUpdate(self):
+		self.Exec('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		          ['success','message','data'])
+
+
 	def Exec(self,function,args=False,cols=None,output_opts={},supress_output=False):
 		try:
 			if args:  r = eval("%s(**%s)" % (function,args))
