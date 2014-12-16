@@ -101,7 +101,7 @@ class ExecCommand():
 
 	def Bootstrap(self):
 		if bpclient.args.GetCommand() == 'ping':  self.Ping()
-		elif bpclient.args.GetCommand() == 'services':  self.Services()
+		elif bpclient.args.GetCommand() == 'service':  self.Services()
 
 
 	def Ping(self):
@@ -118,6 +118,11 @@ class ExecCommand():
 
 	def PingPing(self):
 		self.Exec('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
+
+
+	def ServicesRegister(self):
+		self.Exec('bpclient.services.Register',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		          ['success','message','data'])
 
 
 	def Exec(self,function,args=False,cols=None,output_opts={},supress_output=False):

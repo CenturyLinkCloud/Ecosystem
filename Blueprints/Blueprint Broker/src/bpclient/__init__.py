@@ -14,7 +14,7 @@ Package Github page:
 from bpclient.shell import Args, ExecCommand
 import bpclient.ping as ping
 import bpclient.output as output
-#import bpclient.services as services
+import bpclient.services as services
 import bpclient.config as config_class
 
 

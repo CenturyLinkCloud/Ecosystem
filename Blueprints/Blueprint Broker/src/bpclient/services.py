@@ -8,17 +8,25 @@ Service registration, listing, and object querying
 import re
 import time
 import json
+import requests
 
-import bpbroker
+import bpclient
 
 
 #####################################################
 
-def Register(rh):
+def Register(name,data):
 	"""Registers new service to service broker.
 
 	Registers a new entry if none exists or returns error if entry already exists.
 	Recommend using a name + key to mitigate misplaced overwrites
+
+	CLI:
+	> ./bpclient.py  -f json -b 127.0.0.1:20443 service register --name test2 --data '{"a": 3, "b": "foo"}'
+	{"message": "Success", "data": {"a": 3, "last_write_ts": 1418760026, "b": "foo", "last_write_ip": "127.0.0.1"}, "success": true}
+
+	REPL:
+	>>> 
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
@@ -27,30 +35,9 @@ def Register(rh):
 	:returns data: query result for key 'name'
 	"""
 
-	# Validate parameters
-	data = []
-	try:
-		data = json.loads(rh.qs['data'])
-	except:
-		rh.send_error(400, "Unable to parse data json format")
-		data = {'data': rh.qs['data']}
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
-	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
-	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
-	elif 'last_write_ts' in data:  rh.send_error(400,"Used reserved data name last_write_ts")
-
-	# Set data
-	elif data:  
-		with bpbroker.config.rlock:
-			if rh.qs['name'] in bpbroker.config.data['services']:  
-				rh.send_response(200)
-				rh.send_header('Content-Type','Application/json')
-				rh.end_headers()
-				rh.wfile.write(json.dumps({'success': False, 'message': "Entry already exists", 'data': {}}))
-			else:  
-				bpbroker.config.data['services'][rh.qs['name']] = \
-					dict(data.items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
-				Get(rh)
+	r = requests.post("https://%s/services/Register/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
+	print r.text
+	return(r.json())
 
 
 def Replace(rh):
@@ -110,7 +97,7 @@ def Update(rh):
 		data = json.loads(rh.qs['data'])
 	except:
 		rh.send_error(400, "Unable to parse data json format")
-		data = {'data': rh.qs['data']}
+		return()
 	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
 	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
