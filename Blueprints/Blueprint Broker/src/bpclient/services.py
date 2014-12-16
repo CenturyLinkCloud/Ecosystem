@@ -26,17 +26,27 @@ def Register(name,data):
 	{"message": "Success", "data": {"a": 3, "last_write_ts": 1418760026, "b": "foo", "last_write_ip": "127.0.0.1"}, "success": true}
 
 	REPL:
-	>>> 
+	>>> bpclient.services.Register(name='test6',data='{"a": 1}')
+	{"message": "Success", "data": {"a": 1, "last_write_ts": 1418760363, "last_write_ip": "127.0.0.1"}, "success": true}
+	{u'data': {u'a': 1,
+	           u'last_write_ip': u'127.0.0.1',
+	           u'last_write_ts': 1418760363},
+	 u'message': u'Success',
+	 u'success': True}
+
+	>>> bpclient.services.Register(name='test5',data='my data')
+	{"message": "Success", "data": {"last_write_ts": 1418760632, "data": "my data", "last_write_ip": "127.0.0.1"}, "success": true}
+	{u'data': {u'data': u'my data',
+	           u'last_write_ip': u'127.0.0.1',
+	           u'last_write_ts': 1418760632},
+	 u'message': u'Success',
+	 u'success': True}
 
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
-	:returns success: bool success
-	:returns message: status message
-	:returns data: query result for key 'name'
 	"""
 
 	r = requests.post("https://%s/services/Register/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
-	print r.text
 	return(r.json())
 
 
@@ -53,29 +63,29 @@ def Replace(rh):
 	Register(rh)
 
 
-def Delete(rh,silent=False):
+def Delete(name):
 	"""Remove keyed entry.
 
+	CLI:
+	> ./bpclient.py  -f text -b 127.0.0.1:20443 service delete --name test2
+	True	Success	{"last_write_ts": 1418760685, "data": "xxxx", "last_write_ip": "127.0.0.1"}
+
+	REPL:
+	>>> bpclient.services.Get('test1')
+	{u'data': {u'data': u'xxxx',
+	           u'last_write_ip': u'127.0.0.1',
+	           u'last_write_ts': 1418760626},
+	 u'message': u'Success',
+	 u'success': True}
+
+	>>> bpclient.services.Get('nokey')
+	{u'message': u'Entry not found', u'data': {}, u'success': False}
+
 	:param name: Unique registration name.  Often a name and a unique key.
-	:returns success: bool success
-	:returns message: status message
 	"""
-	# Validate parameters
-	error = False
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 
-	# Get data
-	else:
-		if not silent:
-			rh.send_response(200)
-			rh.send_header('Content-Type','Application/json')
-			rh.end_headers()
-
-		with bpbroker.config.rlock:
-			if rh.qs['name'] in bpbroker.config.data['services']:  del(bpbroker.config.data['services'][rh.qs['name']])
-			if not silent:
-				rh.wfile.write(json.dumps({'success': True, 'message': "Success"}))
-
+	r = requests.post("https://%s/services/Delete/" % bpclient.BPBROKER,params={'name': name},verify=False)
+	return(r.json())
 
 
 def Update(rh):
@@ -113,36 +123,35 @@ def Update(rh):
 			Get(rh)
 
 
-
-def Get(rh):
+def Get(name):
 	"""Return data associated with given key.
 
 	Returns all data associated with key unless specific fields are provided.
 
+	CLI:
+	> ./bpclient.py  -f text -b 127.0.0.1:20443 service get --name test2
+	True	Success	{"last_write_ts": 1418760685, "data": "xxxx", "last_write_ip": "127.0.0.1"}
+
+	REPL:
+	>>> bpclient.services.Get('test1')
+	{u'data': {u'data': u'xxxx',
+	           u'last_write_ip': u'127.0.0.1',
+	           u'last_write_ts': 1418760626},
+	 u'message': u'Success',
+	 u'success': True}
+
+	>>> bpclient.services.Get('nokey')
+	{u'message': u'Entry not found', u'data': {}, u'success': False}
+
 	:param name: Unique registration name.  Often a name and a unique key.
-	:returns success: bool success
-	:returns message: status message
-	:returns data: query result for key 'name'
 	"""
-	# Validate parameters
-	error = False
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 
-	# Get data
-	else:
-		rh.send_response(200)
-		rh.send_header('Content-Type','Application/json')
-		rh.end_headers()
-
-		with bpbroker.config.rlock:
-			if rh.qs['name'] not in bpbroker.config.data['services']: 
-				rh.wfile.write(json.dumps({'success': False, 'message': "Entry not found", 'data': {}}))
-			else:  
-				rh.wfile.write(json.dumps({'success': True, 'message': "Success", 'data': bpbroker.config.data['services'][rh.qs['name']]}))
+	r = requests.post("https://%s/services/Get/" % bpclient.BPBROKER,params={'name': name},verify=False)
+	return(r.json())
 
 
-def List(rh):
+def List(name):
 	"""Alias for Get."""
-	Get(rh)
+	Get(name)
 
 

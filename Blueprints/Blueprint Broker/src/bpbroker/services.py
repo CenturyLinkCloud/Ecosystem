@@ -32,7 +32,6 @@ def Register(rh):
 	try:
 		data = json.loads(rh.qs['data'])
 	except:
-		rh.send_error(400, "Unable to parse data json format")
 		data = {'data': rh.qs['data']}
 	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
@@ -109,7 +108,6 @@ def Update(rh):
 	try:
 		data = json.loads(rh.qs['data'])
 	except:
-		rh.send_error(400, "Unable to parse data json format")
 		data = {'data': rh.qs['data']}
 	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
@@ -124,7 +122,6 @@ def Update(rh):
 				dict(bpbroker.config.data['services'][rh.qs['name']].items() + data.items() + 
 				     {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
 			Get(rh)
-
 
 
 def Get(rh):
