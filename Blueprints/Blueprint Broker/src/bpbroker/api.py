@@ -77,7 +77,6 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 	def ProcessRequest(self):
-		self.end_headers()
 		self._ParseRequest()
 		if self._ValidateRequest():  getattr(getattr(bpbroker,self.package), self.method)(self)
 
