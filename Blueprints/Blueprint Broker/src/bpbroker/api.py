@@ -66,10 +66,9 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 					if not hasattr(getattr(bpbroker,self.package), self.method):  error = "Unauthorized method"
 				except:
 					try:
-						i = __import__(self.package)
-						for mod in re.sub(".*?\.","",self.package).split("."):  i = getattr(i,mod)
-						print getattr(i, self.method)(self)
-						if not hasattr(i, self.method):  error = "Unauthorized method"
+						self.package_obj = __import__(self.package)
+						for mod in re.sub(".*?\.","",self.package).split("."):  self.package_obj = getattr(self.package_obj,mod)
+						if not hasattr(self.package_obj, self.method):  error = "Unauthorized method"
 					except:
 						error = "Unauthorized method"
 
@@ -85,7 +84,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	def ProcessRequest(self):
 		self._ParseRequest()
-		if self._ValidateRequest():  getattr(getattr(bpbroker,self.package), self.method)(self)
+		if self._ValidateRequest():  getattr(self.package_obj, self.method)(self)
 
 
 
