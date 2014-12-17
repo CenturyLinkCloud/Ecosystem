@@ -25,48 +25,35 @@ def Rows(data_arr,keys,opts={}):
 
 
 # TSV w/o headers
-def Text(data_arr,keys,opts={}):
-	rows = []
+def Text(data,keys,opts={}):
+	for key in keys: 
+		if isinstance(data[key], (basestring, int, long, float)):  row = str(data[key]).replace("	"," ")
+		elif isinstance(data[key], (dict,)):  row = json.dumps(data[key])
+		else:  
+			str_line = []
+			for a in data[key]:  str_line.append(str(a))
+			row = ", ".join(str_line).replace(",","")
 
-	for line in data_arr:
-		row = []
-		for key in keys: 
-			if isinstance(line[key], (basestring, int, long, float)):  row.append(str(line[key]).replace("	"," "))
-			elif isinstance(line[key], (dict,)):  row.append(json.dumps(line[key]))
-			else:  
-				str_line = []
-				for a in line[key]:  str_line.append(str(a))
-				row.append(", ".join(str_line).replace(",",""))
-		rows.append("	".join(row))
-
-	return("\n".join(rows))
+	return(row)
 
 
 # TODO - Use CSV module?
-def Csv(data_arr,keys,opts={'no_header': False}):
-	csv = []
+def Csv(data,keys,opts={'no_header': False}):
 	if not opts['no_header']:  csv.append(",".join(keys))
 
-	for line in data_arr:
-		row = []
-		for key in keys: 
-			if isinstance(line[key], (basestring, int, long, float)):  row.append(str(line[key]).replace(","," "))
-			else:  
-				str_line = []
-				for a in line[key]:  str_line.append(str(a))
-				row.append(" ".join(str_line).replace(",",""))
-		csv.append(",".join(row))
+	for key in keys: 
+		if isinstance(data[key], (basestring, int, long, float)):  csv = str(data[key]).replace(","," ")
+		else:  
+			str_data = []
+			for a in data[key]:  str_data.append(str(a))
+			csv =" ".join(str_data).replace(",","")
 
-	return("\n".join(csv))
+	return(csv)
 
 
-def Json(data_arr,keys,opts={}):
-	new_data_arr = []
-	for data_dict in data_arr:
-		for key in data_dict.keys():
-			if key not in keys:  data_dict.pop(key,None)
-		new_data_arr.append(data_dict)
+def Json(data,keys,opts={}):
+	for key in data.keys():
+		if key not in keys:  data.pop(key,None)
 
-	if len(new_data_arr)==1:  return(new_data_arr[0])
-	else:  return(new_data_arr)
+	return(data)
 

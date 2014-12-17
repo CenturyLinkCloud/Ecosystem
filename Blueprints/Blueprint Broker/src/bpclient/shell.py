@@ -24,6 +24,7 @@ class Args:
 		########## Ping ###########
 		parser_ping = parser_sp1.add_parser('ping', help='Connectivity health check')
 		parser_ping.add_argument('--data', help='Data payload.  This is echoed back from the server on successful test')
+		parser_ping.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 
 		########## Services ###########
@@ -71,7 +72,7 @@ class Args:
 		########## Global ###########
 		parser.add_argument('--bpbroker', '-b', metavar='host:port', help='BP Broker to communicate with')
 		parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
-		parser.add_argument('--format', '-f', choices=['json','text','csv','csv-noheader'], default='json', help='Output result format (json is default)')
+		parser.add_argument('--format', '-f', choices=['json','text','csv','csv-noheader'], default='text', help='Output result format (text is default)')
 		self.args = parser.parse_args()
 
 
@@ -119,13 +120,13 @@ class ExecCommand():
 
 
 	def PingPing(self):
-		self.Exec('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
+		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
 
 
 	def _ServicesWrapper(self,function,args,cols,opts={}):
 		try:
 			opts['supress_output'] = True
-			r = self.Exec(function,args,cols,opts),
+			r = self.Exec(function,args,cols,opts,supress_output=True)
 
 			if 'data' in r and '_str' in r['data']:  r['data'] = r['data']['_str']
 			if not bpclient.args.args.raw and 'data' in r: 
@@ -144,26 +145,24 @@ class ExecCommand():
 
 
 	def ServicesRegister(self):
-		self.Exec('bpclient.services.Register',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		self._ServicesWrapper('bpclient.services.Register',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
 		          ['success','message','data'])
 
 
 	def ServicesGet(self):
-		self.Exec('bpclient.services.Get',{'name': bpclient.args.args.name}, ['success','message','data'])
+		self._ServicesWrapper('bpclient.services.Get',{'name': bpclient.args.args.name}, ['success','message','data'])
 
 
 	def ServicesDelete(self):
-		self.Exec('bpclient.services.Delete',{'name': bpclient.args.args.name}, ['success','message'])
+		self._ServicesWrapper('bpclient.services.Delete',{'name': bpclient.args.args.name}, ['success','message'])
 
 
 	def ServicesReplace(self):
-		self.Exec('bpclient.services.Replace',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		self._ServicesWrapper('bpclient.services.Replace',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
 		          ['success','message','data'])
 
 
 	def ServicesUpdate(self):
-		#self.Exec('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
-		#          ['success','message','data'])
 		self._ServicesWrapper('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
 		          ['success','message','data'])
 
@@ -175,7 +174,7 @@ class ExecCommand():
 
 			if bpclient.args.args.cols:  cols = bpclient.args.args.cols
 
-			if not isinstance(r, list):  r = [r]
+			# TODO - not sure whether we'll reuse this code at all or duplicate in wrappers as needed?
 			if not supress_output and bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,opts)
 			elif not supress_output and bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,opts)
 			elif not supress_output and bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
