@@ -47,6 +47,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 	def _ParseRequest(self):
+		self.path = re.sub("/\?","?",self.path)
 		(undef,self.package,method) = urlparse(self.path).path.split("/",2)
 		self.method = re.sub("/$","",method)
 		self.qs = dict(parse_qsl(urlparse(self.path).query))	# Read Get qs
@@ -58,13 +59,20 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def _ValidateRequest(self):
 		error = False
 		with bpbroker.config.rlock:
-			if self.package not in bpbroker.config.data:  error = "Unauthorized package"
+			#if self.package not in bpbroker.config.data:  error = "Unauthorized package"
 			if re.match("_",self.method):  error = "Unauthorized method"
 			else:
 				try:
 					if not hasattr(getattr(bpbroker,self.package), self.method):  error = "Unauthorized method"
 				except:
-					error = "Unauthorized method"
+					try:
+						i = __import__(self.package)
+						print self.method
+						if not hasattr(i, self.method):  print "this"
+						if not hasattr(i, self.method):  error = "Unauthorized method"
+						print "e"
+					except:
+						error = "Unauthorized method"
 
 		if error: self.send_error(401, error)
 
