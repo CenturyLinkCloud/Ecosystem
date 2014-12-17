@@ -12,7 +12,7 @@ import bptest
 
 #####################################################
 
-def A():
+def A(rh):
 	print "a"
 
 def Ping(rh):

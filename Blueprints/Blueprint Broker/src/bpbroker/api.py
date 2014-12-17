@@ -59,7 +59,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def _ValidateRequest(self):
 		error = False
 		with bpbroker.config.rlock:
-			#if self.package not in bpbroker.config.data:  error = "Unauthorized package"
+			if self.package not in bpbroker.config.data:  error = "Unauthorized package"
 			if re.match("_",self.method):  error = "Unauthorized method"
 			else:
 				try:
