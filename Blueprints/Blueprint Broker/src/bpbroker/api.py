@@ -29,13 +29,19 @@ default_config = {
 
 #####################################################
 
-
 class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
 	timeout = 1
 
 
 
 class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+
+	# Response variables populated by individual request handlers
+	error = 200
+	error_message = ''
+	content_type = "Application/json"
+	data = ''
+
 
 	def log_error(self, format, *args):
 		pass
@@ -63,7 +69,10 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			if re.match("_",self.method):  error = "Unauthorized method"
 			else:
 				try:
-					if not hasattr(getattr(bpbroker,self.package), self.method):  error = "Unauthorized method"
+					#if not hasattr(getattr(bpbroker,self.package), self.method):  error = "Unauthorized method"
+					self.package_obj = __import__("bpbroker."+self.package)
+					for mod in self.package.split("."):  self.package_obj = getattr(self.package_obj,mod)
+					if not hasattr(self.package_obj, self.method):  error = "Unauthorized method"
 				except:
 					try:
 						self.package_obj = __import__(self.package)
@@ -84,7 +93,14 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	def ProcessRequest(self):
 		self._ParseRequest()
-		if self._ValidateRequest():  getattr(self.package_obj, self.method)(self)
+		if self._ValidateRequest():  
+			getattr(self.package_obj, self.method)(self)
+			if self.error==200:  
+				self.send_response(self.error)
+				self.send_header('Content-Type',self.content_type)
+				self.end_headers()
+				self.wfile.write(self.data)
+			else:  self.send_error(self.error,self.error_message)
 
 
 
