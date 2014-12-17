@@ -7,10 +7,13 @@ Basic package to test end to end communication
 
 import json
 
-import bpbroker
+import bptest
 
 
 #####################################################
+
+def A():
+	print "a"
 
 def Ping(rh):
 	"""Echo source host and querystring back in response.

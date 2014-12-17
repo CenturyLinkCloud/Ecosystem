@@ -13,6 +13,3 @@ Package Github page:
 import bptest.ping as ping
 
 
-####### module/object vars #######
-#_V1_API_KEY = False
-
