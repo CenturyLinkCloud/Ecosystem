@@ -32,7 +32,7 @@ def Register(rh):
 	try:
 		data = json.loads(rh.qs['data'])
 	except:
-		data = {'data': rh.qs['data']}
+		data = {'_str': rh.qs['data']}
 	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
 	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
@@ -108,7 +108,7 @@ def Update(rh):
 	try:
 		data = json.loads(rh.qs['data'])
 	except:
-		data = {'data': rh.qs['data']}
+		data = {'_str': rh.qs['data']}
 	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
 	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
 	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")

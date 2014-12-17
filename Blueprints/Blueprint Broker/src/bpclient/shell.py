@@ -34,24 +34,29 @@ class Args:
 		parser_user_register = parser_sp3.add_parser('register', help='Register supplied data to supplied key')
 		parser_user_register.add_argument('--name', required=True, help='Unique key for service broker registration')
 		parser_user_register.add_argument('--data', required=True, help='Data associated with this key')
+		parser_user_register.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Replace
 		parser_user_replace = parser_sp3.add_parser('replace', help='Replace data associated with supplied key')
 		parser_user_replace.add_argument('--name', required=True, help='Unique key')
 		parser_user_replace.add_argument('--data', required=True, help='Data associated with this key')
+		parser_user_replace.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Update
 		parser_user_update = parser_sp3.add_parser('update', help='Update data associated with supplied key')
 		parser_user_update.add_argument('--name', required=True, help='Unique key')
 		parser_user_update.add_argument('--data', required=True, help='Data associated with this key')
+		parser_user_update.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Get
 		parser_user_get = parser_sp3.add_parser('get', help='Return data associated with supplied key')
 		parser_user_get.add_argument('--name', required=True, help='Unique key')
+		parser_user_get.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Delete
 		parser_user_delete = parser_sp3.add_parser('delete', help='Delete key from service broker')
 		parser_user_delete.add_argument('--name', required=True, help='Unique key')
+		parser_user_delete.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 
 		########## Discovery ###########
@@ -67,9 +72,6 @@ class Args:
 		parser.add_argument('--bpbroker', '-b', metavar='host:port', help='BP Broker to communicate with')
 		parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
 		parser.add_argument('--format', '-f', choices=['json','text','csv','csv-noheader'], default='json', help='Output result format (json is default)')
-		#parser.add_argument('--config', '-c', help='Ini config file')
-		#parser.add_argument('--quiet', '-q', action='count', help='Supress status output (repeat up to 2 times)')
-		#parser.add_argument('--verbose', '-v', action='count', help='Increase verbosity')
 		self.args = parser.parse_args()
 
 
@@ -120,6 +122,25 @@ class ExecCommand():
 		self.Exec('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
 
 
+	def _ServicesWrapper(self,function,args,cols,opts={}):
+		try:
+			opts['supress_output'] = True
+			r = self.Exec(function,args,cols,opts),
+
+			if bpclient.args.args.raw and 'data' in r:
+				if '_str' in r['data']:  print r['data']['_str']
+				else: 
+					if bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,opts)
+					elif bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,opts)
+					elif bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
+					elif bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,opts)
+			else:
+
+		except Exception as e:
+			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.exit(1)
+
+
 	def ServicesRegister(self):
 		self.Exec('bpclient.services.Register',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
 		          ['success','message','data'])
@@ -139,11 +160,13 @@ class ExecCommand():
 
 
 	def ServicesUpdate(self):
-		self.Exec('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		#self.Exec('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
+		#          ['success','message','data'])
+		self._ServicesWrapper('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
 		          ['success','message','data'])
 
 
-	def Exec(self,function,args=False,cols=None,output_opts={},supress_output=False):
+	def Exec(self,function,args=False,cols=None,opts={},supress_output=False):
 		try:
 			if args:  r = eval("%s(**%s)" % (function,args))
 			else:  r = eval("%s()" % (function))
@@ -151,13 +174,14 @@ class ExecCommand():
 			if bpclient.args.args.cols:  cols = bpclient.args.args.cols
 
 			if not isinstance(r, list):  r = [r]
-			if not supress_output and bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,output_opts)
-			elif not supress_output and bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,output_opts)
+			if not supress_output and bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,opts)
+			elif not supress_output and bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,opts)
 			elif not supress_output and bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
-			elif not supress_output and bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,output_opts)
+			elif not supress_output and bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,opts)
 
-		except Exception as e:
-			print e
+			return(r)
+
+		except:
 			raise
 
 
