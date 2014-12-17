@@ -127,14 +127,16 @@ class ExecCommand():
 			opts['supress_output'] = True
 			r = self.Exec(function,args,cols,opts),
 
-			if bpclient.args.args.raw and 'data' in r:
-				if '_str' in r['data']:  print r['data']['_str']
-				else: 
-					if bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,opts)
-					elif bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,opts)
-					elif bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
-					elif bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,opts)
-			else:
+			if 'data' in r and '_str' in r['data']:  r['data'] = r['data']['_str']
+			if not bpclient.args.args.raw and 'data' in r: 
+				r = {'data': r['data']}
+				cols = ('data',)
+
+			if 'data' in r:
+				if bpclient.args.args.format == 'json':  print bpclient.output.Json(r,cols,opts)
+				elif bpclient.args.args.format == 'text':  print bpclient.output.Text(r,cols,opts)
+				elif bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
+				elif bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,opts)
 
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
