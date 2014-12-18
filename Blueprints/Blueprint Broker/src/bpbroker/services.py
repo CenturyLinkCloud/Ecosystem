@@ -33,19 +33,24 @@ def Register(rh):
 		data = json.loads(rh.qs['data'])
 	except:
 		data = {'_str': rh.qs['data']}
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
-	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
-	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
-	elif 'last_write_ts' in data:  rh.send_error(400,"Used reserved data name last_write_ts")
+	if 'name' not in rh.qs:  
+		rh.status = 400
+		rh.status_message = "Missing name parameter"
+	elif 'data' not in rh.qs:  
+		rh.status = 400
+		rh.status_message"Missing data parameter"
+	elif 'last_write_ip' in data:  
+		rh.status = 400
+		rh.status_message = "Used reserved data name last_write_ip"
+	elif 'last_write_ts' in data:  
+		rh.status = 400
+		rh.status_message = "Used reserved data name last_write_ts"
 
 	# Set data
 	elif data:  
 		with bpbroker.config.rlock:
 			if rh.qs['name'] in bpbroker.config.data['services']:  
-				rh.send_response(200)
-				rh.send_header('Content-Type','Application/json')
-				rh.end_headers()
-				rh.wfile.write(json.dumps({'success': False, 'message': "Entry already exists", 'data': {}}))
+				rh.data = json.dumps({'success': False, 'message': "Entry already exists", 'data': {}})
 			else:  
 				bpbroker.config.data['services'][rh.qs['name']] = \
 					dict(data.items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
@@ -61,11 +66,11 @@ def Replace(rh):
 	:returns message: status message
 	:returns data: query result for key 'name'
 	"""
-	Delete(rh,silent=True)
+	Delete(rh)
 	Register(rh)
 
 
-def Delete(rh,silent=False):
+def Delete(rh):
 	"""Remove keyed entry.
 
 	:param name: Unique registration name.  Often a name and a unique key.
@@ -74,19 +79,15 @@ def Delete(rh,silent=False):
 	"""
 	# Validate parameters
 	error = False
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
+	if 'name' not in rh.qs:
+		rh.status = 400
+		rh.status_message = "Missing name parameter"
 
 	# Get data
 	else:
-		if not silent:
-			rh.send_response(200)
-			rh.send_header('Content-Type','Application/json')
-			rh.end_headers()
-
 		with bpbroker.config.rlock:
 			if rh.qs['name'] in bpbroker.config.data['services']:  del(bpbroker.config.data['services'][rh.qs['name']])
-			if not silent:
-				rh.wfile.write(json.dumps({'success': True, 'message': "Success"}))
+			rh.data = json.dumps({'success': True, 'message': "Success"})
 
 
 
@@ -109,10 +110,18 @@ def Update(rh):
 		data = json.loads(rh.qs['data'])
 	except:
 		data = {'_str': rh.qs['data']}
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
-	elif 'data' not in rh.qs:  rh.send_error(400,"Missing data parameter")
-	elif 'last_write_ip' in data:  rh.send_error(400,"Used reserved data name last_write_ip")
-	elif 'last_write_ts' in data:  rh.send_error(400,"Used reserved data name last_write_ts")
+	if 'name' not in rh.qs:  
+		rh.status = 400
+		rh.status_message = "Missing name parameter"
+	elif 'data' not in rh.qs:  
+		rh.status = 400
+		rh.status_message"Missing data parameter"
+	elif 'last_write_ip' in data:  
+		rh.status = 400
+		rh.status_message = "Used reserved data name last_write_ip"
+	elif 'last_write_ts' in data:  
+		rh.status = 400
+		rh.status_message = "Used reserved data name last_write_ts"
 
 	# Set data
 	elif data:  
@@ -136,7 +145,9 @@ def Get(rh):
 	"""
 	# Validate parameters
 	error = False
-	if 'name' not in rh.qs:  rh.send_error(400,"Missing name parameter")
+	if 'name' not in rh.qs:  
+		rh.status = 400
+		rh.status_message = "Missing name parameter"
 
 	# Get data
 	else:
@@ -146,9 +157,9 @@ def Get(rh):
 
 		with bpbroker.config.rlock:
 			if rh.qs['name'] not in bpbroker.config.data['services']: 
-				rh.wfile.write(json.dumps({'success': False, 'message': "Entry not found", 'data': {}}))
+				rh.data = json.dumps({'success': False, 'message': "Entry not found", 'data': {}})
 			else:  
-				rh.wfile.write(json.dumps({'success': True, 'message': "Success", 'data': bpbroker.config.data['services'][rh.qs['name']]}))
+				rh.data = json.dumps({'success': True, 'message': "Success", 'data': bpbroker.config.data['services'][rh.qs['name']]})
 
 
 def List(rh):
