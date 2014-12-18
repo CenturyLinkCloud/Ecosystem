@@ -27,6 +27,12 @@ class Args:
 		parser_ping.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 
+		########## Execute ###########
+		parser_execute = parser_sp1.add_parser('execute', help='Execute custom RPC on BP Broker server')
+		parser_execute.add_argument('--method', required=True, help='Fully qualified package and method to execute')
+		parser_execute.add_argument('--data', required=True, help='Data payload')
+
+
 		########## Services ###########
 		parser_user = parser_sp1.add_parser('service', help='Service broker registration and querying')
 		parser_sp3 = parser_user.add_subparsers(dest='sub_command')
@@ -104,11 +110,8 @@ class ExecCommand():
 
 	def Bootstrap(self):
 		if bpclient.args.GetCommand() == 'ping':  self.Ping()
+		if bpclient.args.GetCommand() == 'execute':  self.Execute()
 		elif bpclient.args.GetCommand() == 'service':  self.Services()
-
-
-	def Ping(self):
-		self.PingPing()
 
 
 	def Services(self):
@@ -117,10 +120,6 @@ class ExecCommand():
 		elif bpclient.args.GetArgs().sub_command == 'replace':  self.ServicesReplace()
 		elif bpclient.args.GetArgs().sub_command == 'update':  self.ServicesUpdate()
 		elif bpclient.args.GetArgs().sub_command == 'delete':  self.ServicesDelete()
-
-
-	def PingPing(self):
-		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
 
 
 	def _ServicesWrapper(self,function,args,cols,opts={}):
@@ -142,6 +141,14 @@ class ExecCommand():
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
 			sys.exit(1)
+
+
+	def Ping(self):
+		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
+
+
+	def Execute(self):
+		self.Exec('bpclient.execute.Execute',{'method': bpclient.args.args.method, 'data': bpclient.args.args.data}, [], supress_output=True)
 
 
 	def ServicesRegister(self):
