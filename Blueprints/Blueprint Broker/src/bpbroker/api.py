@@ -69,7 +69,6 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			if re.match("_",self.method):  error = "Unauthorized method"
 			else:
 				try:
-					#if not hasattr(getattr(bpbroker,self.package), self.method):  error = "Unauthorized method"
 					self.package_obj = __import__("bpbroker."+self.package)
 					for mod in self.package.split("."):  self.package_obj = getattr(self.package_obj,mod)
 					if not hasattr(self.package_obj, self.method):  error = "Unauthorized method"
