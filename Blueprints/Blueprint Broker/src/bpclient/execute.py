@@ -1,7 +1,7 @@
 """
-bp_client ping module.
+bp_client execute module.
 
-Basic package to test end to end communication
+Package to initiate custom RPC call on BP Broker server
 """
 
 
@@ -15,8 +15,25 @@ import bpclient
 def Execute(method,data):
 	"""Execute custom RPC on BP Broker server passing along data payload.
 
-	
+	Expects RPC method to be fully qualified incusive of file/package to execute and the actual method.
+	For example if you were to execute the following on the BP Broker server:
 
+		import testpacakage
+		testpackage.testmodule.method(params)
+
+	The equivalent call to this method is:
+
+		bpclient.Execute(method="testpackage.testmodule.method",data="params")
+
+	The actual call to the BP Broker is:
+
+		POST https://broker/testpackage.testmodule/method?data=params
+
+	If using the bpclient cli this is accomplished with the following command:
+
+		bpclient --method testpackage.testmodule.method --data params
+		
+	:param method: RPC method to execute
 	:param data: Data to be sent/echoed
 	:returns : Sends returns all output to stdout
 	"""
