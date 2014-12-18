@@ -20,6 +20,7 @@ default_config = {
 		'healthcheck_freq_sec': 10,
 	},
 
+	'example_extension_module':  { },
 	'ping':  { },
 	'services':  { },
 }

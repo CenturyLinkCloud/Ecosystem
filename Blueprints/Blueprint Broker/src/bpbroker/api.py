@@ -75,7 +75,8 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				except:
 					try:
 						self.package_obj = __import__(self.package)
-						for mod in re.sub(".*?\.","",self.package).split("."):  self.package_obj = getattr(self.package_obj,mod)
+						if re.search("\.",self.package):
+							for mod in re.sub(".*?\.","",self.package).split("."):  self.package_obj = getattr(self.package_obj,mod)
 						if not hasattr(self.package_obj, self.method):  error = "Unauthorized method"
 					except:
 						error = "Unauthorized method"

@@ -38,7 +38,7 @@ def Register(rh):
 		rh.status_message = "Missing name parameter"
 	elif 'data' not in rh.qs:  
 		rh.status = 400
-		rh.status_message"Missing data parameter"
+		rh.status_message = "Missing data parameter"
 	elif 'last_write_ip' in data:  
 		rh.status = 400
 		rh.status_message = "Used reserved data name last_write_ip"
@@ -115,7 +115,7 @@ def Update(rh):
 		rh.status_message = "Missing name parameter"
 	elif 'data' not in rh.qs:  
 		rh.status = 400
-		rh.status_message"Missing data parameter"
+		rh.status_message = "Missing data parameter"
 	elif 'last_write_ip' in data:  
 		rh.status = 400
 		rh.status_message = "Used reserved data name last_write_ip"
