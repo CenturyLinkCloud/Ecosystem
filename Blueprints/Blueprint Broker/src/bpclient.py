@@ -6,7 +6,6 @@ import sys
 import bpclient
 
 
-bpclient.Args()
-bpclient.ExecCommand()
+bpclient.cli.BPClient()
 
 
