@@ -13,26 +13,12 @@ import bpclient
 #####################################################
 
 def Discovery(name):
-	"""Execute custom RPC on BP Broker server passing along data payload.
+	"""Broadcast BP Broker discovery traffic to local networks, returing BP Broker that resonds.
 
-	Expects RPC method to be fully qualified incusive of file/package to execute and the actual method.
-	For example if you were to execute the following on the BP Broker server:
+	Broadcasts UDP packet to all local networks containing a BP Broker discovery query.
+	If BP Broker is on one of these networks and contains the specified "name" in the service
+	registry then it will respond.
 
-		import testpacakage
-		testpackage.testmodule.method(params)
-
-	The equivalent call to this method is:
-
-		bpclient.Execute(method="testpackage.testmodule.method",data="params")
-
-	The actual call to the BP Broker is:
-
-		POST https://broker/testpackage.testmodule/method?data=params
-
-	If using the bpclient cli this is accomplished with the following command:
-
-		bpclient --method testpackage.testmodule.method --data params
-		
 	:param name: Services key to search to broadcast to bp broker servers
 	:returns bpboker: Returns IP address of responding BP Broker or False if no response
 	"""
