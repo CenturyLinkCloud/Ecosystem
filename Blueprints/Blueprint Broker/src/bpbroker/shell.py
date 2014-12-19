@@ -25,8 +25,13 @@ class Args:
 		parser_install = parser_sp1.add_parser('start', help='Start service')
 
 
-		########## Install ###########
-		parser_install = parser_sp1.add_parser('install', help='Install service')
+		########## Install Service ###########
+		parser_sp1.add_parser('install-service', help='Install service')
+
+
+		########## TODO Install Package ###########
+		#parser_install = parser_sp1.add_parser('install-package', help='Install service')
+		#parser_install.add_argument('--config-file', help='File containing configuration json to apply.  Default is stdin')
 
 
 		########## Configure ###########
@@ -82,6 +87,8 @@ class ExecCommand():
 
 
 	def Configure(self):
-		pass
+		# TODO - read in stdin?
+		if bpbroker.args.args.config_file:  bpbroker.config_class.ImportConfigFile(bpbroker.args.args.config_file)
+		else:  bpbroker.config_class.ImportConfigString("tbd")
 
 
