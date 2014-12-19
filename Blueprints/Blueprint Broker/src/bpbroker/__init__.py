@@ -11,6 +11,7 @@ Package Github page:
 """
 
 from bpbroker.shell import Args, ExecCommand
+import bpbroker.cli as cli
 import bpbroker.server as server
 import bpbroker.api as API
 import bpbroker.discovery as discovery

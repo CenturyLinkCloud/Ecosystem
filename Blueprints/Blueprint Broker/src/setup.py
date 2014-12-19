@@ -16,7 +16,9 @@ setup(
 
 	entry_points = {
 		'console_scripts': [
-			#'clc  = clc.cli:main',
+			'bpbroker  = bpbroker.cli:BPBroker',
+			'bpclient  = bpclient.cli:BPClient',
+			'bpmailer  = bpclient.cli:BPMailer',
 		],
 	},
 
