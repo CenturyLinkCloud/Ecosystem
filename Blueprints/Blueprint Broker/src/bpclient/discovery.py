@@ -5,7 +5,8 @@ Package to initiate UDP broadcast to local networks searching for existing BP Br
 """
 
 
-import requests
+import sys, time
+from socket import *
 
 import bpclient
 
@@ -23,9 +24,12 @@ def Discovery(name):
 	:returns bpboker: Returns IP address of responding BP Broker or False if no response
 	"""
 
-	method_match = re.match("(.*)\.(.*)",method)
 
-	r = requests.post("https://%s/%s/%s/" % (bpclient.BPBROKER,method_match.group(1),method_match.group(2)),params={'data': data},verify=False)
-	return(r.text)
+	s = socket(AF_INET, SOCK_DGRAM)
+	s.bind(('', 0))
+	s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
+	data = repr(time.time()) + '\n'
+	s.sendto(data, ('<broadcast>', MYPORT))
+	time.sleep(2)
 
