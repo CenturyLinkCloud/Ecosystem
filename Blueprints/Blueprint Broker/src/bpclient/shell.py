@@ -27,12 +27,6 @@ class Args:
 		parser_ping.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 
-		########## Execute ###########
-		parser_execute = parser_sp1.add_parser('execute', help='Execute custom RPC on BP Broker server')
-		parser_execute.add_argument('--method', required=True, help='Fully qualified package and method to execute')
-		parser_execute.add_argument('--data', required=True, help='Data payload')
-
-
 		########## Services ###########
 		parser_user = parser_sp1.add_parser('service', help='Service broker registration and querying')
 		parser_sp3 = parser_user.add_subparsers(dest='sub_command')
@@ -64,6 +58,12 @@ class Args:
 		parser_user_delete = parser_sp3.add_parser('delete', help='Delete key from service broker')
 		parser_user_delete.add_argument('--name', required=True, help='Unique key')
 		parser_user_delete.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+
+
+		########## Execute ###########
+		parser_execute = parser_sp1.add_parser('execute', help='Execute custom RPC on BP Broker server')
+		parser_execute.add_argument('--method', required=True, help='Fully qualified package and method to execute')
+		parser_execute.add_argument('--data', required=True, help='Data payload')
 
 
 		########## Discovery ###########
@@ -148,7 +148,11 @@ class ExecCommand():
 
 
 	def Execute(self):
-		self.Exec('bpclient.execute.Execute',{'method': bpclient.args.args.method, 'data': bpclient.args.args.data}, [], supress_output=True)
+		try:
+			print self.Exec('bpclient.execute.Execute',{'method': bpclient.args.args.method, 'data': bpclient.args.args.data}, [], supress_output=True)
+		except Exception as e:
+			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.exit(1)
 
 
 	def ServicesRegister(self):

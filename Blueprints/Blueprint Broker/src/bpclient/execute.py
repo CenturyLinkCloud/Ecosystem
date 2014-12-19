@@ -5,6 +5,7 @@ Package to initiate custom RPC call on BP Broker server
 """
 
 
+import re
 import requests
 
 import bpclient
@@ -37,7 +38,10 @@ def Execute(method,data):
 	:param data: Data to be sent/echoed
 	:returns : Sends returns all output to stdout
 	"""
-	r = requests.post("https://%s/ping/Ping/" % bpclient.BPBROKER,params={'data': data},verify=False)
-	return(r.json())
+
+	method_match = re.match("(.*)\.(.*)",method)
+
+	r = requests.post("https://%s/%s/%s/" % (bpclient.BPBROKER,method_match.group(1),method_match.group(2)),params={'data': data},verify=False)
+	return(r.text)
 
 
