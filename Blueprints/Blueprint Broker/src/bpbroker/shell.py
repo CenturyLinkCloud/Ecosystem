@@ -74,7 +74,7 @@ class ExecCommand():
 
 
 	def Start(self):
-		pass
+		bpbroker.server.Start()
 
 
 	def Install(self):
