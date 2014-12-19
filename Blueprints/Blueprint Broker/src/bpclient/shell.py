@@ -67,6 +67,8 @@ class Args:
 
 
 		########## Discovery ###########
+		parser_discovery = parser_sp1.add_parser('discover', help='Discover BP server on local subnet')
+		parser_discovery.add_argument('--name', required=True, help='BP server containig specified key in service registry will respond')
 
 
 		########## Email ###########
@@ -110,7 +112,8 @@ class ExecCommand():
 
 	def Bootstrap(self):
 		if bpclient.args.GetCommand() == 'ping':  self.Ping()
-		if bpclient.args.GetCommand() == 'execute':  self.Execute()
+		elif bpclient.args.GetCommand() == 'discovery':  self.Discovery()
+		elif bpclient.args.GetCommand() == 'execute':  self.Execute()
 		elif bpclient.args.GetCommand() == 'service':  self.Services()
 
 
@@ -150,6 +153,14 @@ class ExecCommand():
 	def Execute(self):
 		try:
 			print self.Exec('bpclient.execute.Execute',{'method': bpclient.args.args.method, 'data': bpclient.args.args.data}, [], supress_output=True)
+		except Exception as e:
+			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.exit(1)
+
+
+	def Discovery(self):
+		try:
+			print self.Exec('bpclient.discovery.discovery',{'name': bpclient.args.args.name, ['bpbroker'])
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
 			sys.exit(1)
