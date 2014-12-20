@@ -5,8 +5,9 @@ Package to initiate UDP broadcast to local networks searching for existing BP Br
 """
 
 
-import sys, time
-from socket import *
+import socket
+from socket import SOL_SOCKET, SO_BROADCAST
+import sys
 
 import bpclient
 
@@ -24,12 +25,18 @@ def Discovery(name):
 	:returns bpboker: Returns IP address of responding BP Broker or False if no response
 	"""
 
+	# SOCK_DGRAM is the socket type to use for UDP sockets
+	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	sock.settimeout(3)
+	sock.setsockopt(SOL_SOCKET, SO_BROADCAST, True)
 
-	s = socket(AF_INET, SOCK_DGRAM)
-	s.bind(('', 0))
-	s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+	try:
+		sock.sendto(name + "\n", ('<broadcast>', 20443))
+		received = sock.recv(1024)
 
-	data = repr(time.time()) + '\n'
-	s.sendto(data, ('<broadcast>', MYPORT))
-	time.sleep(2)
+		print "Sent:     {}".format(name)
+		print "Received: {}".format(received)
+
+	except socket.timeout:
+		print "No results"
 
