@@ -36,7 +36,7 @@ INIT_D_HEADER_DEB = """#!/bin/bash
 """
 
 INIT_D_SCRIPT = """
-DAEMON_PATH="/usr/local/sbin/"
+DAEMON_PATH="/usr/bin/"
 
 DAEMON=bpbroker
 DAEMONOPTS="start"
@@ -112,9 +112,9 @@ def _InstallLinux():
 	os.system("chmod oug+x /etc/init.d/bpbroker")
 	
 	## Dump current configuration ##
-	if not os.path.exists("/usr/local/sbin"):  os.makedirs("/usr/local/sbin")
-	if not os.path.exists("/usr/local/etc"):  os.makedirs("/usr/local/etc")
-	bpbroker.config.Save("/usr/local/etc/bpbroker.json")
+	if not os.path.exists("/usr/local/bpbroker/etc"):  os.makedirs("/usr/local/bpbroker/etc")
+	if not os.path.exists("/usr/local/bpbroker/lib"):  os.makedirs("/usr/local/bpbroker/lib")
+	bpbroker.config.Save("/usr/local/bpbroker/etc/bpbroker.json")
 
 	## Install and start ##
 	error = False

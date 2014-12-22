@@ -62,8 +62,8 @@ class Config(object):
 		self.source = source
 		self.rlock = threading.RLock()
 
-		if not self.source and os.name == 'posix' and os.path.exists("/usr/local/etc/bpbroker.json"):
-			self.source = "/usr/local/etc/bpbroker.json"
+		if not self.source and os.name == 'posix' and os.path.exists("/usr/local/bpbroker/etc/bpbroker.json"):
+			self.source = "/usr/local/bpbroker/etc/bpbroker.json"
 		elif not self.source and os.name == 'nt' and os.path.exists("tbd"):
 			# TODO - windows default configuration location
 			pass

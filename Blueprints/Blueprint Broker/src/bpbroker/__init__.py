@@ -10,6 +10,11 @@ Package Github page:
 
 """
 
+import sys
+import os
+if os.name == 'posix':  sys.path.append("/usr/local/bpbroker/lib")
+elif os.name == 'nt':  pass
+
 from bpbroker.shell import Args, ExecCommand
 import bpbroker.cli as cli
 import bpbroker.server as server
