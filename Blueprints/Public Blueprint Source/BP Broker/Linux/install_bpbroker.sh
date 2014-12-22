@@ -18,5 +18,5 @@ command -v pip >/dev/null 2>&1 || {
 	}
 
 # Installing/Upgrading bpbroker package
-pip install --upgrade bpbroker
+pip --no-cache install --upgrade bpbroker
 
