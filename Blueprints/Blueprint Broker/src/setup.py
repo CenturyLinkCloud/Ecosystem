@@ -28,7 +28,7 @@ setup(
 	author_email = "Keith.Resar@CenturyLinkCloud.com",
 	description = "CenturyLink Cloud Blueprint Broker Service",
 	keywords = "CenturyLink Cloud Blueprint Broker",
-	url = "https://github.com/CenturyLinkCloud/",
+	url = "https://github.com/CenturyLinkCloud/Ecosystem/tree/master/Blueprints/Blueprint%20Broker",
 
 	# could also include long_description, download_url, classifiers, etc.
 )
