@@ -34,7 +34,7 @@ def Discover(name):
 		sock.sendto(name + "\n", ('<broadcast>', 20443))
 		received, src = sock.recvfrom(1024)
 
-		if received == "Key Exists\n":  return({'bpbroker':src[0]})
+		if received == "Key Exists\n":  return({'bpbroker': src[0]})
 		else:  raise(Exception("No results"))
 
 	except socket.timeout:
