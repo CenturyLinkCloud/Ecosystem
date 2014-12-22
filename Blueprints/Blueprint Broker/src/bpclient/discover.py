@@ -30,15 +30,13 @@ def Discover(name):
 	sock.settimeout(3)
 	sock.setsockopt(SOL_SOCKET, SO_BROADCAST, True)
 
-	print "a"
 	try:
-		#sock.sendto(name + "\n", ('<broadcast>', 20443))
-		sock.sendto(name + "\n", ('192.168.1.237', 20443))
-		received = sock.recv(1024)
+		sock.sendto(name + "\n", ('<broadcast>', 20443))
+		received, src = sock.recvfrom(1024)
 
-		print "Sent:     {}".format(name)
-		print "Received: {}".format(received)
+		if received == "Key Exists\n":  return(src[0])
+		else:  raise(Exception("No results"))
 
 	except socket.timeout:
-		print "No results"
+		raise(Exception("No results"))
 
