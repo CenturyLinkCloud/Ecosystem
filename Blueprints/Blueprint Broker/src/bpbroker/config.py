@@ -20,8 +20,11 @@ default_config = {
 	'_global':  {
 		'healthcheck_freq_sec': 10,
 	},
+	'_config':  {
+		'backup_freq_secs': 3600,
+		'backup_retain_n': 24,
+	},
 
-	'example_extension_module':  { },
 	'ping':  { },
 	'services':  { },
 }
@@ -31,17 +34,19 @@ default_config = {
 
 
 def ImportConfigString(cstr):
-	print "String follows:\n%s" % cstr
+	try:
+		with bpbroker.config.rlock:
+			bpbroker.config.data =  dict(list(bpbroker.config.data.items()) + list(json.loads(cstr).items()))
+	except Exception as e:
+		raise(Exception("Unable to import configuration: %s" % str(e)))
 
 
 def ImportConfigFile(cfile):
 	try:
 		f = open(cfile)
-		ImportconfigString(f.read())
+		ImportConfigString(f.read())
 	except Exception as e:
-		print "b"
-		sys.stderr.write("Fatal error importing config file %s error: %s\n" % (cfile,str(e)))
-		sys.exit(1)
+		raise(Exception("unable to import config file %s: %s\n" % (cfile,str(e))))
 
 
 class Config(object):

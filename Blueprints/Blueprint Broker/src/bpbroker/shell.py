@@ -21,7 +21,7 @@ class Args:
 		parser = argparse.ArgumentParser(description="bpbroker service")
 		parser_sp1 = parser.add_subparsers(title='Commands',dest='command')
 
-		# TODO - default action if no args are supplied?
+		########## Run Service ###########
 		parser_install = parser_sp1.add_parser('start', help='Start service')
 
 
@@ -69,6 +69,7 @@ class ExecCommand():
 		try:
 			self.Bootstrap()
 		except Exception as e:
+			sys.stderr.write("Fatal error: %s\n" % str(e))
 			sys.exit(1)
 
 
