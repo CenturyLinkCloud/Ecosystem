@@ -129,8 +129,8 @@ class ExecCommand():
 		try:
 			opts['supress_output'] = True
 			r = self.Exec(function,args,cols,opts,supress_output=True)
-			print r
 
+			if 'success' in r and not r['success']:  raise(Exception(r['message']+"\n"))
 			if 'data' in r and '_str' in r['data']:  r['data'] = r['data']['_str']
 			if not bpclient.args.args.raw and 'data' in r: 
 				r = {'data': r['data']}

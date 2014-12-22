@@ -50,7 +50,7 @@ def Register(rh):
 	elif data:  
 		with bpbroker.config.rlock:
 			if rh.qs['name'] in bpbroker.config.data['services']:  
-				rh.data = json.dumps({'success': False, 'message': "Entry already exists", 'data': {}})
+				rh.data = json.dumps({'success': False, 'message': "Entry '%s' already exists" % rh.qs['name'], 'data': {}})
 			else:  
 				bpbroker.config.data['services'][rh.qs['name']] = \
 					dict(data.items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
@@ -151,13 +151,9 @@ def Get(rh):
 
 	# Get data
 	else:
-		rh.send_response(200)
-		rh.send_header('Content-Type','Application/json')
-		rh.end_headers()
-
 		with bpbroker.config.rlock:
 			if rh.qs['name'] not in bpbroker.config.data['services']: 
-				rh.data = json.dumps({'success': False, 'message': "Entry not found", 'data': {}})
+				rh.data = json.dumps({'success': False, 'message': "Entry '%s' not found" % rh.qs['name'], 'data': {}})
 			else:  
 				rh.data = json.dumps({'success': True, 'message': "Success", 'data': bpbroker.config.data['services'][rh.qs['name']]})
 
