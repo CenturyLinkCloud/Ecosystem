@@ -10,6 +10,5 @@
     <Execution>
         <Mode>Ssh</Mode>
         <Command>install_bpbroker.sh</Command>
-		<Persistent>true</Persistent>
     </Execution>
 </Manifest>
