@@ -26,7 +26,8 @@ class Args:
 
 
 		########## Install Service ###########
-		parser_sp1.add_parser('install-service', help='Install service')
+		parser_sp1.add_parser('install-service', help='Install and start service')
+		parser_sp1.add_parser('uninstall-service', help='Remove service')
 
 
 		########## TODO Install Package ###########
@@ -75,7 +76,8 @@ class ExecCommand():
 
 	def Bootstrap(self):
 		if bpbroker.args.GetCommand() == 'start':  self.Start()
-		elif bpbroker.args.GetCommand() == 'install':  self.Install()
+		elif bpbroker.args.GetCommand() == 'install-service':  self.Install()
+		elif bpbroker.args.GetCommand() == 'uninstall-service':  self.Uninstall()
 		elif bpbroker.args.GetCommand() == 'configure':  self.Configure()
 
 
@@ -85,11 +87,13 @@ class ExecCommand():
 
 	def Install(self):
 		bpbroker.install.Install()
-		pass
+
+
+	def Uninstall(self):
+		bpbroker.install.Uninstall()
 
 
 	def Configure(self):
-		# TODO - read in stdin?
 		if bpbroker.args.args.config_file:  bpbroker.config_class.ImportConfigFile(bpbroker.args.args.config_file)
 		else:  bpbroker.config_class.ImportConfigString("tbd")
 
