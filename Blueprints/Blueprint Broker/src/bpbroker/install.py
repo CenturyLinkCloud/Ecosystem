@@ -36,7 +36,7 @@ INIT_D_HEADER_DEB = """#!/bin/bash
 """
 
 INIT_D_SCRIPT = """
-DAEMON_PATH="/usr/bin/"
+DAEMON_PATH="/usr/local/bpbroker/bin/"
 
 DAEMON=bpbroker
 DAEMONOPTS="start"
@@ -50,7 +50,7 @@ case "$1" in
 start)
 	printf "%-50s" "Starting $NAME..."
 	cd $DAEMON_PATH
-	PID=`$DAEMON $DAEMONOPTS > /dev/null 2>&1 & echo $!`
+	PID=`./$DAEMON $DAEMONOPTS > /dev/null 2>&1 & echo $!`
 	#echo "Saving PID" $PID " to " $PIDFILE
         if [ -z $PID ]; then
             printf "%s\n" "Fail"
@@ -148,4 +148,7 @@ def Uninstall():
 	if os.name=='nt':  _UninstallWindows()
 	else:  _UninstallLinux()
 
+
+def InstallScript(script):
+	"""Copy a python script / package directory to the bp broker system lib.  Used to easily extend bpbroker functionality."""
 

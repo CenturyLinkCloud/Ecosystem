@@ -17,6 +17,12 @@ command -v pip >/dev/null 2>&1 || {
 	pip install --upgrade pip;
 	}
 
+# Virtualenv to fence this from the system libraries
+pip --no-cache install virtualenv
+virtualenv /usr/local/bpbroker
+mkdir -p /usr/local/bpbroker/{etc,lib,bin}
+source /usr/local/bpbroker/bin/activate
+
 # Installing/Upgrading bpbroker package
 pip --no-cache install --upgrade bpbroker
 
