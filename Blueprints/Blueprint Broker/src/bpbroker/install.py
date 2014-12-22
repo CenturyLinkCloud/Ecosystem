@@ -97,13 +97,21 @@ esac
 def _InstallLinux():
 	global INIT_D_SCRIPT
 
-	with open("/etc/init.d/bpbroker","w") as f:
-		f.write(INIT_D_SCRIPT)
+	## Write init file ##
+	if os.path.exists("/sbin/chkconfig"):
+		with open("/etc/init.d/bpbroker","w") as f:  f.write(INIT_D_HEADER_RPM)
+	elif os.path.exists("/usr/sbin/update-rc.d"):
+		with open("/etc/init.d/bpbroker","w") as f:  f.write(INIT_D_HEADER_DEB)
+	else:
+		raise(Exception("Unable to install service, not RPM or DEB system"))
+	with open("/etc/init.d/bpbroker","w+") as f:  f.write(INIT_D_SCRIPT)
 	os.system("chmod oug+x /etc/init.d/bpbroker")
 	
+	## Dump current configuration ##
 	if not os.path.exists("/usr/local/sbin"):  os.makedirs("/usr/local/sbin")
 	if not os.path.exists("/usr/local/etc"):  os.makedirs("/usr/local/etc")
 
+	## Install and start ##
 	error = False
 	if os.path.exists("/sbin/chkconfig"):
 		# RHEL or RPM based
