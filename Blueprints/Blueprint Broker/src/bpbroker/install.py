@@ -6,8 +6,6 @@ Listens and responds to ssl connections.  Proxies connection requests to registe
 
 
 import os
-import re
-import sys
 
 import bpbroker
 
