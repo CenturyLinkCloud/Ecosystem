@@ -26,7 +26,7 @@ fi
 #########################################
 #### Install and configure clc-cli
 ##
-pip install --upgrade clc-cli
+pip install --upgrade clc-sdk
 
 
 mkdir -p /usr/local/etc/
