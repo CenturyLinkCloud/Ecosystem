@@ -84,6 +84,7 @@ class ExecCommand():
 
 
 	def Install(self):
+		bpbroker.install.Install()
 		pass
 
 

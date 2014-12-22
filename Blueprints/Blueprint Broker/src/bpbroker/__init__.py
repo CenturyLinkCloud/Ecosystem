@@ -18,6 +18,7 @@ import bpbroker.discover as discover
 import bpbroker.ping as ping
 import bpbroker.services as services
 import bpbroker.config as config_class
+import bpbroker.install as install
 
 
 ####### module/object vars #######
