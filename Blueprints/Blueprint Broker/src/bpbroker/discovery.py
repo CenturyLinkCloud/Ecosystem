@@ -36,10 +36,14 @@ class DiscoveryUDPHandler(SocketServer.BaseRequestHandler):
 
 	def handle(self):
 		data = self.request[0].strip()
+		print data
 		with bpbroker.config.rlock:
 			socket = self.request[1]
 			if data in bpbroker.config.data['services']:
 				socket.sendto("Key Exists\n", self.client_address)
+				print "Key 4xists"
+			else:  print "no key exists for %s " % data
+		print "\n"
 
 
 

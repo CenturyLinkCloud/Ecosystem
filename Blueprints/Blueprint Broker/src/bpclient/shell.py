@@ -112,7 +112,7 @@ class ExecCommand():
 
 	def Bootstrap(self):
 		if bpclient.args.GetCommand() == 'ping':  self.Ping()
-		elif bpclient.args.GetCommand() == 'discovery':  self.Discovery()
+		elif bpclient.args.GetCommand() == 'discover':  self.Discover()
 		elif bpclient.args.GetCommand() == 'execute':  self.Execute()
 		elif bpclient.args.GetCommand() == 'service':  self.Services()
 
@@ -159,9 +159,9 @@ class ExecCommand():
 			sys.exit(1)
 
 
-	def Discovery(self):
+	def Discover(self):
 		try:
-			print self.Exec('bpclient.discovery.discovery',{'name': bpclient.args.args.name}, ['bpclient'])
+			print self.Exec('bpclient.discovery.Discover',{'name': bpclient.args.args.name}, ['bpclient'])
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
 			sys.exit(1)

@@ -14,7 +14,7 @@ import bpclient
 
 #####################################################
 
-def Discovery(name):
+def Discover(name):
 	"""Broadcast BP Broker discovery traffic to local networks, returing BP Broker that resonds.
 
 	Broadcasts UDP packet to all local networks containing a BP Broker discovery query.
@@ -30,8 +30,10 @@ def Discovery(name):
 	sock.settimeout(3)
 	sock.setsockopt(SOL_SOCKET, SO_BROADCAST, True)
 
+	print "a"
 	try:
-		sock.sendto(name + "\n", ('<broadcast>', 20443))
+		#sock.sendto(name + "\n", ('<broadcast>', 20443))
+		sock.sendto(name + "\n", ('192.168.1.237', 20443))
 		received = sock.recv(1024)
 
 		print "Sent:     {}".format(name)
