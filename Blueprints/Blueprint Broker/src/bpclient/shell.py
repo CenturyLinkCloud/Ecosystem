@@ -18,7 +18,7 @@ class Args:
 
 
 	def ParseArgs(self):
-		parser = argparse.ArgumentParser(description="bpbroker service client")
+		parser = argparse.ArgumentParser(description="bpclient service client")
 		parser_sp1 = parser.add_subparsers(title='Commands',dest='command')
 
 		########## Ping ###########
@@ -28,39 +28,47 @@ class Args:
 
 
 		########## Services ###########
-		parser_user = parser_sp1.add_parser('service', help='Service broker registration and querying')
-		parser_sp3 = parser_user.add_subparsers(dest='sub_command')
+		parser_services = parser_sp1.add_parser('service', help='Service broker registration and querying')
+		parser_sp3 = parser_services.add_subparsers(dest='sub_command')
 
 		## Register
-		parser_user_register = parser_sp3.add_parser('register', help='Register supplied data to supplied key')
-		parser_user_register.add_argument('--name', required=True, help='Unique key for service broker registration')
-		parser_user_register.add_argument('--data', required=True, help='Data associated with this key')
-		parser_user_register.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+		parser_services_register = parser_sp3.add_parser('register', help='Register supplied data to supplied key')
+		parser_services_register.add_argument('--name', required=True, help='Unique key for service broker registration')
+		parser_services_register.add_argument('--data', required=True, help='Data associated with this key')
+		parser_services_register.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Replace
-		parser_user_replace = parser_sp3.add_parser('replace', help='Replace data associated with supplied key')
-		parser_user_replace.add_argument('--name', required=True, help='Unique key')
-		parser_user_replace.add_argument('--data', required=True, help='Data associated with this key')
-		parser_user_replace.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+		parser_services_replace = parser_sp3.add_parser('replace', help='Replace data associated with supplied key')
+		parser_services_replace.add_argument('--name', required=True, help='Unique key')
+		parser_services_replace.add_argument('--data', required=True, help='Data associated with this key')
+		parser_services_replace.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Update
-		parser_user_update = parser_sp3.add_parser('update', help='Update data associated with supplied key')
-		parser_user_update.add_argument('--name', required=True, help='Unique key')
-		parser_user_update.add_argument('--data', required=True, help='Data associated with this key')
-		parser_user_update.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+		parser_services_update = parser_sp3.add_parser('update', help='Update data associated with supplied key')
+		parser_services_update.add_argument('--name', required=True, help='Unique key')
+		parser_services_update.add_argument('--data', required=True, help='Data associated with this key')
+		parser_services_update.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Get
-		parser_user_get = parser_sp3.add_parser('get', help='Return data associated with supplied key')
-		parser_user_get.add_argument('--name', required=True, help='Unique key')
-		parser_user_get.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+		parser_services_get = parser_sp3.add_parser('get', help='Return data associated with supplied key')
+		parser_services_get.add_argument('--name', required=True, help='Unique key')
+		parser_services_get.add_argument('--raw', action="store_true", default=False, help='Return raw data')
 
 		## Delete
-		parser_user_delete = parser_sp3.add_parser('delete', help='Delete key from service broker')
-		parser_user_delete.add_argument('--name', required=True, help='Unique key')
-		parser_user_delete.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+		parser_services_delete = parser_sp3.add_parser('delete', help='Delete key from service broker')
+		parser_services_delete.add_argument('--name', required=True, help='Unique key')
+		parser_services_delete.add_argument('--raw', action="store_true", default=False, help='Return raw data')
+
+
+		########## Execute ###########
+		parser_execute = parser_sp1.add_parser('execute', help='Execute custom RPC on BP Broker server')
+		parser_execute.add_argument('--method', required=True, help='Fully qualified package and method to execute')
+		parser_execute.add_argument('--data', required=True, help='Data payload')
 
 
 		########## Discovery ###########
+		parser_discovery = parser_sp1.add_parser('discover', help='Discover BP server on local subnet')
+		parser_discovery.add_argument('--name', required=True, help='BP server containig specified key in service registry will respond')
 
 
 		########## Email ###########
@@ -104,11 +112,9 @@ class ExecCommand():
 
 	def Bootstrap(self):
 		if bpclient.args.GetCommand() == 'ping':  self.Ping()
+		elif bpclient.args.GetCommand() == 'discover':  self.Discover()
+		elif bpclient.args.GetCommand() == 'execute':  self.Execute()
 		elif bpclient.args.GetCommand() == 'service':  self.Services()
-
-
-	def Ping(self):
-		self.PingPing()
 
 
 	def Services(self):
@@ -119,15 +125,12 @@ class ExecCommand():
 		elif bpclient.args.GetArgs().sub_command == 'delete':  self.ServicesDelete()
 
 
-	def PingPing(self):
-		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
-
-
 	def _ServicesWrapper(self,function,args,cols,opts={}):
 		try:
 			opts['supress_output'] = True
 			r = self.Exec(function,args,cols,opts,supress_output=True)
 
+			if 'success' in r and not r['success']:  raise(Exception(r['message']+"\n"))
 			if 'data' in r and '_str' in r['data']:  r['data'] = r['data']['_str']
 			if not bpclient.args.args.raw and 'data' in r: 
 				r = {'data': r['data']}
@@ -139,6 +142,26 @@ class ExecCommand():
 				elif bpclient.args.args.format == 'csv-noheader':  print bpclient.output.Csv(r,cols,{'no_header': True})
 				elif bpclient.args.args.format == 'csv':  print bpclient.output.Csv(r,cols,opts)
 
+		except Exception as e:
+			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.exit(1)
+
+
+	def Ping(self):
+		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
+
+
+	def Execute(self):
+		try:
+			print self.Exec('bpclient.execute.Execute',{'method': bpclient.args.args.method, 'data': bpclient.args.args.data}, [], supress_output=True)
+		except Exception as e:
+			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.exit(1)
+
+
+	def Discover(self):
+		try:
+			self.Exec('bpclient.discover.Discover',{'name': bpclient.args.args.name}, ['bpbroker'])
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
 			sys.exit(1)

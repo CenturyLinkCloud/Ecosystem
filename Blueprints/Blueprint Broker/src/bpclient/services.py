@@ -27,7 +27,6 @@ def Register(name,data):
 
 	REPL:
 	>>> bpclient.services.Register(name='test6',data='{"a": 1}')
-	{"message": "Success", "data": {"a": 1, "last_write_ts": 1418760363, "last_write_ip": "127.0.0.1"}, "success": true}
 	{u'data': {u'a': 1,
 	           u'last_write_ip': u'127.0.0.1',
 	           u'last_write_ts': 1418760363},
@@ -35,7 +34,6 @@ def Register(name,data):
 	 u'success': True}
 
 	>>> bpclient.services.Register(name='test5',data='my data')
-	{"message": "Success", "data": {"last_write_ts": 1418760632, "data": "my data", "last_write_ip": "127.0.0.1"}, "success": true}
 	{u'data': {u'data': u'my data',
 	           u'last_write_ip': u'127.0.0.1',
 	           u'last_write_ts': 1418760632},

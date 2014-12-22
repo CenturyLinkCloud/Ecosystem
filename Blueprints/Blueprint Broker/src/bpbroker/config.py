@@ -6,6 +6,7 @@ This is thread safe.
 """
 
 
+import sys
 import json
 import threading
 
@@ -20,12 +21,27 @@ default_config = {
 		'healthcheck_freq_sec': 10,
 	},
 
+	'example_extension_module':  { },
 	'ping':  { },
 	'services':  { },
 }
 
 
 #####################################################
+
+
+def ImportConfigString(cstr):
+	print "String follows:\n%s" % cstr
+
+
+def ImportConfigFile(cfile):
+	try:
+		f = open(cfile)
+		ImportconfigString(f.read())
+	except Exception as e:
+		print "b"
+		sys.stderr.write("Fatal error importing config file %s error: %s\n" % (cfile,str(e)))
+		sys.exit(1)
 
 
 class Config(object):

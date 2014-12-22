@@ -12,11 +12,13 @@ setup(
 	version = "0.1",
 	packages = find_packages("."),
 
-	install_requires = ['argparse','requests'],
+	install_requires = ['argparse','requests','premailer'],
 
 	entry_points = {
 		'console_scripts': [
-			#'clc  = clc.cli:main',
+			'bpbroker  = bpbroker.cli:BPBroker',
+			'bpclient  = bpclient.cli:BPClient',
+			'bpmailer  = bpclient.cli:BPMailer',
 		],
 	},
 

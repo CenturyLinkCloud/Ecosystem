@@ -10,11 +10,13 @@ Package Github page:
 
 """
 
-#import bpclient.api as API
 from bpclient.shell import Args, ExecCommand
+import bpclient.cli as cli
+import bpclient.discover as discover
 import bpclient.ping as ping
 import bpclient.output as output
 import bpclient.services as services
+import bpclient.execute as execute
 import bpclient.config as config_class
 
 
