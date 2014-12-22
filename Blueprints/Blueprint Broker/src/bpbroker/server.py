@@ -25,8 +25,8 @@ def Start():
 	api_thread = bpbroker.API.APIThread(queue_worker,queue_health)
 	api_thread.start()
 
-	discovery_thread = bpbroker.discovery.DiscoveryThread(queue_worker,queue_health)
-	discovery_thread.start()
+	discover_thread = bpbroker.discover.DiscoverThread(queue_worker,queue_health)
+	discover_thread.start()
 
 
 	signal.signal(signal.SIGINT,Shutdown)

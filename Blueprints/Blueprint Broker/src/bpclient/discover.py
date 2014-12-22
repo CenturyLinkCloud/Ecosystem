@@ -1,5 +1,5 @@
 """
-bp_client discovery module.
+bp_client discover module.
 
 Package to initiate UDP broadcast to local networks searching for existing BP Broker servers.
 """
@@ -15,9 +15,9 @@ import bpclient
 #####################################################
 
 def Discover(name):
-	"""Broadcast BP Broker discovery traffic to local networks, returing BP Broker that resonds.
+	"""Broadcast BP Broker discover traffic to local networks, returing BP Broker that resonds.
 
-	Broadcasts UDP packet to all local networks containing a BP Broker discovery query.
+	Broadcasts UDP packet to all local networks containing a BP Broker discover query.
 	If BP Broker is on one of these networks and contains the specified "name" in the service
 	registry then it will respond.
 

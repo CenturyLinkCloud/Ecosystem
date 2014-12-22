@@ -161,7 +161,7 @@ class ExecCommand():
 
 	def Discover(self):
 		try:
-			print self.Exec('bpclient.discovery.Discover',{'name': bpclient.args.args.name}, ['bpclient'])
+			print self.Exec('bpclient.discover.Discover',{'name': bpclient.args.args.name}, ['bpclient'])
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
 			sys.exit(1)

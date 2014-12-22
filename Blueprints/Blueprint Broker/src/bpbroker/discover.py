@@ -32,7 +32,7 @@ class TimeoutBaseUDPServer(SocketServer.UDPServer):
 
 
 
-class DiscoveryUDPHandler(SocketServer.BaseRequestHandler):
+class DiscoverUDPHandler(SocketServer.BaseRequestHandler):
 
 	def handle(self):
 		data = self.request[0].strip()
@@ -47,7 +47,7 @@ class DiscoveryUDPHandler(SocketServer.BaseRequestHandler):
 
 
 
-class DiscoveryThread(threading.Thread):
+class DiscoverThread(threading.Thread):
 
 	def __init__(self,worker_queue,health_queue,config={}):
 		threading.Thread.__init__(self)
@@ -63,15 +63,15 @@ class DiscoveryThread(threading.Thread):
 
 
 	def run(self):
-		self.discovery_server = TimeoutBaseUDPServer((self.config['listen_ip'], self.config['listen_port']), DiscoveryUDPHandler)
+		self.discover_server = TimeoutBaseUDPServer((self.config['listen_ip'], self.config['listen_port']), DiscoverUDPHandler)
 
 		while not self._stop_event.is_set():
-			self.discovery_server.handle_request()
+			self.discover_server.handle_request()
 			self.HealthCheck()
 
 
 	def HealthCheck(self):
-		self.health_queue.put_nowait({'thread': 'discovery', 'ts': int(time.time())})
+		self.health_queue.put_nowait({'thread': 'discover', 'ts': int(time.time())})
 
 
 
