@@ -15,20 +15,26 @@ import bpbroker
 #####################################################
 
 INIT_D_HEADER_RPM = """#!/bin/bash
+
 # bpbroker daemon
 # chkconfig: 345 25 85
 # description: bpbroker service
 # processname: bpbroker
+
 """
 
 INIT_D_HEADER_DEB = """#!/bin/bash
+
+### BEGIN INIT INFO
 # Provides:          bpbroker
-# Required-Start:    
+# Required-Start:    $syslog $remote_fs
 # Required-Stop:     
 # Default-Start:     3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: bpbroker service
 # Description:       BP Broker service
+### END INIT INFO
+
 """
 
 INIT_D_SCRIPT = """
@@ -104,7 +110,7 @@ def _InstallLinux():
 		with open("/etc/init.d/bpbroker","w") as f:  f.write(INIT_D_HEADER_DEB)
 	else:
 		raise(Exception("Unable to install service, not RPM or DEB system"))
-	with open("/etc/init.d/bpbroker","w+") as f:  f.write(INIT_D_SCRIPT)
+	with open("/etc/init.d/bpbroker","aw") as f:  f.write(INIT_D_SCRIPT)
 	os.system("chmod oug+x /etc/init.d/bpbroker")
 	
 	## Dump current configuration ##
@@ -115,11 +121,9 @@ def _InstallLinux():
 	error = False
 	if os.path.exists("/sbin/chkconfig"):
 		# RHEL or RPM based
-		print "RHEL"
 		error = os.system("/sbin/chkconfig --add bpbroker && /sbin/chkconfig bpbroker on && /sbin/service bpbroker start")
 	elif os.path.exists("/usr/sbin/update-rc.d"):
-		print "Deb"
-		error = os.system("/usr/sbin/update-rc.d bpbroker enable && /usr/sbin/service bpbroker start")
+		error = os.system("/usr/sbin/update-rc.d bpbroker enable 3 4 5 && /usr/sbin/service bpbroker start")
 	else:
 		raise(Exception("Unable to install service, not RPM or DEB system"))
 
