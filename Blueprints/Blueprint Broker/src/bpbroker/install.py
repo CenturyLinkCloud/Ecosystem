@@ -116,6 +116,7 @@ def _InstallLinux():
 	## Dump current configuration ##
 	if not os.path.exists("/usr/local/sbin"):  os.makedirs("/usr/local/sbin")
 	if not os.path.exists("/usr/local/etc"):  os.makedirs("/usr/local/etc")
+	bpbroker.config.Save("/usr/local/etc/bpbroker.json")
 
 	## Install and start ##
 	error = False

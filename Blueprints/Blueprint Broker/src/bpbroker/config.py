@@ -37,14 +37,14 @@ def ImportConfigString(cstr):
 	try:
 		with bpbroker.config.rlock:
 			bpbroker.config.data =  dict(list(bpbroker.config.data.items()) + list(json.loads(cstr).items()))
+			bpbroker.config.Save()
 	except Exception as e:
 		raise(Exception("Unable to import configuration: %s" % str(e)))
 
 
 def ImportConfigFile(cfile):
 	try:
-		f = open(cfile)
-		ImportConfigString(f.read())
+		with open(cfile) as f:  ImportConfigString(f.read())
 	except Exception as e:
 		raise(Exception("unable to import config file %s: %s\n" % (cfile,str(e))))
 
@@ -56,6 +56,11 @@ class Config(object):
 		self.source = source
 		self.rlock = threading.RLock()
 
+		if not self.source and os.name == 'posix' and os.path.exists("/usr/local/etc/bpbroker.json"):
+			self.source = "/usr/local/etc/bpbroker.json"
+		elif not self.source and os.name == 'nt' and os.path.exists("tbd"):
+			# TODO - windows default configuration location
+			pass
 		self.data = default_config
 		if self.source:  self._Load()
 
@@ -73,7 +78,9 @@ class Config(object):
 				raise
 
 
-	def Save(self):
+	def Save(self,source=False):
+		if source:  self.source = source
+
 		with self.rlock:
 			try:
 				with open(self.source,"w") as fp:

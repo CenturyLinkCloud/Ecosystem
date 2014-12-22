@@ -68,6 +68,7 @@ class Args:
 class ExecCommand():
 	def __init__(self):
 		try:
+			if bpbroker.args.args.config:  bpbroker.config = bpbroker.config_class.Config(bpbroker.args.args.config)
 			self.Bootstrap()
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s\n" % str(e))
