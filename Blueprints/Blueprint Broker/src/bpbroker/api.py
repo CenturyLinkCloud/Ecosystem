@@ -12,17 +12,19 @@ import BaseHTTPServer, SimpleHTTPServer
 import ssl
 import time
 import re
+import os
 from urlparse import urlparse, parse_qs, parse_qsl
 from StringIO import StringIO
 
 import bpbroker
 
 
+
 default_config = {
 	'listen_port': 20443,
 	'listen_ip': '',	# default bind to all interfaces
-	'ssl_cert': 'bpbroker/dummy_api.crt',
-	'ssl_key': 'bpbroker/dummy_api.key',
+	'ssl_cert': '%s/dummy_api.crt' % os.path.dirname(bpbroker.__file__),
+	'ssl_key': '%s/dummy_api.key' % os.path.dirname(bpbroker.__file__),
 }
 
 

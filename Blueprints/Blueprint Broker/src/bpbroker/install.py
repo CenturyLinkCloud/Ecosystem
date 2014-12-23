@@ -134,7 +134,15 @@ def _InstallLinux():
 
 
 def _InstallWindows():
-	pass
+	## Dump current configuration ##
+	if not os.path.exists("%s/bpbroker/etc" % os.environ["ProgramW6432"]):  os.makedirs("%s/bpbroker/etc" % os.environ["ProgramW6432"])
+	if not os.path.exists("%s/bpbroker/lib" % os.environ["ProgramW6432"]):  os.makedirs("%s/bpbroker/lib" % os.environ["ProgramW6432"])
+	bpbroker.config.Save("%s/bpbroker/etc/bpbroker.json" % os.environ["ProgramW6432"])
+
+	# Install service
+	#"C:\program files\bpbroker\nssm.exe" install bpbroker "C:\Program Files\bpbroker\Python27\Scripts\bpbroker.exe" start
+
+	# Start service
 
 
 def _UninstallLinux():
@@ -142,6 +150,7 @@ def _UninstallLinux():
 
 
 def _UninstallWindows():
+	#nssm remove bpbroker confirm
 	pass
 
 
