@@ -21,7 +21,7 @@ New-Item -ItemType Directory -Force -Path $env:programfiles"\bpbroker\lib"
 #
 # Unzip and Copy python27 binaries into our directory
 #
-Remove-Item -Recurse -Force "$bpbroker_dir\Python27"
+if (Test-Path  ("$bpbroker_dir\Python27"))  { Remove-Item -Recurse -Force "$bpbroker_dir\Python27" }
 $helper = New-Object -ComObject Shell.Application
 $files = $helper.NameSpace("$script_path\$python_zip").Items()
 $helper.NameSpace($bpbroker_dir).CopyHere($files)
