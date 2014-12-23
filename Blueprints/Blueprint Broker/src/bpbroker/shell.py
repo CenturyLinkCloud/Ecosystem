@@ -31,7 +31,8 @@ class Args:
 
 
 		########## Install Extension ###########
-		parser_sp1.add_parser('install-extension', help='Install custom extension')
+		parser_extension = parser_sp1.add_parser('install-extension', help='Install custom extension')
+		parser_extension.add_argument('--script', required=True, help='Python script or package directory to install')
 
 
 		########## TODO Install Package ###########
@@ -100,7 +101,7 @@ class ExecCommand():
 
 
 	def InstallExtension(self):
-		bpbroker.install.InstallExtension()
+		bpbroker.install.InstallExtension(bpbroker.args.args.script)
 
 
 	def Configure(self):

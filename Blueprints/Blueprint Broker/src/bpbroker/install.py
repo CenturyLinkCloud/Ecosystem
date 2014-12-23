@@ -6,6 +6,7 @@ Listens and responds to ssl connections.  Proxies connection requests to registe
 
 
 import os
+from distutils import dir_util, file_util
 
 import bpbroker
 
@@ -98,6 +99,9 @@ esac
 
 #####################################################
 
+
+
+
 def _InstallLinux():
 	global INIT_D_SCRIPT
 
@@ -126,6 +130,8 @@ def _InstallLinux():
 	else:
 		raise(Exception("Unable to install service, not RPM or DEB system"))
 
+	if error:  raise(Exception("OS error %s executing service install" % error))
+
 
 def _InstallWindows():
 	pass
@@ -151,4 +157,15 @@ def Uninstall():
 
 def InstallExtension(script):
 	"""Copy a python script / package directory to the bp broker system lib.  Used to easily extend bpbroker functionality."""
+
+	if os.name == "nt":  bpbroker_dir = ""
+	elif os.name == "posix":  bpbroker_dir = "/usr/local/bpbroker"
+
+	try:
+		if os.path.isfile(script):  file_util.copy_file(script,bpbroker_dir+"/lib/")
+		else:  dir_util.copy_tree(script,bpbroker_dir+"/lib/")
+	except Exception as e:
+		raise(Exception("Error installing extension %s: %s" % (script,str(e))))
+
+
 
