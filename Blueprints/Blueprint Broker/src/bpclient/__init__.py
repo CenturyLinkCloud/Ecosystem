@@ -17,7 +17,6 @@ import bpclient.ping as ping
 import bpclient.output as output
 import bpclient.services as services
 import bpclient.execute as execute
-import bpclient.config as config_class
 
 
 import requests
@@ -26,6 +25,4 @@ requests.packages.urllib3.disable_warnings()
 
 ####### module/object vars #######
 #_V1_API_KEY = False
-
-config = config_class.Config()
 
