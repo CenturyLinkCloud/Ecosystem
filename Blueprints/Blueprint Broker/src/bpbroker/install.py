@@ -149,6 +149,6 @@ def Uninstall():
 	else:  _UninstallLinux()
 
 
-def InstallScript(script):
+def InstallExtension(script):
 	"""Copy a python script / package directory to the bp broker system lib.  Used to easily extend bpbroker functionality."""
 

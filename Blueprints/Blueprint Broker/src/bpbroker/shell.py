@@ -30,6 +30,10 @@ class Args:
 		parser_sp1.add_parser('uninstall-service', help='Remove service')
 
 
+		########## Install Extension ###########
+		parser_sp1.add_parser('install-extension', help='Install custom extension')
+
+
 		########## TODO Install Package ###########
 		#parser_install = parser_sp1.add_parser('install-package', help='Install service')
 		#parser_install.add_argument('--config-file', help='File containing configuration json to apply.  Default is stdin')
@@ -80,6 +84,7 @@ class ExecCommand():
 		elif bpbroker.args.GetCommand() == 'install-service':  self.Install()
 		elif bpbroker.args.GetCommand() == 'uninstall-service':  self.Uninstall()
 		elif bpbroker.args.GetCommand() == 'configure':  self.Configure()
+		elif bpbroker.args.GetCommand() == 'install-extension':  self.InstallExtension()
 
 
 	def Start(self):
@@ -92,6 +97,10 @@ class ExecCommand():
 
 	def Uninstall(self):
 		bpbroker.install.Uninstall()
+
+
+	def InstallExtension(self):
+		bpbroker.install.InstallExtension()
 
 
 	def Configure(self):
