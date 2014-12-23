@@ -140,9 +140,17 @@ def _InstallWindows():
 	bpbroker.config.Save("%s/bpbroker/etc/bpbroker.json" % os.environ["ProgramW6432"])
 
 	# Install service
-	#"C:\program files\bpbroker\nssm.exe" install bpbroker "C:\Program Files\bpbroker\Python27\Scripts\bpbroker.exe" start
+	print("%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"])
+	if os.path.exists("%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]):
+		error = os.system("'%s\\bpbroker\\nssm.exe' install bpbroker '%s\\bpbroker\\Python27\\Scripts\\bpbroker.exe' start" % \
+							(os.environ["ProgramW6432"],os.environ["ProgramW6432"]))
+	else:
+		raise(Exception("nssm.exe not present as expected at %s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]))
+	print "Error: %s" % error
 
 	# Start service
+	error = os.system("'%s\\bpbroker\\nssm.exe' start bpbroker" % os.environ["ProgramW6432"])
+	print "Error: %s" % error
 
 
 def _UninstallLinux():
