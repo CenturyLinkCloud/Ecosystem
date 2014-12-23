@@ -12,6 +12,10 @@ setup(
 	version = "0.2",
 	packages = find_packages("."),
 
+	package_data = {
+		"bpbroker": ["dummy_api.crt","dummy_api.key"],
+	},
+
 	install_requires = ['argparse','requests'],
 
 	entry_points = {
