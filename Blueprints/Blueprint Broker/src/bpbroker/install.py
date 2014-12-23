@@ -158,7 +158,7 @@ def Uninstall():
 def InstallExtension(script):
 	"""Copy a python script / package directory to the bp broker system lib.  Used to easily extend bpbroker functionality."""
 
-	if os.name == "nt":  bpbroker_dir = ""
+	if os.name == "nt":  bpbroker_dir = "%s/bpbroker" % os.environ["ProgramW6432"]
 	elif os.name == "posix":  bpbroker_dir = "/usr/local/bpbroker"
 
 	try:

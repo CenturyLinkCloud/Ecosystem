@@ -13,7 +13,7 @@ Package Github page:
 import sys
 import os
 if os.name == 'posix':  sys.path.append("/usr/local/bpbroker/lib")
-elif os.name == 'nt':  pass
+elif os.name == 'nt':  sys.path.append("%s/bpbroker/lib" % os.environ["ProgramW6432"])
 
 from bpbroker.shell import Args, ExecCommand
 import bpbroker.cli as cli
@@ -25,6 +25,7 @@ import bpbroker.services as services
 import bpbroker.config as config_class
 import bpbroker.install as install
 
+#if os.name == 'nt':  import bpbroker.windows_service as windows_service
 
 ####### module/object vars #######
 #_V1_API_KEY = False
