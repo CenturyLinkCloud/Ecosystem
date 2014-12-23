@@ -19,20 +19,24 @@ to the requesting client:
 
 """
 
+import random
+import string
 import json
 
 
 #####################################################
 
 
-def Test(rh):
-	"""Echo source host and querystring back in response. """
+def AddAgent(rh):
+	"""Add agent to local ossec manager and return key."""
 
-	# A successful return is clean and looks like this:
-	rh.data = json.dumps(rh.qs)
+	# Generate key 
+	key = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(64))
+	#rh.data = json.dumps(rh.qs)
 
 	# Where you to choose an errored response you may set the following:
 	#rh.status = 500
 	#rh.status_message = "End client visible message text explaining 500 error"
 
+print AddAgent(object)
 
