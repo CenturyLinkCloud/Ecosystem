@@ -6,6 +6,7 @@ Listens and responds to ssl connections.  Proxies connection requests to registe
 
 
 import os
+import subprocess
 from distutils import dir_util, file_util
 
 import bpbroker
@@ -140,17 +141,21 @@ def _InstallWindows():
 	bpbroker.config.Save("%s/bpbroker/etc/bpbroker.json" % os.environ["ProgramW6432"])
 
 	# Install service
-	print("%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"])
 	if os.path.exists("%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]):
-		error = os.system("'%s\\bpbroker\\nssm.exe' install bpbroker '%s\\bpbroker\\Python27\\Scripts\\bpbroker.exe' start" % \
-							(os.environ["ProgramW6432"],os.environ["ProgramW6432"]))
+		error = subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"],
+		                         "install",
+								 "bpbroker",
+								 "%s\\bpbroker\\Python27\\Scripts\\bpbroker.exe" % os.environ["ProgramW6432"],
+								 "start"])
+		if error:  raise(Exception("OS error %s installing service: " % error))
 	else:
 		raise(Exception("nssm.exe not present as expected at %s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]))
-	print "Error: %s" % error
 
 	# Start service
-	error = os.system("'%s\\bpbroker\\nssm.exe' start bpbroker" % os.environ["ProgramW6432"])
-	print "Error: %s" % error
+	error = subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"],
+	                         "start",
+							 "bpbroker"])
+	if error:  raise(Exception("OS error %s executing service start following install" % error))
 
 
 def _UninstallLinux():
