@@ -19,6 +19,12 @@ New-Item -ItemType Directory -Force -Path $env:programfiles"\bpbroker\lib"
 
 
 #
+# Copy nssm service manager
+#
+cp nssm.exe $bpbroker_dir
+
+
+#
 # Unzip and Copy python27 binaries into our directory
 #
 if (Test-Path  ("$bpbroker_dir\Python27"))  { Remove-Item -Recurse -Force "$bpbroker_dir\Python27" }
