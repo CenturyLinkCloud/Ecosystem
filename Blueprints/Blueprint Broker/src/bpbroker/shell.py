@@ -35,11 +35,6 @@ class Args:
 		parser_extension.add_argument('--script', required=True, help='Python script or package directory to install')
 
 
-		########## TODO Install Package ###########
-		#parser_install = parser_sp1.add_parser('install-package', help='Install service')
-		#parser_install.add_argument('--config-file', help='File containing configuration json to apply.  Default is stdin')
-
-
 		########## Configure ###########
 		parser_configure = parser_sp1.add_parser('configure', help='Apply additional configuration to bpbroker service')
 		parser_configure.add_argument('--config-file', help='File containing configuration json to apply.  Default is stdin')

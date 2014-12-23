@@ -12,6 +12,7 @@ import bpbroker
 ####################################################
 
 def Shutdown(signum, fram):
+	bpbroker.config.Save()
 	print "\n"
 	sys.exit(0)
 

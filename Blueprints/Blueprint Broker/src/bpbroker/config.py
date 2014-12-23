@@ -40,17 +40,13 @@ def ImportConfigString(cstr):
 			bpbroker.config.data =  dict(list(bpbroker.config.data.items()) + list(json.loads(cstr).items()))
 			bpbroker.config.Save()
 	except Exception as e:
-		print e
 		raise(Exception("Unable to import configuration: %s" % str(e)))
 
 
 def ImportConfigFile(cfile):
 	try:
 		with open(cfile) as f:  
-			#cstr = f.read()
-			#print cstr
 			ImportConfigString(f.read())
-			#ImportConfigString(cstr)
 	except Exception as e:
 		raise(Exception("Unable to import config file %s: %s\n" % (cfile,str(e))))
 
@@ -76,6 +72,7 @@ class Config(object):
 
 
 	def _Load(self):
+		print self.source
 		with self.rlock:
 			try:
 				with open(self.source) as fp:
@@ -87,12 +84,13 @@ class Config(object):
 	def Save(self,source=False):
 		if source:  self.source = source
 
-		with self.rlock:
-			try:
-				with open(self.source,"w") as fp:
-					self.data = json.dump(self.data,fp)
-			except:
-				raise
+		if self.source:  
+			with self.rlock:
+				try:
+					with open(self.source,"w") as fp:
+						self.data = json.dump(self.data,fp)
+				except:
+					raise
 
 
 
