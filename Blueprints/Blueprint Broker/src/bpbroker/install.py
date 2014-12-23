@@ -142,6 +142,8 @@ def _InstallWindows():
 
 	# Install service
 	if os.path.exists("%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]):
+		subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "stop", "bpbroker"])
+		subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "remove", "bpbroker", "confirm"])
 		error = subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"],
 		                         "install",
 								 "bpbroker",
@@ -163,8 +165,8 @@ def _UninstallLinux():
 
 
 def _UninstallWindows():
-	#nssm remove bpbroker confirm
-	pass
+	subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "stop", "bpbroker"])
+	subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "remove", "bpbroker", "confirm"])
 
 
 def Install():
