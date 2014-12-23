@@ -12,6 +12,8 @@ Package Github page:
 
 import sys
 import os
+
+## Add local path to support imported custom extensions
 if os.name == 'posix':  sys.path.append("/usr/local/bpbroker/lib")
 elif os.name == 'nt':  sys.path.append("%s/bpbroker/lib" % os.environ["ProgramW6432"])
 

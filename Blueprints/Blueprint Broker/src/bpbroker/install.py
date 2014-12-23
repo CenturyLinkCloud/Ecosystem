@@ -138,13 +138,14 @@ def _InstallWindows():
 	## Dump current configuration ##
 	if not os.path.exists("%s/bpbroker/etc" % os.environ["ProgramW6432"]):  os.makedirs("%s/bpbroker/etc" % os.environ["ProgramW6432"])
 	if not os.path.exists("%s/bpbroker/lib" % os.environ["ProgramW6432"]):  os.makedirs("%s/bpbroker/lib" % os.environ["ProgramW6432"])
+	if not os.path.exists("%s/bpbroker/bin" % os.environ["ProgramW6432"]):  os.makedirs("%s/bpbroker/bin" % os.environ["ProgramW6432"])
 	bpbroker.config.Save("%s/bpbroker/etc/bpbroker.json" % os.environ["ProgramW6432"])
 
 	# Install service
-	if os.path.exists("%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]):
-		subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "stop", "bpbroker"])
-		subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "remove", "bpbroker", "confirm"])
-		error = subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"],
+	if os.path.exists("%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"]):
+		subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"], "stop", "bpbroker"])
+		subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"], "remove", "bpbroker", "confirm"])
+		error = subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"],
 		                         "install",
 								 "bpbroker",
 								 "%s\\bpbroker\\Python27\\Scripts\\bpbroker.exe" % os.environ["ProgramW6432"],
@@ -154,7 +155,7 @@ def _InstallWindows():
 		raise(Exception("nssm.exe not present as expected at %s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]))
 
 	# Start service
-	error = subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"],
+	error = subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"],
 	                         "start",
 							 "bpbroker"])
 	if error:  raise(Exception("OS error %s executing service start following install" % error))
@@ -165,8 +166,8 @@ def _UninstallLinux():
 
 
 def _UninstallWindows():
-	subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "stop", "bpbroker"])
-	subprocess.call(["%s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"], "remove", "bpbroker", "confirm"])
+	subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"], "stop", "bpbroker"])
+	subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"], "remove", "bpbroker", "confirm"])
 
 
 def Install():

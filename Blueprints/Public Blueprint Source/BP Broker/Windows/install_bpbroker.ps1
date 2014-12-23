@@ -16,12 +16,13 @@ $pip = "$scripts_dir\pip.exe"
 New-Item -ItemType Directory -Force -Path $env:programfiles"\bpbroker"
 New-Item -ItemType Directory -Force -Path $env:programfiles"\bpbroker\etc"
 New-Item -ItemType Directory -Force -Path $env:programfiles"\bpbroker\lib"
+New-Item -ItemType Directory -Force -Path $env:programfiles"\bpbroker\bin"
 
 
 #
 # Copy nssm service manager
 #
-cp nssm.exe $bpbroker_dir
+cp nssm.exe "$bpbroker_dir\bin"
 
 
 #
@@ -43,15 +44,15 @@ $helper.NameSpace($bpbroker_dir).CopyHere($files)
 # Configure shortcuts
 #
 $WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("$bpbroker_dir\bpbroker.lnk")
+$Shortcut = $WshShell.CreateShortcut("$bpbroker_dir\bin\bpbroker.lnk")
 $Shortcut.TargetPath = "$scripts_dir\bpbroker.exe"
 $Shortcut.Save()
 $WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("$bpbroker_dir\bpclient.lnk")
+$Shortcut = $WshShell.CreateShortcut("$bpbroker_dir\bin\bpclient.lnk")
 $Shortcut.TargetPath = "$scripts_dir\bpclient.exe"
 $Shortcut.Save()
 $WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("$bpbroker_dir\bpmailer.lnk")
+$Shortcut = $WshShell.CreateShortcut("$bpbroker_dir\bin\bpmailer.lnk")
 $Shortcut.TargetPath = "$scripts_dir\bpmailer.exe"
 $Shortcut.Save()
 
