@@ -58,11 +58,10 @@ class Config(object):
 		self.source = source
 		self.rlock = threading.RLock()
 
-		if not self.source and os.name == 'posix' and os.path.exists("/usr/local/bpbroker/etc/bpbroker.json"):
+		if not self.source and os.name == 'posix':
 			self.source = "/usr/local/bpbroker/etc/bpbroker.json"
-		elif not self.source and os.name == 'nt' and os.path.exists("tbd"):
-			# TODO - windows default configuration location
-			pass
+		elif not self.source and os.name == 'nt':
+			self.source = "%s/bpbroker/etc/bpbroker.json" % os.environ["ProgramW6432"]
 		self.data = default_config
 		if self.source:  self._Load()
 
@@ -72,11 +71,13 @@ class Config(object):
 
 
 	def _Load(self):
-		print self.source
 		with self.rlock:
 			try:
 				with open(self.source) as fp:
 					self.data =  dict(list(self.data.items()) + list(json.load(fp).items()))
+			except IOError:
+				# File doesn't exist - set note and save to self.source on program exit
+				sys.stderr.write("No configuration file at %s, running with default configuration\n" % str(self.source))
 			except:
 				raise
 
@@ -89,8 +90,8 @@ class Config(object):
 				try:
 					with open(self.source,"w") as fp:
 						self.data = json.dump(self.data,fp)
-				except:
-					raise
+				except Exception as e:
+					raise(Exception("Error saving configuration file %s: %s" % (self.source,str(e))))
 
 
 
