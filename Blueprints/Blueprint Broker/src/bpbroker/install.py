@@ -125,9 +125,11 @@ def _InstallLinux():
 	error = False
 	if os.path.exists("/sbin/chkconfig"):
 		# RHEL or RPM based
-		error = os.system("/sbin/chkconfig --add bpbroker && /sbin/chkconfig bpbroker on && /sbin/service bpbroker start")
+		#error = os.system("/sbin/chkconfig --add bpbroker && /sbin/chkconfig bpbroker on && /sbin/service bpbroker restart")
+		error = os.system("/sbin/chkconfig --add bpbroker && /sbin/chkconfig bpbroker")
 	elif os.path.exists("/usr/sbin/update-rc.d"):
-		error = os.system("/usr/sbin/update-rc.d bpbroker enable 3 4 5 && /usr/sbin/service bpbroker start")
+		#error = os.system("/usr/sbin/update-rc.d bpbroker enable 3 4 5 && /usr/sbin/service bpbroker restart")
+		error = os.system("/usr/sbin/update-rc.d bpbroker enable 3 4 5")
 	else:
 		raise(Exception("Unable to install service, not RPM or DEB system"))
 
@@ -155,10 +157,10 @@ def _InstallWindows():
 		raise(Exception("nssm.exe not present as expected at %s\\bpbroker\\nssm.exe" % os.environ["ProgramW6432"]))
 
 	# Start service
-	error = subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"],
-	                         "start",
-							 "bpbroker"])
-	if error:  raise(Exception("OS error %s executing service start following install" % error))
+	#error = subprocess.call(["%s\\bpbroker\\bin\\nssm.exe" % os.environ["ProgramW6432"],
+	#                         "start",
+	#						 "bpbroker"])
+	#if error:  raise(Exception("OS error %s executing service start following install" % error))
 
 
 def _UninstallLinux():
