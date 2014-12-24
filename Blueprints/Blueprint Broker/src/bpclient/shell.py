@@ -79,6 +79,7 @@ class Args:
 
 		########## Global ###########
 		parser.add_argument('--bpbroker', '-b', metavar='host:port', help='BP Broker to communicate with')
+		parser.add_argument('--access-ley', '-a', metavar='KEY', help='Optional access key required to access some BP Broker modules')
 		parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
 		parser.add_argument('--format', '-f', choices=['json','text','csv','csv-noheader'], default='text', help='Output result format (text is default)')
 		self.args = parser.parse_args()
@@ -148,12 +149,14 @@ class ExecCommand():
 
 
 	def Ping(self):
-		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data},['src','pong'])
+		self._ServicesWrapper('bpclient.ping.Ping',{'data': bpclient.args.args.data, 'access_key': bpclient.args.args.access_key},['src','pong'])
 
 
 	def Execute(self):
 		try:
-			print self.Exec('bpclient.execute.Execute',{'method': bpclient.args.args.method, 'data': bpclient.args.args.data}, [], supress_output=True)
+			print self.Exec('bpclient.execute.Execute',
+			                {'method': bpclient.args.args.method, 'data': bpclient.args.args.data, 'access_key': bpclient.args.args.access_key}, 
+							[], supress_output=True)
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s" % str(e))
 			sys.exit(1)
@@ -168,26 +171,33 @@ class ExecCommand():
 
 
 	def ServicesRegister(self):
-		self._ServicesWrapper('bpclient.services.Register',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
-		          ['success','message','data'])
+		self._ServicesWrapper('bpclient.services.Register',
+		                      {'name': bpclient.args.args.name, 'data': bpclient.args.args.data, 'access_key': bpclient.args.args.access_key},
+		                      ['success','message','data'])
 
 
 	def ServicesGet(self):
-		self._ServicesWrapper('bpclient.services.Get',{'name': bpclient.args.args.name}, ['success','message','data'])
+		self._ServicesWrapper('bpclient.services.Get',
+		                      {'name': bpclient.args.args.name, 'access_key': bpclient.args.args.access_key}, 
+							  ['success','message','data'])
 
 
 	def ServicesDelete(self):
-		self._ServicesWrapper('bpclient.services.Delete',{'name': bpclient.args.args.name}, ['success','message'])
+		self._ServicesWrapper('bpclient.services.Delete',
+		                      {'name': bpclient.args.args.name, 'access_key': bpclient.args.args.access_key}, 
+							  ['success','message'])
 
 
 	def ServicesReplace(self):
-		self._ServicesWrapper('bpclient.services.Replace',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
-		          ['success','message','data'])
+		self._ServicesWrapper('bpclient.services.Replace',
+		                      {'name': bpclient.args.args.name, 'access_key': bpclient.args.args.access_key, 'data': bpclient.args.args.data},
+		                      ['success','message','data'])
 
 
 	def ServicesUpdate(self):
-		self._ServicesWrapper('bpclient.services.Update',{'name': bpclient.args.args.name, 'data': bpclient.args.args.data},
-		          ['success','message','data'])
+		self._ServicesWrapper('bpclient.services.Update',
+		                      {'name': bpclient.args.args.name, 'data': bpclient.args.args.data, 'access_key': bpclient.args.args.access_key},
+		                      ['success','message','data'])
 
 
 	def Exec(self,function,args=False,cols=None,opts={},supress_output=False):

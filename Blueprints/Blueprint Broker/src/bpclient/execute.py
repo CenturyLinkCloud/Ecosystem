@@ -13,7 +13,7 @@ import bpclient
 
 #####################################################
 
-def Execute(method,data):
+def Execute(access_key,method,data):
 	"""Execute custom RPC on BP Broker server passing along data payload.
 
 	Expects RPC method to be fully qualified incusive of file/package to execute and the actual method.
@@ -41,7 +41,8 @@ def Execute(method,data):
 
 	method_match = re.match("(.*)\.(.*)",method)
 
-	r = requests.post("https://%s/%s/%s/" % (bpclient.BPBROKER,method_match.group(1),method_match.group(2)),params={'data': data},verify=False)
+	r = requests.post("https://%s/%s/%s/" % (bpclient.BPBROKER,method_match.group(1),method_match.group(2)),
+	                  params={'access_key':access_key,'data': data},verify=False)
 	return(r.text)
 
 

@@ -15,7 +15,7 @@ import bpclient
 
 #####################################################
 
-def Register(name,data):
+def Register(access_key,name,data):
 	"""Registers new service to service broker.
 
 	Registers a new entry if none exists or returns error if entry already exists.
@@ -44,11 +44,11 @@ def Register(name,data):
 	:param data: json object containing all data to associated with name
 	"""
 
-	r = requests.post("https://%s/services/Register/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
+	r = requests.post("https://%s/services/Register/" % bpclient.BPBROKER,params={'access_key': access_key, 'name': name, 'data': data},verify=False)
 	return(r.json())
 
 
-def Replace(name,data):
+def Replace(access_key,name,data):
 	"""Replacing existing content (if any).
 
 	CLI:
@@ -67,11 +67,11 @@ def Replace(name,data):
 	:param name: Unique registration name.  Often a name and a unique key.
 	:param data: json object containing all data to associated with name
 	"""
-	r = requests.post("https://%s/services/Replace/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
+	r = requests.post("https://%s/services/Replace/" % bpclient.BPBROKER,params={'access_key': access_key, 'name': name, 'data': data},verify=False)
 	return(r.json())
 
 
-def Delete(name):
+def Delete(access_key,name):
 	"""Remove keyed entry.  
 
 	Returns scuccess=True whether key exists or not.
@@ -87,11 +87,11 @@ def Delete(name):
 	:param name: Unique registration name.  Often a name and a unique key.
 	"""
 
-	r = requests.post("https://%s/services/Delete/" % bpclient.BPBROKER,params={'name': name},verify=False)
+	r = requests.post("https://%s/services/Delete/" % bpclient.BPBROKER,params={'access_key': access_key, 'name': name},verify=False)
 	return(r.json())
 
 
-def Update(name,data):
+def Update(access_key,name,data):
 	"""Update existing entry.
 
 	If no entry exists insert it.  If entry already exists for given key then merge data together with
@@ -123,11 +123,11 @@ def Update(name,data):
 	:param data: json object containing all data to associated with name
 	"""
 
-	r = requests.post("https://%s/services/Update/" % bpclient.BPBROKER,params={'name': name, 'data': data},verify=False)
+	r = requests.post("https://%s/services/Update/" % bpclient.BPBROKER,params={'access_key': access_key, 'name': name, 'data': data},verify=False)
 	return(r.json())
 
 
-def Get(name):
+def Get(access_key,name):
 	"""Return data associated with given key.
 
 	Returns all data associated with key unless specific fields are provided.
@@ -150,12 +150,12 @@ def Get(name):
 	:param name: Unique registration name.  Often a name and a unique key.
 	"""
 
-	r = requests.post("https://%s/services/Get/" % bpclient.BPBROKER,params={'name': name},verify=False)
+	r = requests.post("https://%s/services/Get/" % bpclient.BPBROKER,params={'access_key': access_key, 'name': name},verify=False)
 	return(r.json())
 
 
-def List(name):
+def List(access_key,name):
 	"""Alias for Get."""
-	Get(name)
+	Get(access_key,name)
 
 
