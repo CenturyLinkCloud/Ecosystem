@@ -13,7 +13,7 @@ import bpclient
 
 #####################################################
 
-def Execute(access_key,method,data):
+def Execute(method,data,access_key=''):
 	"""Execute custom RPC on BP Broker server passing along data payload.
 
 	Expects RPC method to be fully qualified incusive of file/package to execute and the actual method.

@@ -68,7 +68,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		error = False
 		with bpbroker.config.rlock:
 			if self.package not in bpbroker.config.data:  error = "Unauthorized package"
-			if '_access_key' in bpbroker.config.data[self.package] and \
+			elif '_access_key' in bpbroker.config.data[self.package] and bpbroker.config.data[self.package]['_access_key'] and \
 			   ('access_key' not in self.qs or self.qs['access_key'] != bpbroker.config.data[self.package]['_access_key']):
 			   	error = "Incorrect access key"
 			elif re.match("_",self.method):  error = "Unauthorized method"

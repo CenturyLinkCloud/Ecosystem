@@ -59,6 +59,7 @@ perl -p -i -e "s/\"_access_key\": \"\"/\"_access_key\": \"$OSSEC_KEY\"/g" cust-o
 bpbroker install-service
 service bpbroker stop
 bpbroker configure --config-file cust-ossec.json
+bpbroker install-extension --script ossec.py
 service bpbroker start
 bpclient --bpbroker 127.0.0.1:20443 --access-key "$OSSEC_KEY" service replace --name "ossec-manager-$OSSEC_ID" --data "x" >/dev/null
 

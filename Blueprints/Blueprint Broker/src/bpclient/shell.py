@@ -79,7 +79,7 @@ class Args:
 
 		########## Global ###########
 		parser.add_argument('--bpbroker', '-b', metavar='host:port', help='BP Broker to communicate with')
-		parser.add_argument('--access-key', '-a', metavar='KEY', help='Optional access key required to access some BP Broker modules')
+		parser.add_argument('--access-key', '-a', default='', metavar='KEY', help='Optional access key required to access some BP Broker modules')
 		parser.add_argument('--cols', nargs='*', metavar='COL', help='Include only specific columns in the output')
 		parser.add_argument('--format', '-f', choices=['json','text','csv','csv-noheader'], default='text', help='Output result format (text is default)')
 		self.args = parser.parse_args()
