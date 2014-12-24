@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = "bpbroker",
-	version = "0.10",
+	version = "0.14",
 	packages = find_packages("."),
 
 	package_data = {

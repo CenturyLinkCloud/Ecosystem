@@ -4,7 +4,6 @@
 #
 #
 
-ADMIN_EMAIL="keith.resar@ctl.io"
 OSSEC_KEY=""
 OSSEC_ID=""
 BPBROKER_IP=""
@@ -52,9 +51,10 @@ mv "$BP_DIR/cust-preloaded-vars.conf" etc/preloaded-vars.conf
 # Use bpbroker to generate and retrieve agent key
 #
 source $BPBROKER_DIR/bin/activate
-CLIENT_KEY=`bpclient --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" execute --method ossec.AddAgent --data $HOSTNAME`
-echo $CLIENT_KEY
-echo $CLIENT_KEY > /var/ossec/etc/client.keys
+bpclient --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" execute --method ossec.AddAgent --data $HOSTNAME > /var/ossec/etc/client.keys
+if [ $? -gt 0 ]; then
+	exit $?
+fi
 
 /var/ossec/bin/ossec-control restart
 
