@@ -158,7 +158,7 @@ class ExecCommand():
 			                {'method': bpclient.args.args.method, 'data': bpclient.args.args.data, 'access_key': bpclient.args.args.access_key}, 
 							[], supress_output=True)
 		except Exception as e:
-			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.stderr.write("Fatal error: %s\n" % str(e))
 			sys.exit(1)
 
 
@@ -166,7 +166,7 @@ class ExecCommand():
 		try:
 			self.Exec('bpclient.discover.Discover',{'name': bpclient.args.args.name}, ['bpbroker'])
 		except Exception as e:
-			sys.stderr.write("Fatal error: %s" % str(e))
+			sys.stderr.write("Fatal error: %s\n" % str(e))
 			sys.exit(1)
 
 

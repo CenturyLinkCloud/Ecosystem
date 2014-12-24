@@ -45,7 +45,6 @@ def AddAgent(rh):
 			id = str(int(re.sub("\s.*","",sorted(client_keys)[-1]))+1).zfill(3)
 		except IndexError:
 			id = "001"
-		print id
 
 		# Generate key 
 		key = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(64))

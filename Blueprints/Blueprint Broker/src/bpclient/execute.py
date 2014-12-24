@@ -43,6 +43,8 @@ def Execute(method,data,access_key=''):
 
 	r = requests.post("https://%s/%s/%s/" % (bpclient.BPBROKER,method_match.group(1),method_match.group(2)),
 	                  params={'access_key':access_key,'data': data},verify=False)
+	if r.status_code != 200:  raise(Exception("Response Error %s" % r.status_code))
+
 	return(r.text)
 
 

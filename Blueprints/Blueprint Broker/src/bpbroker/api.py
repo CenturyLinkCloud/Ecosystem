@@ -39,8 +39,8 @@ class TimeoutBaseHTTPServer(BaseHTTPServer.HTTPServer):
 class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	# Response variables populated by individual request handlers
-	error = 200
-	error_message = ''
+	status = 200
+	status_message = ''
 	content_type = "Application/json"
 	data = ''
 
@@ -100,12 +100,12 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self._ParseRequest()
 		if self._ValidateRequest():  
 			getattr(self.package_obj, self.method)(self)
-			if self.error==200:  
+			if self.status==200:  
 				self.send_response(self.error)
 				self.send_header('Content-Type',self.content_type)
 				self.end_headers()
 				self.wfile.write(self.data)
-			else:  self.send_error(self.error,self.error_message)
+			else:  self.send_error(self.status,self.status_message)
 
 
 
