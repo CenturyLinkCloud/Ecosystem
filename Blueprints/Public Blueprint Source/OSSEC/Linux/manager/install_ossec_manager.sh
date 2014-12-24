@@ -18,6 +18,7 @@ BPBROKER_DIR="/usr/local/bpbroker"
 #
 # Pre-reqs
 #
+./install_bpbroker.sh
 yum -y install gcc || apt-get -y install build-essential
 
 
