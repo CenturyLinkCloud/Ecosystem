@@ -6,6 +6,7 @@
 
 ADMIN_EMAIL="keith.resar@ctl.io"
 OSSEC_KEY=""
+OSSEC_ID=""
 BPBROKER=""
 
 SMTP_SERVER="127.0.0.1"
@@ -45,10 +46,10 @@ touch /var/ossec/etc/client.keys
 # Configure and enable bpbroker service
 #
 source $BPBROKER_DIR/bin/activate
-perl -p -i -e "s/\"access_key\": \"\"/\"access_key\": \"$OSSEC_KEY\"/g"
+perl -p -i -e "s/\"_access_key\": \"\"/\"_access_key\": \"$OSSEC_KEY\"/g"
 bpbroker configure --config-file ossec.json
 bpbroker install-service
-bpclient --bpbroker 127.0.0.1:20443 service replace --name ossec --data x
+bpclient --bpbroker 127.0.0.1:20443 service replace --name "ossec-$OSSEC_ID" --data "{\"access_key\": \"$OSSEC_KEY\"}"
 
 #if [ -z "$BPBROKER" ]; then
 #	BPBROKER=`bpclient discover --name ossec-manager`
