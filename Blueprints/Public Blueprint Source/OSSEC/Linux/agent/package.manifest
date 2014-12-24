@@ -16,6 +16,6 @@
     </Parameters>
     <Execution>
         <Mode>Ssh</Mode>
-        <Command>install_ossec_agent.sh</Command>
+        <Command>install_ossec_agent.sh '${ossec_id}' '${ossec_key}' '${bpbroker_ip}'</Command>
     </Execution>
 </Manifest>

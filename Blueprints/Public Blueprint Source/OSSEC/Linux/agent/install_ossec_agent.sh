@@ -4,9 +4,9 @@
 #
 #
 
-OSSEC_KEY=""
-OSSEC_ID=""
-BPBROKER_IP=""
+OSSEC_ID="$1"
+OSSEC_KEY="$2"
+BPBROKER_IP="$3"
 OSSEC_URL="http://www.ossec.net/files/ossec-hids-2.8.1.tar.gz"
 
 HOSTNAME=`hostname`

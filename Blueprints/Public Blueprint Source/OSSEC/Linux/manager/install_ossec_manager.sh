@@ -4,9 +4,9 @@
 #
 #
 
-ADMIN_EMAIL=$1
-OSSEC_ID=$2
-OSSEC_KEY=$3
+ADMIN_EMAIL="$1"
+OSSEC_ID="$2"
+OSSEC_KEY="$3"
 OSSEC_URL="http://www.ossec.net/files/ossec-hids-2.8.1.tar.gz"
 
 SMTP_SERVER="127.0.0.1"
