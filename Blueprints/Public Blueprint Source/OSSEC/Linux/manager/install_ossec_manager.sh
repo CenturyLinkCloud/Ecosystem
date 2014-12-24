@@ -7,7 +7,6 @@
 ADMIN_EMAIL="keith.resar@ctl.io"
 OSSEC_KEY=""
 OSSEC_ID=""
-BPBROKER=""
 OSSEC_URL="http://www.ossec.net/files/ossec-hids-2.8.1.tar.gz"
 
 SMTP_SERVER="127.0.0.1"
@@ -50,17 +49,18 @@ touch /var/ossec/etc/client.keys
 # Configure and enable bpbroker service
 #
 source $BPBROKER_DIR/bin/activate
+
+cd "$BP_DIR"
+if [ ! -f ossec.json ]; then
+	cd ../../noarch		# dev mode
+fi
 cp ossec.json cust-ossec.json
 perl -p -i -e "s/\"_access_key\": \"\"/\"_access_key\": \"$OSSEC_KEY\"/g" cust-ossec.json
-bpbroker configure --config-file cust-ossec.json
 bpbroker install-service
-bpclient --bpbroker 127.0.0.1:20443 --access-key "$OSSEC_KEY" service replace --name "ossec-$OSSEC_ID" --data "x" >/dev/null
-
-#if [ -z "$BPBROKER" ]; then
-#	BPBROKER=`bpclient discover --name ossec-manager`
-#fi
-
-
+service bpbroker stop
+bpbroker configure --config-file cust-ossec.json
+service bpbroker start
+bpclient --bpbroker 127.0.0.1:20443 --access-key "$OSSEC_KEY" service replace --name "ossec-manager-$OSSEC_ID" --data "x" >/dev/null
 
 
 #
