@@ -101,7 +101,7 @@ class APIHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		if self._ValidateRequest():  
 			getattr(self.package_obj, self.method)(self)
 			if self.status==200:  
-				self.send_response(self.error)
+				self.send_response(self.status)
 				self.send_header('Content-Type',self.content_type)
 				self.end_headers()
 				self.wfile.write(self.data)
