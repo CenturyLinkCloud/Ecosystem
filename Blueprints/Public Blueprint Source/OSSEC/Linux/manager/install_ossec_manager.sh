@@ -19,14 +19,15 @@ BPBROKER_DIR="/usr/local/bpbroker"
 #
 # Pre-reqs
 #
-yum -y install gcc || apt-get install build-essential
+yum -y install gcc || apt-get -y install build-essential
 
 
 #
 # Update OSSEC configuration file
 #
-perl -p -i -e "s/^USER_EMAIL_SMTP=.*/USER_EMAIL_SMTP=\"$SMTP_SERVER\"/" preloaded-vars.conf
-perl -p -i -e "s#^USER_WHITE_LIST=.*#USER_WHITE_LIST=\"$NETWORK\"#" preloaded-vars.conf
+cp preloaded-vars.conf cust-preloaded-vars.conf
+perl -p -i -e "s/^USER_EMAIL_SMTP=.*/USER_EMAIL_SMTP=\"$SMTP_SERVER\"/" cust-preloaded-vars.conf
+perl -p -i -e "s#^USER_WHITE_LIST=.*#USER_WHITE_LIST=\"$NETWORK\"#" cust-preloaded-vars.conf
 
 
 #
@@ -37,7 +38,7 @@ curl -o ossec.tar.gz http://www.ossec.net/files/ossec-hids-2.8.1.tar.gz
 tar xfz ossec.tar.gz
 
 cd ossec-hids*
-cp $BP_DIR/preloaded-vars.conf etc/
+mv "$BP_DIR/cust-preloaded-vars.conf" etc/preloaded-vars.conf
 ./install.sh
 touch /var/ossec/etc/client.keys
 
@@ -46,10 +47,11 @@ touch /var/ossec/etc/client.keys
 # Configure and enable bpbroker service
 #
 source $BPBROKER_DIR/bin/activate
-perl -p -i -e "s/\"_access_key\": \"\"/\"_access_key\": \"$OSSEC_KEY\"/g"
-bpbroker configure --config-file ossec.json
+cp ossec.json cust-ossec.json
+perl -p -i -e "s/\"_access_key\": \"\"/\"_access_key\": \"$OSSEC_KEY\"/g" cust-ossec.json
+bpbroker configure --config-file cust-ossec.json
 bpbroker install-service
-bpclient --bpbroker 127.0.0.1:20443 service replace --name "ossec-$OSSEC_ID" --data "{\"access_key\": \"$OSSEC_KEY\"}"
+bpclient --bpbroker 127.0.0.1:20443 --access-key "$OSSEC_KEY" service replace --name "ossec-$OSSEC_ID" --data "x"
 
 #if [ -z "$BPBROKER" ]; then
 #	BPBROKER=`bpclient discover --name ossec-manager`
@@ -61,7 +63,7 @@ bpclient --bpbroker 127.0.0.1:20443 service replace --name "ossec-$OSSEC_ID" --d
 #
 # Cleanup
 #
-#rm -rf /tmp/$$
+rm -rf /tmp/$$
 
 
 
