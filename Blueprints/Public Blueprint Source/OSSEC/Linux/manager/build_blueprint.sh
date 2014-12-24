@@ -3,7 +3,7 @@
 
 # Import external pre-reqs
 cp ../../noarch/* .
-cp "../../../BP\ Broker/Linux/install_bpbroker.sh" .
+cp "../../../BP Broker/Linux/install_bpbroker.sh" .
 
 
 # Create package

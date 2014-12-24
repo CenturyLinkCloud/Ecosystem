@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import external pre-reqs
-cp "../../../BP\ Broker/Linux/install_bpbroker.sh" .
+cp "../../../BP Broker/Linux/install_bpbroker.sh" .
 
 
 # Create package
