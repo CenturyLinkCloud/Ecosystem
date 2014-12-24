@@ -53,9 +53,10 @@ def AddAgent(rh):
 		with bpbroker.config.rlock:
 			with open("%s/etc/client.keys" % OSSEC_DIR,"aw") as f:
 				f.write("%s %s %s %s\n" % (id,rh.qs['data'],rh.RequestingHost(),key))
+			subprocess.Popen(["%s/bin/ossec-control" % OSSEC_DIR, "restart"], stdout=subprocess.PIPE).communicate()
 
 		# Export encoded key
-		rh.data = subprocess.Popen(["%s/bin/manage_agents" % OSSEC_DIR, "-e", id], stdout=subprocess.PIPE).communicate()[0].split("\n")[2]
+		rh.data = "%s %s %s %s" % (id,rh.qs['data'],rh.RequestingHost(),key)
 
 
 def RemoveAgent(rh):
