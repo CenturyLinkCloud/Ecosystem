@@ -8,11 +8,9 @@
 		</Description>
     </Metadata>
     <Parameters>
-		<Parameters>
-			<Parameter Name="OSSEC ID" Hint="(optional) Enter OSSEC manager ID if one was specified during manager setup" Type="String" Variable="ossec_id" Prompt="Design" Required="false"/>
-			<Parameter Name="OSSEC Key" Hint="(optional) Enter OSSEC key if one was specified during manager setup" Type="String" Variable="ossec_key" Prompt="Design" Required="false"/>
-			<Parameter Name="OSSEC Manager" Hint="(optional) Select OSSEC manager hostname.  If OSSEC managed is on the same network this is optional and it will be automatically discovered" Type="ServerIP" Variable="bpbroker_ip" Prompt="Design" Required="false"/>
-		</Parameters>
+		<Parameter Name="OSSEC ID" Hint="(optional) Enter OSSEC manager ID if one was specified during manager setup" Type="String" Variable="ossec_id" Prompt="Design" Required="false"/>
+		<Parameter Name="OSSEC Key" Hint="(optional) Enter OSSEC key if one was specified during manager setup" Type="String" Variable="ossec_key" Prompt="Design" Required="false"/>
+		<Parameter Name="OSSEC Manager" Hint="(optional) Select OSSEC manager hostname.  If OSSEC managed is on the same network this is optional and it will be automatically discovered" Type="ServerIP" Variable="bpbroker_ip" Prompt="Design" Required="false"/>
     </Parameters>
     <Execution>
         <Mode>Ssh</Mode>

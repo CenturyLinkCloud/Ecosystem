@@ -4,15 +4,13 @@
         <UUID>fdc41e23-0f10-4b54-9fe7-5011b1229764</UUID>
         <Name>Security - Install OSSEC Manager for Linux</Name>
         <Description>
-		Installs the Open Source OSSEC manager and local agent onto a Linux machine.  Depends on the BP Broker tool.
+		Installs the Open Source OSSEC manager and local agent onto a Linux machine.
 		</Description>
     </Metadata>
     <Parameters>
-		<Parameters>
-			<Parameter Name="Admin Email" Hint="OSSEC administrator email address" Type="String" Variable="admin_email" Prompt="Design" Required="true"/>
-			<Parameter Name="OSSEC ID" Hint="(optional) Enter OSSEC manager ID if there will be multiple managers in this network" Type="String" Variable="ossec_id" Prompt="Design" Required="false"/>
-			<Parameter Name="OSSEC Key" Hint="(optional) Enter OSSEC key to support agent authorization prior to joining to manager" Type="String" Variable="ossec_key" Prompt="Design" Required="false"/>
-		</Parameters>
+		<Parameter Name="Admin Email" Hint="OSSEC administrator email address" Type="String" Variable="admin_email" Prompt="Design" Required="true"/>
+		<Parameter Name="OSSEC ID" Hint="(optional) Enter OSSEC manager ID if there will be multiple managers in this network" Type="String" Variable="ossec_id" Prompt="Design" Required="false"/>
+		<Parameter Name="OSSEC Key" Hint="(optional) Enter OSSEC key to support agent authorization prior to joining to manager" Type="String" Variable="ossec_key" Prompt="Design" Required="false"/>
     </Parameters>
     <Execution>
         <Mode>Ssh</Mode>
