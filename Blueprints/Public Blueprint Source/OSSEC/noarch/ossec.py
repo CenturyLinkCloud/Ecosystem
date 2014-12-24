@@ -40,9 +40,12 @@ def AddAgent(rh):
 		rh.status_message = "Unable to add requested host IP in use"
 
 	else:
-		print "1"
 		# Find next agent
-		id = str(int(re.sub("\s.*","",sorted(client_keys)[-1]))+1).zfill(3)
+		try:
+			id = str(int(re.sub("\s.*","",sorted(client_keys)[-1]))+1).zfill(3)
+		except IndexError:
+			id = "001"
+		print id
 
 		# Generate key 
 		key = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(64))
