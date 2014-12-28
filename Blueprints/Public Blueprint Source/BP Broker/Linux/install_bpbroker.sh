@@ -13,7 +13,7 @@ command -v python >/dev/null 2>&1 || { echo >&2 "Cannot locate python, required 
 # pip pre-req (Python package manager)
 command -v pip >/dev/null 2>&1 || { 
 	echo >&2 "Cannot locate pip, installing"; 
-	python get-pip.py;
+	curl https://bootstrap.pypa.io/get-pip.py | python;
 	pip install --upgrade pip;
 	}
 
