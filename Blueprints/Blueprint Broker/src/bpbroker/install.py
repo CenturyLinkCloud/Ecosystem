@@ -37,8 +37,9 @@ INIT_D_HEADER_DEB = """#!/bin/bash
 
 """
 
-INIT_D_SCRIPT = """
+INIT_D_SCRIPT = '''
 DAEMON_PATH="/usr/local/bpbroker/bin/"
+BINARY_GREP_STR='/usr/local/bpbroker/bin/python\s+./bpbroker\s+start'
 
 DAEMON=bpbroker
 DAEMONOPTS="start"
@@ -50,6 +51,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 case "$1" in
 start)
+	ps ax|egrep "${BINARY_GREP_STR}"|awk '{print $1}' | xargs kill
 	printf "%-50s" "Starting $NAME..."
 	cd $DAEMON_PATH
 	PID=`./$DAEMON $DAEMONOPTS > /dev/null 2>&1 & echo $!`
@@ -76,15 +78,9 @@ status)
 ;;
 stop)
         printf "%-50s" "Stopping $NAME"
-            PID=`cat $PIDFILE`
-            cd $DAEMON_PATH
-        if [ -f $PIDFILE ]; then
-            kill -HUP $PID
-            printf "%s\n" "Ok"
-            rm -f $PIDFILE
-        else
-            printf "%s\n" "pidfile not found"
-        fi
+		ps ax|egrep "$BINARY_GREP_STR"|awk '{print $1}' | xargs kill
+		printf "%s\n" "Ok"
+		rm -f $PIDFILE
 ;;
 
 restart)
@@ -96,7 +92,7 @@ restart)
         echo "Usage: $0 {status|start|stop|restart}"
         exit 1
 esac
-"""
+'''
 
 #####################################################
 
@@ -175,6 +171,8 @@ def _UninstallWindows():
 def Install():
 	if os.name=='nt':  _InstallWindows()
 	else:  _InstallLinux()
+
+	print "Service installed successfuly and configured to start at boot.  Note service is not yet started"
 
 
 def Uninstall():
