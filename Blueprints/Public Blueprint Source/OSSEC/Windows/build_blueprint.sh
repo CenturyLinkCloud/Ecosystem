@@ -21,3 +21,6 @@ zip ../Blueprints_Completed_Packages/Windows_ossec_agent.zip  \
 # Cleanup
 rm install_bpbroker.ps1 nssm.exe python-2.7.9.zip
 
+# Upload since over 25m
+clc blueprints package-upload --package ../Blueprints_Completed_Packages/Windows_ossec_agent.zip
+
