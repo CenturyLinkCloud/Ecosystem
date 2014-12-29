@@ -4,7 +4,7 @@
         <UUID>f8f2d734-ca35-4c89-87a6-b6a63cc8b3e4</UUID>
         <Name>Security - Install OSSEC Agent for Windows</Name>
         <Description>
-		Installs the Open Source OSSEC agent onto a Windows machine and registers with the OSSEC manager.
+		Installs the Open Source OSSEC agent v2.7.1 onto a Windows machine and registers with the OSSEC manager.
 		</Description>
     </Metadata>
     <Parameters>

@@ -42,6 +42,7 @@ cd ossec-hids*
 mv "$BP_DIR/cust-preloaded-vars.conf" etc/preloaded-vars.conf
 ./install.sh
 touch /var/ossec/etc/client.keys
+chmod o+r /var/ossec/etc/client.keys
 
 /var/ossec/bin/ossec-control start
 

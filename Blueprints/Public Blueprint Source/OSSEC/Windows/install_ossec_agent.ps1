@@ -14,7 +14,7 @@ $bpbroker_port = ":20443"
 #
 # Install BP Broker
 #
-&install_bpbroker.ps1
+./install_bpbroker.ps1
 
 
 #
@@ -76,5 +76,5 @@ $client_key | Out-File "C:\Program Files (x86)\ossec-agent\client.keys" -encodin
 #
 # Start service
 #
-sc start OssecSrv
+Start-Service OssecSvc
 

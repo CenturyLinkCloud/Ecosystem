@@ -4,7 +4,7 @@
         <UUID>fdc41e23-0f10-4b54-9fe7-5011b1229764</UUID>
         <Name>Security - Install OSSEC Manager for Linux</Name>
         <Description>
-		Installs the Open Source OSSEC manager and local agent onto a Linux machine.
+		Installs the Open Source OSSEC manager v2.7.1 and local agent onto a Linux machine.  This install must be completed prior to adding any remote agents.
 		</Description>
     </Metadata>
     <Parameters>
