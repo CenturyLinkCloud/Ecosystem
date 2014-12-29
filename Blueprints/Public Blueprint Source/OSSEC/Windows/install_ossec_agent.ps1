@@ -8,32 +8,24 @@ param (
 
 
 
-#HOSTNAME=`hostname`
-#BP_DIR=`pwd`
-#BPBROKER_DIR="/usr/local/bpbroker"
-
-
-
-$script_path = split-path -parent $MyInvocation.MyCommand.Definition
-$bpbroker_dir = "$env:programfiles\bpbroker"
-$bpclient = "$bpbroker_dir\bin\bpclient.lnk"
+$HOSTNAME=hostname
+$bpbroker_port = ":20443"
 
 #
 # Install BP Broker
 #
-#&install_bpbroker.ps1
+&install_bpbroker.ps1
 
 
 #
 # Run base ossec install
 #
-#&ossec-agent-win32-2.7.1.exe /S
+./ossec-agent-win32-2.7.1.exe /S
 
 
 #
 # Find bpbroker IP if none provided
 #
-echo "pre: $BPBROKER_IP"
 if (!$BPBROKER_IP)  {
 	$psi = New-object System.Diagnostics.ProcessStartInfo 
 	$psi.CreateNoWindow = $true 
@@ -48,5 +40,41 @@ if (!$BPBROKER_IP)  {
 	$output = $process.StandardOutput.ReadToEnd() 
 	$process.WaitForExit()
 	$BPBROKER_IP = $output -replace "`t|`n|`r",""
-} 
-echo "*$BPBROKER_IP*"
+}
+
+
+#
+# Get key
+# 
+$psi = New-object System.Diagnostics.ProcessStartInfo 
+$psi.CreateNoWindow = $true 
+$psi.UseShellExecute = $false 
+$psi.RedirectStandardOutput = $true 
+$psi.RedirectStandardError = $true 
+$psi.FileName = "C:\Program Files\bpbroker\Python27\Scripts\bpclient.exe" 
+$psi.Arguments = @("--bpbroker","$BPBROKER_IP$bpbroker_port","--access-key",$OSSEC_KEY,"execute","--method","ossec.AddAgent","--data",$HOSTNAME) 
+$process = New-Object System.Diagnostics.Process 
+$process.StartInfo = $psi 
+[void]$process.Start()
+$output = $process.StandardOutput.ReadToEnd() 
+$process.WaitForExit()
+$client_key = $output
+
+
+#
+# Install key
+#
+$client_key | Out-File "C:\Program Files (x86)\ossec-agent\client.keys" -encoding ascii
+
+
+#
+# Configure Server
+#
+(gc ossec.conf) -replace 'OSSEC_MANAGER_IP',$BPBROKER_IP | Out-File "C:\Program Files (x86)\ossec-agent\ossec.conf" -encoding ascii
+
+
+#
+# Start service
+#
+sc start OssecSrv
+
