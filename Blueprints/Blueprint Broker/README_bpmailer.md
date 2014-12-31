@@ -37,14 +37,6 @@ optional arguments:
                         stdin.
 ```
 
-Example executing by passing variables through stdin on Linux using a HERE document.
-```shell
-> /bpmailer.py --config bpmailer.json  --to toaddr@example.com --subject "Test Message" --template examples/bpmailer_example_message_template \
-               --css examples/bpmailer_example_css --from "John Smith <john@example.com>" --variables - <<HERE
-NAME=xxxx
-foo=bar
-HERE
-```
 
 # Configuraton
 Configuration can be made through any combination of the following methods in increasing order of priority.
@@ -53,7 +45,7 @@ Configuration can be made through any combination of the following methods in in
 * Environment variables
 * Command line options
 
-### Hardcoded Defaults
+## Hardcoded Defaults
 The following defaults are embedded within the tool:
 ```json
 {
@@ -66,7 +58,7 @@ The following defaults are embedded within the tool:
 }
 ```
 
-### Configuration File
+## Configuration File
 This format is compatible with the bpbroker configuration file and both tools can use the same configuration.
 See (Example bpmailer_config.json)[examples/bpmailer_example_config.json] also shown below:
 ```json
@@ -83,7 +75,7 @@ See (Example bpmailer_config.json)[examples/bpmailer_example_config.json] also s
 }
 ```
 
-### Available environment variables
+## Available environment variables
 The following environment variables are interpreted:
 * MAIL_FROM_ADDRESS
 * MAIL_CC_ADDRESSES
@@ -93,3 +85,17 @@ The following environment variables are interpreted:
 * SMTP_PASSWORD
 * MAIL_FROM_ADDRESS
 
+# Quickstart Example
+Example executing by passing variables through stdin on Linux using a HERE document.
+```shell
+> bpmailer --config bpmailer.json  --to toaddr@example.com --subject "Test Message" --template examples/bpmailer_example_message_template \
+           --css examples/bpmailer_example_css --from "John Smith <john@example.com>" --variables - <<HERE
+NAME=xxxx
+foo=bar
+HERE
+```
+
+Results in the following email:
+![alt text][md_assets/bpmailer_exmaple_email.png]
+
+Starting from the email msg and css inside the [examples](examples) directory will deliver a good multi-client experience.  This template is basded on 
