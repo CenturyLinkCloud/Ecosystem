@@ -10,8 +10,8 @@ success oriented tools.
 * [Installing](#installing)
 * [Usage](#usage)
 * [Configuration](#configuration)
-* [Network Communication](#networkcommunication)
-* [Access Keys](#accesskeys) - optional authorization
+* [Network Communication](#network-communication)
+* [Access Keys](#access-keys) - optional authorization
 * [Discovery](#discover) - self-discovery of bpbroker nodes
 * [Ping](#ping) - end-to-end connectivity check
 * [Service](#service) - durable key/value service broker store
