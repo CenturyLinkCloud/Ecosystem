@@ -98,10 +98,10 @@ $BPBROKER_IP = $output -replace "`t|`n|`r",""
 
 # Ping
 The ping method is used to verify end-to-end connectivity.  Specify the `--bpbroker` parameter as the endpoint to reach.  Will receive an echo
-of the `--data` send to the bpbroker service.
+of the `--data` sent to the bpbroker service.
 
 ```shell
-# succssful call
+# successful call
 > bpclient --bpbroker 127.0.0.1:20443 ping --data foo
 foo
 
@@ -119,7 +119,7 @@ Provide access to the key/value service broker data store.  Data stored here is 
 
 ## Usage
 ```shell
-> ./bpclient service --help
+> bpclient service --help
 usage: bpclient service [-h] {register,replace,update,get,delete} ...
 
 positional arguments:
@@ -145,11 +145,11 @@ Fatal error: Entry 'foo' already exists
 ```
 
 ## Service Replace
-Replaces existing data with the bpbroker service or if none exists creates new.  This is the recommended method if the `--name`` may already be
+Replaces existing data with the bpbroker service or if none exists creates new.  This is the recommended method if the `--name` may already be
 in use but the data itself is not authoritative.
 
 ```shell
-# 'foo' keya already exists
+# 'foo' key already exists
 > bpclient  --bpbroker 127.0.0.1:20443 service replace --name foo --data bar
 bar
 
@@ -177,7 +177,7 @@ Performs a read of existing data.  If `--name` does not exist returns an error.
 
 ```shell
 # key exists
-bpclient  --bpbroker 127.0.0.1:20443 service get --name foo
+> bpclient  --bpbroker 127.0.0.1:20443 service get --name foo
 bar
 
 # key does not exist
@@ -194,7 +194,7 @@ Remove existing `--name`.  No result output on either success or failure.
 
 
 # Execute
-Execute custom modules implemented on the server side.  An example of this is the **OSSEC** implementation with a custom Python module in [this github repo](Public Blueprint Source/OSSEC/noarch).  We also have a sample module in the [examples](examples) directory.
+Execute custom modules implemented on the server side.  An example of this is the **OSSEC** implementation with a custom Python module in [this github repo](../Public Blueprint Source/OSSEC/noarch).  We also have a sample module in the [examples](examples/example_extension_module.py) directory.
 
 These custom modules are accessible to bpclient after successful installation on the bpbroker instance by specifying the module and method name using the `--method`` parameter.
 If there are errors with the access key or if the module is not enabled within the bpbroker service then bpclient will exist with a non-zero error status and provide an error
@@ -202,6 +202,7 @@ message.
 
 
 ```shell
-> bpclient --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" execute --method ossec.AddAgent --data $HOSTNAME
+> bpclient --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" \
+           execute --method ossec.AddAgent --data $HOSTNAME
 ```
 
