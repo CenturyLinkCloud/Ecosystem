@@ -82,7 +82,7 @@ $psi.UseShellExecute = $false
 $psi.RedirectStandardOutput = $true 
 $psi.RedirectStandardError = $true 
 $psi.FileName = "C:\Program Files\bpbroker\Python27\Scripts\bpclient.exe" 
-$psi.Arguments = @("discover","--name","foo-$CLUSER_ID") 
+$psi.Arguments = @("discover","--name","foo-$CLUSTER_ID") 
 $process = New-Object System.Diagnostics.Process 
 $process.StartInfo = $psi 
 [void]$process.Start()
@@ -92,6 +92,21 @@ $BPBROKER_IP = $output -replace "`t|`n|`r",""
 ```
 
 # Ping
+The ping method is used to verify end-to-end connectivity.
+
+```shell
+# succssful call
+> bpclient --bpbroker 127.0.0.1:20443 ping --data foo
+foo
+
+# connectivity successful but no bpbroker running at the target
+> bpclient --bpbroker 127.0.0.1:20444 ping --data foo
+Fatal error: ('Connection aborted.', error(61, 'Connection refused'))✘-1
+
+# no connectivity
+> bpclient --bpbroker 10.0.0.1:20443 ping --data foo
+# --> No response, client hangs
+```
 
 # Service
 
