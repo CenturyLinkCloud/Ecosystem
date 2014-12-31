@@ -67,7 +67,31 @@ key/value service registry it will reply.  bpclient returns the IP address of th
 (more likely) mutliple bpbrokers responding for the same service request and developing a split-brain scenario best practices are to use a unique key.  For example 
 if your application is `foo` you may tag one cluster `foo-cluster1` and anotehr `foo-cluster2`.  
 
+Linux bash:
+```shell
+> BPBROKER_IP=`/usr/local/bpbroker/bin/bpclient discover --name foo-$CLUSTER_ID`
+> echo $BPBROKER_IP
+192.168.1.1
+```
 
+Windows Powershell:
+``powershell
+$psi = New-object System.Diagnostics.ProcessStartInfo 
+$psi.CreateNoWindow = $true 
+$psi.UseShellExecute = $false 
+$psi.RedirectStandardOutput = $true 
+$psi.RedirectStandardError = $true 
+$psi.FileName = "C:\Program Files\bpbroker\Python27\Scripts\bpclient.exe" 
+$psi.Arguments = @("discover","--name","foo-$CLUSER_ID") 
+$process = New-Object System.Diagnostics.Process 
+$process.StartInfo = $psi 
+[void]$process.Start()
+$output = $process.StandardOutput.ReadToEnd() 
+$process.WaitForExit()
+$BPBROKER_IP = $output -replace "`t|`n|`r",""
+```
+
+{
 # Quickstart Example
 Example execution by passing variables through stdin on Linux using a HERE document.  Variables can be read via a file or specify `-` for stdin (as shown below).
 ```shell
