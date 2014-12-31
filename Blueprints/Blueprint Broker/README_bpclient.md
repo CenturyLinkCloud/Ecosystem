@@ -145,10 +145,17 @@ Fatal error: Entry 'foo' already exists
 ```
 
 ## Service Replace
+Replaces existing data with the bpbroker service or if none exists creates new.  This is the recommended method if the `--name`` may already be
+in use but the data itself is not authoritative.
+
+```shell
+```
 
 ## Service Update
 
+
 ## Service Get
+
 
 ## Service Delete
 
@@ -159,6 +166,7 @@ Execute custom modules implemented on the server side.  An example of this is th
 These custom modules are accessible to bpclient after successful installation on the bpbroker instance by specifying the module and method name using the `--method`` parameter.
 If there are errors with the access key or if the module is not enabled within the bpbroker service then bpclient will exist with a non-zero error status and provide an error
 message.
+
 
 ```shell
 > bpclient --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" execute --method ossec.AddAgent --data $HOSTNAME
