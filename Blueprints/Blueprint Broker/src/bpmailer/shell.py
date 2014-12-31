@@ -62,7 +62,6 @@ class ExecCommand():
 		try:
 			if bpmailer.args.args.variables=='-': bpmailer.args.args.variables = sys.stdin.read()
 			elif bpmailer.args.args.variables:  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
-			print bpmailer.args.args.variables
 			variables = {}
 			for key,var in re.findall("(.*?)=([^=]+)\n",bpmailer.args.args.variables):
 				variables[key] = var

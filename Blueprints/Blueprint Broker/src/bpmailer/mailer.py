@@ -20,6 +20,7 @@ class Mailer(object):
 		self.subject = subject
 		self.to_addr = to_addr
 		self.from_addr = from_addr
+		self.variables = variables
 
 		#if css_file:  self.LoadCSS(css_file)
 
@@ -44,7 +45,8 @@ class Mailer(object):
 
 
 	def ApplyVariables(self):
-		pass
+		for key,val in self.variables.items():
+			self.template = re.sub("%%%s%%" % key,val,self.template)
 
 
 	def Deliver(self):
