@@ -41,7 +41,6 @@ class Mailer(object):
 	def InlineCSS(self):
 		if self.css_file:
 			self.template = re.sub("<\s*head\s*>","<head>\n<link rel='stylesheet' href='%s'>\n" % self.css_file,self.template,re.IGNORECASE)
-		print self.template
 
 
 	def ApplyVariables(self):

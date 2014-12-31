@@ -2,6 +2,7 @@
 
 import argparse
 import ConfigParser
+import re
 import os
 import sys
 import bpmailer
@@ -31,7 +32,8 @@ class Args:
 		parser.add_argument('--template', required=True, help='Path to mail template file')
 		parser.add_argument('--from', dest="from_addr", help='Source email address')
 		parser.add_argument('--css', help='Path to optional css files not referenced in template')
-		parser.add_argument('--variables', help="Path to optional variables files or '-' for stdin")
+		parser.add_argument('--variables', help="Path to optional key=value variables files or '-' for stdin.")
+		# TODO - add optional delimited for variables if not =
 		self.args = parser.parse_args()
 
 
@@ -60,12 +62,17 @@ class ExecCommand():
 		try:
 			if bpmailer.args.args.variables=='-': bpmailer.args.args.variables = sys.stdin.read()
 			elif bpmailer.args.args.variables:  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
+			print bpmailer.args.args.variables
+			variables = {}
+			for key,var in re.findall("(.*?)=([^=]+)\n",bpmailer.args.args.variables):
+				variables[key] = var
 
 			msg = bpmailer.mailer.Mailer(css_file=bpmailer.args.args.css,
 			                             template_file=bpmailer.args.args.template,
 										 subject=bpmailer.args.args.subject,
 										 to_addr=bpmailer.args.args.to_addr,
-										 from_addr=bpmailer.args.args.from_addr)
+										 from_addr=bpmailer.args.args.from_addr,
+										 variables=variables)
 		except:
 			raise
 			sys.stderr.write("Fatal error: %s\n" % sys.exc_info()[1])
