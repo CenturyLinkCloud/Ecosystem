@@ -54,7 +54,9 @@ class Mailer(object):
 		msg['CC'] = "; ".join(self.cc_addrs)
 		msg.attach(MIMEText(self.template, 'html'))
 
-		s = smtplib.SMTP('localhost')
+		print bpmailer.config.data
+		s = smtplib.SMTP(bpmailer.config.data['_bpmailer']['smtp_server'],bpmailer.config.data['_bpmailer']['smtp_port'])
+		s.login(bpmailer.config.data['_bpmailer']['smtp_user'],bpmailer.config.data['_bpmailer']['smtp_password'])
 		s.sendmail(self.to_addr, self.from_addr, msg.as_string())
 		s.quit()
 

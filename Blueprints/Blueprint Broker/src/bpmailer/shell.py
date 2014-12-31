@@ -60,11 +60,11 @@ class Args:
 class ExecCommand():
 	def __init__(self):
 		try:
+			# Read and parse variables into dict #
 			if bpmailer.args.args.variables=='-': bpmailer.args.args.variables = sys.stdin.read()
 			elif bpmailer.args.args.variables:  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
 			variables = {}
-			for key,var in re.findall("(.*?)=([^=]+)\n",bpmailer.args.args.variables):
-				variables[key] = var
+			for key,var in re.findall("(.*?)=([^=]+)\n",bpmailer.args.args.variables): variables[key] = var
 
 			msg = bpmailer.mailer.Mailer(css_file=bpmailer.args.args.css,
 			                             template_file=bpmailer.args.args.template,

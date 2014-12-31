@@ -3,7 +3,7 @@
 		"mail_from_address": "test@example.com",
 		"mail_cc_addresses": ["cc1@example.com","cc2@example.com"],
 
-		"smptp_server": "127.0.0.1",
+		"smtp_server": "127.0.0.1",
 		"smtp_port": 25,
 		"smtp_user": "",
 		"smtp_password": ""
