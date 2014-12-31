@@ -9,11 +9,3 @@ def BPClient():
 	bpclient.ExecCommand()
 
 
-def BPMailer():
-
-	print "bpmailer not yet implemented"
-	import sys
-	sys.exit(1)
-
-
-

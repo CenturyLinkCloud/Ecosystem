@@ -1,15 +1,10 @@
 
-#
-# python setup.py sdist
-# python setup.py bdist_dumb
-# python setup.py bdist_rpm
-#
 
 from setuptools import setup, find_packages
 
 setup(
 	name = "bpbroker",
-	version = "0.15",
+	version = "0.16",
 	packages = find_packages("."),
 
 	package_data = {
@@ -22,7 +17,7 @@ setup(
 		'console_scripts': [
 			'bpbroker  = bpbroker.cli:BPBroker',
 			'bpclient  = bpclient.cli:BPClient',
-			'bpmailer  = bpclient.cli:BPMailer',
+			'bpmailer  = bpmailer.cli:BPMailer',
 		],
 	},
 
@@ -30,7 +25,7 @@ setup(
 	# metadata for upload to PyPI
 	author = "Keith Resar",
 	author_email = "Keith.Resar@CenturyLinkCloud.com",
-	description = "CenturyLink Cloud Blueprint Broker Service",
+	description = "CenturyLink Cloud Blueprint Broker Service Tools",
 	keywords = "CenturyLink Cloud Blueprint Broker",
 	url = "https://github.com/CenturyLinkCloud/Ecosystem/tree/master/Blueprints/Blueprint%20Broker",
 

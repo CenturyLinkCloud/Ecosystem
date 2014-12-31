@@ -23,6 +23,3 @@ import requests
 requests.packages.urllib3.disable_warnings()
 
 
-####### module/object vars #######
-#_V1_API_KEY = False
-
