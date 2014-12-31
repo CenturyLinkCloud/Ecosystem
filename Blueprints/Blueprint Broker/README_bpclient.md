@@ -132,6 +132,17 @@ positional arguments:
 ```
 
 ## Service Register
+Registers data with the bpbroker service and returns the full data set as a response.  If the specified key already exists will return an error.
+
+```shell
+# successful registration
+> bpclient  --bpbroker 127.0.0.1:20443 service register --name foo --data bar
+bar
+
+# attempted duplicate registration
+> bpclient  --bpbroker 127.0.0.1:20443 service register --name foo --data bar
+Fatal error: Entry 'foo' already exists
+```
 
 ## Service Replace
 
