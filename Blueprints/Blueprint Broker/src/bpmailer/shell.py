@@ -10,10 +10,15 @@ import bpmailer
 class Args:
 
 	def __init__(self):
-		bpmailer.args = self
-		self.ParseArgs()
-		self.MergeEnvironment()
-		self.MergeCommands()
+		try:
+			bpmailer.args = self
+			self.ParseArgs()
+			if bpmailer.args.args.config:  bpmailer.config = bpmailer.config_class.Config(bpmailer.args.args.config)
+			self.MergeEnvironment()
+			self.MergeCommands()
+		except Exception as e:
+			sys.stderr.write("Fatal error: %s\n" % str(e))
+			sys.exit(1)
 
 
 	def ParseArgs(self):
@@ -35,13 +40,17 @@ class Args:
 
 
 	def MergeEnvironment(self):
-		#if 'BPBROKER' in os.environ:  bpmailer.BPROKER = os.environ['BPROKER']
-		pass
+		if 'MAIL_FROM_ADDRESS' in os.environ:  bpmailer.config.data["_bpmailer"]['mail_from_address'] = os.environ['MAIL_FROM_ADDRESS']
+		if 'MAIL_CC_ADDRESSES' in os.environ:  bpmailer.config.data["_bpmailer"]['mail_cc_addresses'] = os.environ['MAIL_CC_ADDRESSES'].split(",")
+		if 'SMTP_SERVER' in os.environ:  bpmailer.config.data["_bpmailer"]['smtp_server'] = os.environ['SMTP_SERVER']
+		if 'SMTP_PORT' in os.environ:  bpmailer.config.data["_bpmailer"]['smtp_port'] = os.environ['SMTP_PORT']
+		if 'SMTP_USER' in os.environ:  bpmailer.config.data["_bpmailer"]['smtp_user'] = os.environ['SMTP_USER']
+		if 'SMTP_PASSWORD' in os.environ:  bpmailer.config.data["_bpmailer"]['smtp_password'] = os.environ['SMTP_PASSWORD']
+		if 'MAIL_FROM_ADDRESS' in os.environ:  bpmailer.config.data["_bpmailer"]['mail_from_address'] = os.environ['MAIL_FROM_ADDRESS']
 
 
 	def MergeCommands(self):
-		#if self.args.bpmailer:  bpmailer.BPBROKER = self.args.bpmailer
-		pass
+		if self.args.from:  bpmailer.config.data["_bpmailer"]['mail_from_address'] = self.args.from
 
 
 
@@ -49,8 +58,6 @@ class Args:
 class ExecCommand():
 	def __init__(self):
 		try:
-			if bpmailer.args.args.config:  bpmailer.config = bpmailer.config_class.Config(bpmailer.args.args.config)
-
 			self.Bootstrap()
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s\n" % str(e))
