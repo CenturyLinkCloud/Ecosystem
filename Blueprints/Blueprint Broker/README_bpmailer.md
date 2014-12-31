@@ -96,7 +96,7 @@ HERE
 ```
 
 Results in the following email:
-![alt text][md_assets/bpmailer_exmaple_email.png]
+![md_assets/bpmailer_exmaple_email.png]
 
 Starting from the email message and css inside the [examples](examples) directory will deliver a good multi-client experience.  This template is based on the
 [ZURB](http://zurb.com/playground/responsive-email-templates) responsive email templates.  bpmailer includes a css inliner to easy flexibility and decrease time
@@ -105,7 +105,29 @@ to implement.
 # Using bpmailer inside your CenturyLink Cloud Blueprints
 Assume the following scenario
 
+> You are an ISV distributing a new database engine.  You have developed a CenturyLink Cloud Blueprint package and a demo application so potential
+> customers can easily test your application.  
+>
+> Your application takes a few minutes to populate with data which means an "application ready state" and the initial automated installation
+> occur asynchronously.  To make using this demo application as easy as possible you want to tell the customer how to access it (the IP address
+> and any initial credentials) and provide some example test queries.  To increase conversion rate you want to send this tailored message exactly
+> when the application is ready to test.
 
+Include a bpmailer configuration file with your installation package that points towards an SMTP relay:
+```json
+{
+	"_bpmailer":  {
+		"smtp_server": "relay.t3mx.com",
+		"smtp_user": "username",
+		"smtp_password": "password"
+	}
+}
+```
 
+After the data load is complete append the following lines to the end of your bash installation script:
+```shell
+> echo IP_ADDRESS=192.168.1.1 | bpmailer --config isv_custom.json  --to prospect@example.com --subject "Database Ready for Testing" \
+                                         --template isv_message_template -from "ISV Inc <john@example.com>" --variables - 
+```
 
 
