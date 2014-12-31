@@ -30,7 +30,7 @@ class Args:
 		parser.add_argument('--subject', required=True, help='Email subject')
 		parser.add_argument('--template', required=True, help='Path to mail template file')
 		parser.add_argument('--from', dest="from_addr", help='Source email address')
-		parser.add_argument('--css', help='Path to optional css file')
+		parser.add_argument('--css', help='Path to optional css files not referenced in template')
 		parser.add_argument('--variables', help="Path to optional variables files or '-' for stdin")
 		self.args = parser.parse_args()
 
@@ -60,7 +60,7 @@ class ExecCommand():
 		try:
 			if bpmailer.args.args.variables=='-': bpmailer.args.args.variables = sys.stdin.read()
 			elif bpmailer.args.args.variables:  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
-			print bpmailer.args.args.variables
+
 			msg = bpmailer.mailer.Mailer(css_file=bpmailer.args.args.css,
 			                             template_file=bpmailer.args.args.template,
 										 subject=bpmailer.args.args.subject,
