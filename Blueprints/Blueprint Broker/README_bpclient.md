@@ -5,6 +5,19 @@ The bpclient tool, part of the [bpbroker](README.md) suite, facilitates easy com
 As with all items in the bpbroker toolset, this is cross-platform and designed as a drop-in tool to decrease the complexity of deployments by providing a standard set of
 success oriented tools.
 
+# Contents
+
+* [Installing](#installing)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Network Communication](#networkcommunication)
+* [Access Keys](#accesskeys) - optional authorization
+* [Discovery](#discover) - self-discovery of bpbroker nodes
+* [Ping](#ping) - end-to-end connectivity check
+* [Service](#service) - durable key/value service broker store
+* [Execute](#execute) - extending the bpbroker suite with custom modules
+
+
 # Installing
 See [bpbroker installation](README.md#installing).
 
