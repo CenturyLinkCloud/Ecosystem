@@ -172,11 +172,25 @@ additional data.
 {"last_write_ts": 1420068317, "last_write_ip": "127.0.0.1", "key": "special data", "new_key": "new data"}
 ```
 
-
 ## Service Get
+Performs a read of existing data.  If `--name` does not exist returns an error.
 
+```shell
+# key exists
+bpclient  --bpbroker 127.0.0.1:20443 service get --name foo
+bar
+
+# key does not exist
+> bpclient  --bpbroker 127.0.0.1:20443 service get --name foo_no_exist
+Fatal error: Entry 'foo_no_exist' not found
+```
 
 ## Service Delete
+Remove existing `--name`.  No result output on either success or failure.
+
+```shell
+> bpclient  --bpbroker 127.0.0.1:20443 service delete --name foo
+```
 
 
 # Execute
