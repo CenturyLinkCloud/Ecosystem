@@ -11,7 +11,7 @@ setup(
 		"bpbroker": ["dummy_api.crt","dummy_api.key"],
 	},
 
-	install_requires = ['argparse','requests'],
+	install_requires = ['argparse','requests','premailer'],
 
 	entry_points = {
 		'console_scripts': [
