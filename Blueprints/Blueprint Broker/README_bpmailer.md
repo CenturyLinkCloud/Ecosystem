@@ -98,4 +98,14 @@ HERE
 Results in the following email:
 ![alt text][md_assets/bpmailer_exmaple_email.png]
 
-Starting from the email msg and css inside the [examples](examples) directory will deliver a good multi-client experience.  This template is basded on 
+Starting from the email message and css inside the [examples](examples) directory will deliver a good multi-client experience.  This template is based on the
+[ZURB](http://zurb.com/playground/responsive-email-templates) responsive email templates.  bpmailer includes a css inliner to easy flexibility and decrease time
+to implement.
+
+# Using bpmailer inside your CenturyLink Cloud Blueprints
+Assume the following scenario
+
+
+
+
+
