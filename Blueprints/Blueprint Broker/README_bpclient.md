@@ -58,6 +58,11 @@ The toolset uses two modes of network communciation
 
 We recommend retaining the default port assignments to maximize compatibility.
 
+# Access Keys
+The bpbroker service may have access keys configured on a per-service basis.  If this is enabled all requests (besides discover) must include
+the `--access-key` parameter.  Failure to do so will return an error.
+
+
 # Discover
 The bpbroker/bpclient suite is build to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
 the same subnet as the **bpclient** tool there is no need for apriori knowledge of the bpbroker IP address.
@@ -106,12 +111,42 @@ Fatal error: ('Connection aborted.', error(61, 'Connection refused'))✘-1
 
 # no connectivity
 > bpclient --bpbroker 10.0.0.1:20443 ping --data foo
-# --> No response, client hangs
+Fatal error: ('Connection aborted.', error(60, 'Operation timed out'))✘-1
 ```
 
 # Service
+Provide access to the key/value service broker data store.  Data stored here is durable across bpbroker service restarts.
+
+## Usage
+```shell
+> ./bpclient service --help
+usage: bpclient service [-h] {register,replace,update,get,delete} ...
+
+positional arguments:
+  {register,replace,update,get,delete}
+    register            Register supplied data to supplied key
+    replace             Replace data associated with supplied key
+    update              Update data associated with supplied key
+    get                 Return data associated with supplied key
+    delete              Delete key from service broker
+```
+
+## Service Register
+
+## Service Replace
+
+## Service Update
+
+## Service Get
+
+## Service Delete
 
 
 # Execute
+Execute custom modules implemented on the server side.  An example of this is the **OSSEC** implementation with a custom Python module in [this github repo](Public Blueprint Source/OSSEC/noarch).  We also have a sample module in the [examples](examples) directory.
 
+These custom modules are accessible to bpclient after successful installation on the bpbroker instance using the following command format:
+
+```shell
+```
 
