@@ -50,6 +50,24 @@ Commands:
 # Configuraton
 All configuration an interation is via command line parameters.
 
+
+# Network communication
+The toolset uses two modes of network communciation
+* [Discovery](#discovery) sends plaintext UDP packets to the broadcast domain port 20443/UDP
+* All other communications occur over SSL encrypted traffic by default on 20443/TCP
+
+We recommend retaining the default port assignments to maximize compatibility.
+
+# Discovery
+The bpbroker/bpclient suite is build to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
+the same subnet as the **bpclient** tool there is no need for apriori knowledge of the bpbroker IP address.
+
+Since multiple broker services may exist within the same subnet the discovery protocol is tagged with a specific key.  If the bpbroker contains that key in its
+key/value service registry it will reply.  bpclient returns the IP address of the first response it recieves.  To mitigate the risk of unauthorized discovery or 
+(more likely) mutliple bpbrokers responding for the same service request and developing a split-brain scenario best practices are to use a unique key.  For example 
+if your application is `foo` you may tag one cluster `foo-cluster1` and anotehr `foo-cluster2`.  
+
+
 # Quickstart Example
 Example execution by passing variables through stdin on Linux using a HERE document.  Variables can be read via a file or specify `-` for stdin (as shown below).
 ```shell
