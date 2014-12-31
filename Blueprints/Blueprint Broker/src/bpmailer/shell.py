@@ -57,11 +57,11 @@ class Args:
 class ExecCommand():
 	def __init__(self):
 		try:
-			msg = bpmailer.Mailer(template=self.args.template,subject=self.args.subject,to_addr=self.args.to_addr)
+			msg = bpmailer.mailer.Mailer(template=self.args.template,subject=self.args.subject,to_addr=self.args.to_addr)
 			if self.args.css:  msg.LoadCSS(self.args.css)
 			print msg.css
-		except Exception as e:
-			sys.stderr.write("Fatal error: %s\n" % str(e))
+		except:
+			sys.stderr.write("Fatal error: %s\n" % sys.exc_info()[1])
 			sys.exit(1)
 
 

@@ -6,7 +6,6 @@ bpmailer mailing module
 
 import re
 import premailer
-
 import bpmailer
 
 

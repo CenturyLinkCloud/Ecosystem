@@ -6,6 +6,6 @@
 		"smptp_server": "127.0.0.1",
 		"smtp_port": 25,
 		"smtp_user": "",
-		"smtp_password": "",
+		"smtp_password": ""
 	}
 }

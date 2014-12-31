@@ -9,25 +9,18 @@ This is thread safe.
 import os
 import sys
 import json
+import socket
 import threading
 
 import bpmailer
 
 default_config = {
-	'api': {
-	},
-	'worker':  {
-	},
-	'_global':  {
-		'healthcheck_freq_sec': 10,
-	},
-	'_config':  {
-		'backup_freq_secs': 3600,
-		'backup_retain_n': 24,
-	},
-
-	'ping':  { },
-	'services':  { },
+	"_bpmailer":  {
+		"smptp_server": "127.0.0.1",
+		"smtp_port": 25,
+		"smtp_user": "bpmailer@%s" % socket.gethostname(),
+		"smtp_password": ""
+	}
 }
 
 
