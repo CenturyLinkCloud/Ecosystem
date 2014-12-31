@@ -98,6 +98,7 @@ HERE
 ```
 
 Results in the following email:
+
 ![example_email](md_assets/bpmailer_exmaple_email.png)
 
 Starting from the email message and css inside the [examples](examples) directory will deliver a good multi-client experience.  This template is based on the
