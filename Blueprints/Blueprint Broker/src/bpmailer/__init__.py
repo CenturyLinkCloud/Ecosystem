@@ -11,7 +11,7 @@ Package Github page:
 
 from bpmailer.shell import Args, ExecCommand
 import bpmailer.cli as cli
-import bpbroker.config as config_class
+import bpmailer.config as config_class
 
 
 import requests

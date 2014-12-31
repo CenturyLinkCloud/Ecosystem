@@ -11,7 +11,7 @@ import sys
 import json
 import threading
 
-import bpbroker
+import bpmailer
 
 default_config = {
 	'api': {
@@ -36,9 +36,9 @@ default_config = {
 
 def ImportConfigString(cstr):
 	try:
-		with bpbroker.config.rlock:
-			bpbroker.config.data =  dict(list(bpbroker.config.data.items()) + list(json.loads(cstr).items()))
-			bpbroker.config.Save()
+		with bpmailer.config.rlock:
+			bpmailer.config.data =  dict(list(bpmailer.config.data.items()) + list(json.loads(cstr).items()))
+			bpmailer.config.Save()
 	except Exception as e:
 		raise(Exception("Unable to import configuration: %s" % str(e)))
 
@@ -59,9 +59,9 @@ class Config(object):
 		self.rlock = threading.RLock()
 
 		if not self.source and os.name == 'posix':
-			self.source = "/usr/local/bpbroker/etc/bpbroker.json"
+			self.source = "/usr/local/bpmailer/etc/bpmailer.json"
 		elif not self.source and os.name == 'nt':
-			self.source = "%s/bpbroker/etc/bpbroker.json" % os.environ["ProgramW6432"]
+			self.source = "%s/bpmailer/etc/bpmailer.json" % os.environ["ProgramW6432"]
 		self.data = default_config
 		if self.source:  self._Load()
 
