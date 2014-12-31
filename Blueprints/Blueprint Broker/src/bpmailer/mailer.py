@@ -7,6 +7,8 @@ bpmailer mailing module
 import re
 import smtplib
 import premailer
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import bpmailer
 
 
@@ -16,16 +18,15 @@ import bpmailer
 
 class Mailer(object):
 
-	def __init__(self,template_file,subject,css_file=None,to_addr=None,from_addr=None,variables={}):
+	def __init__(self,template_file,subject,css_file=None,to_addr=None,cc_addrs=[],from_addr=None,variables={}):
 		self.css_file = css_file
 		self.subject = subject
 		self.to_addr = to_addr
+		self.cc_addrs = cc_addrs
 		self.from_addr = from_addr
 		self.variables = variables
 
-		#if css_file:  self.LoadCSS(css_file)
-
-		self.LoadTemplate(template_file)
+		self.template = open(template_file).read()
 		self.InlineCSS()
 		self.ApplyVariables()
 		self.Deliver()
@@ -33,11 +34,6 @@ class Mailer(object):
 
 	def AddCC(self,cc_addrs):
 		pass
-
-
-	def LoadTemplate(self,f):
-		fh = open(f)
-		self.template = fh.read()
 
 
 	def InlineCSS(self):
@@ -51,6 +47,15 @@ class Mailer(object):
 
 
 	def Deliver(self):
-		pass
+		msg = MIMEMultipart('alternative')
+		msg['Subject'] = "Link"
+		msg['From'] = self.from_addr
+		msg['To'] = self.to_addr
+		msg['CC'] = "; ".join(self.cc_addrs)
+		msg.attach(MIMEText(self.template, 'html'))
+
+		s = smtplib.SMTP('localhost')
+		s.sendmail(self.to_addr, self.from_addr, msg.as_string())
+		s.quit()
 
 
