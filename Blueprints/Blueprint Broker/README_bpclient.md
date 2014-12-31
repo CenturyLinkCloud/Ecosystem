@@ -145,8 +145,11 @@ positional arguments:
 # Execute
 Execute custom modules implemented on the server side.  An example of this is the **OSSEC** implementation with a custom Python module in [this github repo](Public Blueprint Source/OSSEC/noarch).  We also have a sample module in the [examples](examples) directory.
 
-These custom modules are accessible to bpclient after successful installation on the bpbroker instance using the following command format:
+These custom modules are accessible to bpclient after successful installation on the bpbroker instance by specifying the module and method name using the `--method`` parameter.
+If there are errors with the access key or if the module is not enabled within the bpbroker service then bpclient will exist with a non-zero error status and provide an error
+message.
 
 ```shell
+> bpclient --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" execute --method ossec.AddAgent --data $HOSTNAME
 ```
 
