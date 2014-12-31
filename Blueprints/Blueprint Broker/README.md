@@ -31,13 +31,13 @@ The installation script is available inside [this github repo](../Public Bluepri
 ### Windows Quickstart
 The current Windows scripts to not download pre-reqs but instead bundle them in. The installation script and its dependencies are available inside [this github repo](../Public Blueprint Source/BP Broker/Windows) but we recommend leveraging the [zipped package](https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/master/Blueprints/Public Blueprint Source/BP Broker/Blueprints_Completed_Packages/Windows_bpbroker.zip).
 
-Binaries are available to execute rooted out of %programfiles%\bpbroker\bin\.
+Binaries are available to execute rooted out of `%programfiles%\bpbroker\bin\`.
 
 
 ### Via Pyhton's pip
-Cross-platform installation is available via pypi.  Requires *Python 2.7* - this is not currently compatible with Python 3.
+Cross-platform installation is available via pypi.  Requires **Python 2.7** - this is not currently compatible with Python 3.
 If you have pip already installed the following command will get you running.  Other tools built to interact with bpbroker
-often expect it to be rooted in /usr/local/bpbroker (Linux) or %programfiles%\bpbroker (Windows).
+often expect it to be rooted in `/usr/local/bpbroker` (Linux) or `%programfiles%\bpbroker` (Windows).
 
 ```shell
 # system-wide installation
