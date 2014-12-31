@@ -11,12 +11,7 @@ Package Github page:
 
 from bpmailer.shell import Args, ExecCommand
 import bpmailer.cli as cli
+import bpmailer.mailer as mailer
 import bpmailer.config as config_class
 
-
-import requests
-requests.packages.urllib3.disable_warnings()
-
-
-config = config_class.Config()
 
