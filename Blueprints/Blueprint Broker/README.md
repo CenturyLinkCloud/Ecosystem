@@ -1,7 +1,10 @@
 # CenturyLink Cloud Blueprint Broker Toolset
 
-This repository contains a toolset for 
-This repository contains a ***Python SDK*** and a command line interface **CLI** (based on the SDK) to interact with the ***[CenturyLink Cloud](http://www.centurylinkcloud.com)*** API.  At present this aligns most closely to [V1](https://t3n.zendesk.com/categories/20012068-API-v1-0) of the CenturyLink Cloud API though efforts are in process to merge [V2](https://t3n.zendesk.com/categories/20067994-API-v2-0-Beta-) API as it nears full release.
+This repository contains a cross-platform toolset to decrease the complexity of deploying Blueprints within the ***[CenturyLink Cloud](http://www.centurylinkcloud.com)*** platform (though it can be easily leveraged across any other provider or platform).  Plug-in to these tools to gain instant multi-platofrm access to:
+* Self-discoverable service broker - clients instantly find it without any hostname or IP address coding
+* Encrypted key/value store with transparent authentication - for example use to facilitate bootstrapping a multi-server cluster or hot-adding additional nodes) to extend for file transfer and to facilitate server operations on demand
+* Send richly formatted emails customized based on script-provided variables - increase customer success by notifying users how to access and interact with the instance of your software they just installed
+
 
 ## Contents
 
