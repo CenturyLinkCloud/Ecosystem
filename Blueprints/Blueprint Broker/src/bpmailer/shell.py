@@ -31,6 +31,7 @@ class Args:
 		parser.add_argument('--template', required=True, help='Path to mail template file')
 		parser.add_argument('--from', dest="from_addr", help='Source email address')
 		parser.add_argument('--css', help='Path to optional css file')
+		parser.add_argument('--variables', help="Path to optional variables files or '-' for stdin")
 		self.args = parser.parse_args()
 
 
@@ -57,8 +58,14 @@ class Args:
 class ExecCommand():
 	def __init__(self):
 		try:
-			msg = bpmailer.mailer.Mailer(template=bpmailer.args.args.template,subject=bpmailer.args.args.subject,to_addr=bpmailer.args.args.to_addr)
-			if bpmailer.args.args.css:  msg.LoadCSS(bpmailer.args.args.css)
+			if bpmailer.args.args.variables=='-': bpmailer.args.args.variables = sys.stdin.read()
+			elif bpmailer.args.args.variables:  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
+			print bpmailer.args.args.variables
+			msg = bpmailer.mailer.Mailer(css_file=bpmailer.args.args.css,
+			                             template_file=bpmailer.args.args.template,
+										 subject=bpmailer.args.args.subject,
+										 to_addr=bpmailer.args.args.to_addr,
+										 from_addr=bpmailer.args.args.from_addr)
 		except:
 			raise
 			sys.stderr.write("Fatal error: %s\n" % sys.exc_info()[1])

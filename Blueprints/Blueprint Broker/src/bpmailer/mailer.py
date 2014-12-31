@@ -15,10 +15,17 @@ import bpmailer
 
 class Mailer(object):
 
-	def __init__(self,template,subject,to_addr):
-		self.LoadTemplate(template)
+	def __init__(self,template_file,subject,css_file=None,to_addr=None,from_addr=None,variables={}):
 		self.subject = subject
 		self.to_addr = to_addr
+		self.from_addr = from_addr
+
+		if css_file:  self.LoadCSS(css_file)
+
+		self.LoadTemplate(template_file)
+		self.InlineCSS()
+		self.ApplyVariables()
+		self.Deliver()
 
 
 	def AddCC(self,cc_addrs):

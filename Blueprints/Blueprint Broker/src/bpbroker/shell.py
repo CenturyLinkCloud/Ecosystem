@@ -101,6 +101,6 @@ class ExecCommand():
 
 	def Configure(self):
 		if bpbroker.args.args.config_file:  bpbroker.config_class.ImportConfigFile(bpbroker.args.args.config_file)
-		else:  bpbroker.config_class.ImportConfigString("tbd")
+		else:  bpbroker.config_class.ImportConfigString(sys.stdin.read())
 
 
