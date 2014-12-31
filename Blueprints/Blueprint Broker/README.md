@@ -22,11 +22,13 @@ These packages are public and their source is available via [this github repo](.
 ### Linux Quickstart
 The installation script is available inside [this github repo](../Public Blueprint Source/BP Broker/Linux/install_bpbroker.sh).  It can be installed via the following one-liner:
 ```shell
-> curl https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/bp_broker_a/Blueprints/Public%20Blueprint%20Source/BP%20Broker/Linux/install_bpbroker.sh | bash
+> curl https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/master/Blueprints/Public%20Blueprint%20Source/BP%20Broker/Linux/install_bpbroker.sh | bash
 ```
 
 ### Windows Quickstart
-This installation includes Python 2.7
+The current Windows scripts to not download pre-reqs but instead bundle them in. The installation script and its dependencies are available inside [this github repo](../Public Blueprint Source/BP Broker/Windows) but we recommend leveraging the [zipped package](https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/master/Blueprints/Public Blueprint Source/BP Broker/Blueprints_Completed_Packages/Windows_bpbroker.zip).
+
+Binaries are available to execute rooted out of %programfiles%\bpbroker\bin\.
 
 
 ### Via Pyhton's pip
