@@ -149,9 +149,28 @@ Replaces existing data with the bpbroker service or if none exists creates new. 
 in use but the data itself is not authoritative.
 
 ```shell
+# 'foo' keya already exists
+> bpclient  --bpbroker 127.0.0.1:20443 service replace --name foo --data bar
+bar
+
+# 'new_key' does not already exist
+> bpclient  --bpbroker 127.0.0.1:20443 service replace --name new_key --data bar
+bar
 ```
 
 ## Service Update
+Updates existing data with the bpbroker service or if none exists creates new.  If data can be parsed into a json object this permits safely adding
+additional data.
+
+```shell
+# first register the new data point.  Notice different output when we suplied json data vs. a normal string
+> bpclient  --bpbroker 127.0.0.1:20443 service register --name foo3 --data '{"key": "special data"}'
+{"last_write_ts": 1420068290, "last_write_ip": "127.0.0.1", "key": "special data"}
+
+# then update it
+> bpclient  --bpbroker 127.0.0.1:20443 service update --name foo3 --data '{"new_key": "new data"}'
+{"last_write_ts": 1420068317, "last_write_ip": "127.0.0.1", "key": "special data", "new_key": "new data"}
+```
 
 
 ## Service Get
