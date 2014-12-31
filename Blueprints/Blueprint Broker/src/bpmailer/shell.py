@@ -23,15 +23,14 @@ class Args:
 
 	def ParseArgs(self):
 		parser = argparse.ArgumentParser(description="bpmailer tool")
-		parser_sp1 = parser.add_subparsers(title='Commands',dest='command')
 
 		########## Global ###########
-		parser.add_argument('--from', help='Source email address')
-		parser.add_argument('--to', required=True, help='Destination email address')
+		parser.add_argument('--config', '-c', required=True, help='Path to non-default configuration file')
+		parser.add_argument('--to', dest="to_addr", required=True, help='Destination email address')
 		parser.add_argument('--subject', required=True, help='Email subject')
 		parser.add_argument('--template', required=True, help='Path to mail template file')
+		parser.add_argument('--from', dest="from_addr", help='Source email address')
 		parser.add_argument('--css', help='Path to optional css file')
-		parser.add_argument('--config', '-c', required=True, help='Path to non-default configuration file')
 		self.args = parser.parse_args()
 
 
@@ -50,7 +49,7 @@ class Args:
 
 
 	def MergeCommands(self):
-		if self.args.from:  bpmailer.config.data["_bpmailer"]['mail_from_address'] = self.args.from
+		if self.args.from_addr:  bpmailer.config.data["_bpmailer"]['mail_from_address'] = self.args.from_addr
 
 
 
@@ -58,7 +57,9 @@ class Args:
 class ExecCommand():
 	def __init__(self):
 		try:
-			self.Bootstrap()
+			msg = bpmailer.Mailer(template=self.args.template,subject=self.args.subject,to_addr=self.args.to_addr)
+			if self.args.css:  msg.LoadCSS(self.args.css)
+			print msg.css
 		except Exception as e:
 			sys.stderr.write("Fatal error: %s\n" % str(e))
 			sys.exit(1)

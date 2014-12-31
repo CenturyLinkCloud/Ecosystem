@@ -3,9 +3,9 @@
 import time
 import sys
 
-import bpclient
+import bpmailer
 
 
-bpclient.cli.BPClient()
+bpmailer.cli.BPMailer()
 
 

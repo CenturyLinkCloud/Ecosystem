@@ -16,30 +16,34 @@ import bpmailer
 
 class Mailer(object):
 
-	def __init__(self):
-		self.LoadCSS()
-		self.LoadTemplate()
-		self.InlineCSS()
-		self.ApplyVariables()
-		self.Deliver()
+	def __init__(self,template,subject,to_addr):
+		self.LoadTemplate(template)
+		self.subject = subject
+		self.to_addr = to_addr
 
-	def LoadCSS():
+
+	def AddCC(self,cc_addrs):
 		pass
 
 
-	def LoadTemplate():
+	def LoadCSS(self,f):
+		fh = open(f)
+		self.css = fh.readlines()
+
+
+	def LoadTemplate(self,f):
 		pass
 
 
-	def InlineCSS():
+	def InlineCSS(self):
 		pass
 
 
-	def ApplyVariables():
+	def ApplyVariables(self):
 		pass
 
 
-	def Deliver():
+	def Deliver(self):
 		pass
 
 
