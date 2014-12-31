@@ -92,7 +92,8 @@ $BPBROKER_IP = $output -replace "`t|`n|`r",""
 ```
 
 # Ping
-The ping method is used to verify end-to-end connectivity.
+The ping method is used to verify end-to-end connectivity.  Specify the `--bpbroker` parameter as the endpoint to reach.  Will receive an echo
+of the ``--data`` send to the bpbroker service.
 
 ```shell
 # succssful call
@@ -109,6 +110,7 @@ Fatal error: ('Connection aborted.', error(61, 'Connection refused'))✘-1
 ```
 
 # Service
+
 
 # Execute
 
