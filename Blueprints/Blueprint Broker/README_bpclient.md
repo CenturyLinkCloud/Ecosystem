@@ -11,7 +11,7 @@ See [bpbroker installation](README.md#installing).
 
 # Usage
 ```shell
-> bpclient.py
+> bpclient
 usage: bpclient [-h] [--bpbroker host:port] [--access-key KEY]
                 [--cols [COL [COL ...]]]
                 [--format {json,text,csv,csv-noheader}]
@@ -53,7 +53,7 @@ All configuration an interation is via command line parameters.
 
 # Network communication
 The toolset uses two modes of network communciation
-* [Discovery](#discovery) sends plaintext UDP packets to the broadcast domain port 20443/UDP
+* [Discovery](#discover) sends plaintext UDP packets to the broadcast domain port 20443/UDP
 * All other communications occur over SSL encrypted traffic by default on 20443/TCP
 
 We recommend retaining the default port assignments to maximize compatibility.
@@ -64,13 +64,13 @@ the `--access-key` parameter.  Failure to do so will return an error.
 
 
 # Discover
-The bpbroker/bpclient suite is build to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
+The bpbroker/bpclient suite is built to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
 the same subnet as the **bpclient** tool there is no need for apriori knowledge of the bpbroker IP address.
 
 Since multiple broker services may exist within the same subnet the discovery protocol is tagged with a specific key.  If the bpbroker contains that key in its
-key/value service registry it will reply.  bpclient returns the IP address of the first response it recieves.  To mitigate the risk of unauthorized discovery or 
+[key/value service registry](#service) it will reply.  bpclient returns the IP address of the first response it recieves.  To mitigate the risk of unauthorized discovery or 
 (more likely) mutliple bpbrokers responding for the same service request and developing a split-brain scenario best practices are to use a unique key.  For example 
-if your application is `foo` you may tag one cluster `foo-cluster1` and anotehr `foo-cluster2`.  
+if your application is `foo` you may tag one cluster `foo-cluster1` and another `foo-cluster2`.  
 
 Linux bash:
 ```shell
@@ -80,7 +80,7 @@ Linux bash:
 ```
 
 Windows Powershell:
-``powershell
+```powershell
 $psi = New-object System.Diagnostics.ProcessStartInfo 
 $psi.CreateNoWindow = $true 
 $psi.UseShellExecute = $false 
@@ -98,7 +98,7 @@ $BPBROKER_IP = $output -replace "`t|`n|`r",""
 
 # Ping
 The ping method is used to verify end-to-end connectivity.  Specify the `--bpbroker` parameter as the endpoint to reach.  Will receive an echo
-of the ``--data`` send to the bpbroker service.
+of the `--data` send to the bpbroker service.
 
 ```shell
 # succssful call
