@@ -21,9 +21,9 @@ class Args:
 		parser_sp1 = parser.add_subparsers(title='Commands',dest='command')
 
 		########## Global ###########
-		parser.add_argument('--from', required=True, help='source email address')
-		parser.add_argument('--to', required=True, help='destination email address')
-		parser.add_argument('--subject', required=True, help='email subject')
+		parser.add_argument('--from', help='Source email address')
+		parser.add_argument('--to', required=True, help='Destination email address')
+		parser.add_argument('--subject', required=True, help='Email subject')
 		parser.add_argument('--template', required=True, help='Path to mail template file')
 		parser.add_argument('--css', help='Path to optional css file')
 		parser.add_argument('--config', '-c', required=True, help='Path to non-default configuration file')
