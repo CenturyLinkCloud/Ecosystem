@@ -27,11 +27,12 @@ class Mailer(object):
 
 	def LoadCSS(self,f):
 		fh = open(f)
-		self.css = fh.readlines()
+		self.css = fh.read()
 
 
 	def LoadTemplate(self,f):
-		pass
+		fh = open(f)
+		self.template = fh.read()
 
 
 	def InlineCSS(self):
