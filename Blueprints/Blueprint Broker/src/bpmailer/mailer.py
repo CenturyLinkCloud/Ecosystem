@@ -48,15 +48,16 @@ class Mailer(object):
 
 	def Deliver(self):
 		msg = MIMEMultipart('alternative')
-		msg['Subject'] = "Link"
+		msg['Subject'] = self.subject
 		msg['From'] = self.from_addr
 		msg['To'] = self.to_addr
 		msg['CC'] = "; ".join(self.cc_addrs)
 		msg.attach(MIMEText(self.template, 'html'))
 
+		print bpmailer.config.data["_bpmailer"]['mail_from_address']
 		s = smtplib.SMTP(bpmailer.config.data['_bpmailer']['smtp_server'],bpmailer.config.data['_bpmailer']['smtp_port'])
 		s.login(str(bpmailer.config.data['_bpmailer']['smtp_user']),str(bpmailer.config.data['_bpmailer']['smtp_password']))
-		s.sendmail(self.to_addr, self.from_addr, msg.as_string())
+		s.sendmail(bpmailer.config.data["_bpmailer"]['mail_from_address'], self.to_addr, msg.as_string())
 		s.quit()
 
 

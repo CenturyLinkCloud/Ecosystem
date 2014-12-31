@@ -70,7 +70,6 @@ class ExecCommand():
 			                             template_file=bpmailer.args.args.template,
 										 subject=bpmailer.args.args.subject,
 										 to_addr=bpmailer.args.args.to_addr,
-										 from_addr=bpmailer.args.args.from_addr,
 										 variables=variables)
 		except:
 			raise
