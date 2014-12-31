@@ -18,7 +18,7 @@ import bpmailer
 
 class Mailer(object):
 
-	def __init__(self,template_file,subject,css_file=None,to_addr=None,cc_addrs=[],from_addr=None,variables={}):
+	def __init__(self,template_file,to_addr,subject,css_file=None,cc_addrs=[],from_addr=None,variables={}):
 		self.css_file = css_file
 		self.subject = subject
 		self.to_addr = to_addr
@@ -54,9 +54,8 @@ class Mailer(object):
 		msg['CC'] = "; ".join(self.cc_addrs)
 		msg.attach(MIMEText(self.template, 'html'))
 
-		print bpmailer.config.data
 		s = smtplib.SMTP(bpmailer.config.data['_bpmailer']['smtp_server'],bpmailer.config.data['_bpmailer']['smtp_port'])
-		s.login(bpmailer.config.data['_bpmailer']['smtp_user'],bpmailer.config.data['_bpmailer']['smtp_password'])
+		s.login(str(bpmailer.config.data['_bpmailer']['smtp_user']),str(bpmailer.config.data['_bpmailer']['smtp_password']))
 		s.sendmail(self.to_addr, self.from_addr, msg.as_string())
 		s.quit()
 
