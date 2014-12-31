@@ -16,9 +16,10 @@ import bpmailer
 
 default_config = {
 	"_bpmailer":  {
+		"mail_from_user": "bpmailer@%s" % socket.gethostname(),
 		"smptp_server": "127.0.0.1",
 		"smtp_port": 25,
-		"smtp_user": "bpmailer@%s" % socket.gethostname(),
+		"smtp_user": "",
 		"smtp_password": ""
 	}
 }

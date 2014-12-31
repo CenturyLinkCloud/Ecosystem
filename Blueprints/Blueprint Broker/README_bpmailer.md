@@ -6,7 +6,7 @@ As with all items in the bpbroker toolset, this is cross-platform and designed a
 success oriented tools.
 
 # Installing
-See [bpbroker](README.md#installing).
+See [bpbroker installation](README.md#installing).
 
 
 # Usage
@@ -50,9 +50,10 @@ The following defaults are embedded within the tool:
 ```json
 {
     "_bpmailer":  {
+		"mail_from_address": "bpmailer@`hostname`",
         "smptp_server": "127.0.0.1",
         "smtp_port": 25,
-        "smtp_user": "bpmailer@%s" % socket.gethostname(),
+        "smtp_user": "",
         "smtp_password": ""
     }
 }
@@ -60,7 +61,7 @@ The following defaults are embedded within the tool:
 
 ## Configuration File
 This format is compatible with the bpbroker configuration file and both tools can use the same configuration.
-See (Example bpmailer_config.json)[examples/bpmailer_example_config.json] also shown below:
+See [Example bpmailer_config.json](examples/bpmailer_example_config.json) also shown below:
 ```json
 {
 	"_bpmailer":  {
@@ -86,9 +87,10 @@ The following environment variables are interpreted:
 * MAIL_FROM_ADDRESS
 
 # Quickstart Example
-Example executing by passing variables through stdin on Linux using a HERE document.
+Example execution by passing variables through stdin on Linux using a HERE document.  Variables can be read via a file or specify `-` for stdin (as shown below).
 ```shell
-> bpmailer --config bpmailer.json  --to toaddr@example.com --subject "Test Message" --template examples/bpmailer_example_message_template \
+> bpmailer --config bpmailer.json  --to toaddr@example.com --subject "Test Message" \
+           --template examples/bpmailer_example_message_template \
            --css examples/bpmailer_example_css --from "John Smith <john@example.com>" --variables - <<HERE
 NAME=xxxx
 foo=bar
@@ -96,7 +98,7 @@ HERE
 ```
 
 Results in the following email:
-![md_assets/bpmailer_exmaple_email.png]
+![example_email](md_assets/bpmailer_exmaple_email.png)
 
 Starting from the email message and css inside the [examples](examples) directory will deliver a good multi-client experience.  This template is based on the
 [ZURB](http://zurb.com/playground/responsive-email-templates) responsive email templates.  bpmailer includes a css inliner to easy flexibility and decrease time
@@ -113,7 +115,7 @@ Assume the following scenario
 > and any initial credentials) and provide some example test queries.  To increase conversion rate you want to send this tailored message exactly
 > when the application is ready to test.
 
-Include a bpmailer configuration file with your installation package that points towards an SMTP relay:
+Include a bpmailer configuration file with your installation package that points towards your SMTP relay:
 ```json
 {
 	"_bpmailer":  {
@@ -126,8 +128,10 @@ Include a bpmailer configuration file with your installation package that points
 
 After the data load is complete append the following lines to the end of your bash installation script:
 ```shell
-> echo IP_ADDRESS=192.168.1.1 | bpmailer --config isv_custom.json  --to prospect@example.com --subject "Database Ready for Testing" \
-                                         --template isv_message_template -from "ISV Inc <john@example.com>" --variables - 
+> echo IP_ADDRESS=192.168.1.1 | bpmailer --config isv_custom.json  --to prospect@example.com \
+                                         --subject "Database Ready for Testing" \
+                                         --template isv_message_template \
+										 --from "ISV Inc <john@example.com>" --variables - 
 ```
 
 
