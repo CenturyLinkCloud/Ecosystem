@@ -31,7 +31,10 @@ body {
 /* ------------------------------------- 
 		ELEMENTS 
 ------------------------------------- */
-a { color: #2BA6CB;}
+a { 
+	color: rgb(255,99,25);
+	text-decoration: none;
+}
 
 .btn {
 	text-decoration:none;
@@ -47,12 +50,14 @@ a { color: #2BA6CB;}
 
 p.callout {
 	padding:15px;
-	background-color:#ECF8FF;
+	background-color:rgb(140,198,63);
+	color: #FFF;
 	margin-bottom: 15px;
 }
 .callout a {
 	font-weight:bold;
-	color: #2BA6CB;
+	color: rgb(255,99,25);
+	text-decoration: none;
 }
 
 table.social {

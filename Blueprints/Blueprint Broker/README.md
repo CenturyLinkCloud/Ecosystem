@@ -1,25 +1,33 @@
+# CenturyLink Cloud CLI and Python SDK
 
+This repository contains a ***Python SDK*** and a command line interface **CLI** (based on the SDK) to interact with the ***[CenturyLink Cloud](http://www.centurylinkcloud.com)*** API.  At present this aligns most closely to [V1](https://t3n.zendesk.com/categories/20012068-API-v1-0) of the CenturyLink Cloud API though efforts are in process to merge [V2](https://t3n.zendesk.com/categories/20067994-API-v2-0-Beta-) API as it nears full release.
+
+## Contents
+
+* [Installing](#installing)
+* [Python APIV1 SDK Programming Guide](README_PYTHON_APIV2_SDK.md), [Python APIV2 SDK Programming Guide](README_PYTHON_APIV1_SDK.md), and [SDK API Reference](http://centurylinkcloud.github.io/clc-python-sdk/doc/clc.html)
+* [CLI](README_CLI.md)
 
 
 ## Installing
-BP Broker tooling can be installed on any modern Linux OS (must have Python 2.x already installed) or Windows OS.
 
-
-### Linux Installation
-
-There are three ways to install on Linux.
-
-If the Python package manager *pip* is already on the system BP Broker is listed in pypi and can be installed using:
-
-```shell
-> pip install bpbroker
+### Via Pyhthon's pip
+Cross-platform installation is available via pypi.  Requires *Python 2.7* - this is not currently compatible with Python 3.
+If you have pip already installed the following command will get you running:
+```
+> pip install clc-sdk
 ```
 
-Take note however that standard CenturyLink Cloud tools which depend on bpbroker expect it to be installed in a virtualenv rooted out of */usr/local/bpbroker*.  We have scripts to replicate this install via two methods.
+This should automatically install the following dependencies used by the CLI: prettytable, clint, argparse, requests
 
-Either download the shell script available *(HERE-tbd)[#]* and include in any packaging you're creating, or download it as part of your package execution.  An example of the latter is:
-
-```shell
-> curl https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/bp_broker_a/Blueprints/Public%20Blueprint%20Source/BP%20Broker/Linux/install_bpbroker.sh | bash
+If you do not have pip (the Python package manager) installed a quickstart install of this prereq on Linux/Mac is:
 ```
+> curl https://bootstrap.pypa.io/get-pip.py | sudo python
+```
+
+### Windows pre-package executable
+The CLI is available as a prepackaged single-file Windows executable and the most recent compiled version is always available [here](https://github.com/CenturyLinkCloud/clc-python-sdk/raw/master/src/dist/clc-cli.exe).
+Note also that all examples below will need to be modified since the Windows command line executable is *clc-cli* (to eliminate conflict with the a 
+standard installed PS commandlet.
+
 
