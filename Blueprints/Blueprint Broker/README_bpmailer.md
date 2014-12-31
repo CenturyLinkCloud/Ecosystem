@@ -1,34 +1,43 @@
 
-
-
-## Installing
-BP Broker tooling can be installed on any modern Linux OS (must have Python 2.x already installed) or Windows OS.
-
-
-### Linux Installation
-
-There are three ways to install on Linux.
-
-If the Python package manager *pip* is already on the system BP Broker is listed in pypi and can be installed using:
-
-```shell
-> pip install bpbroker
-```
-
-Take note however that standard CenturyLink Cloud tools which depend on bpbroker expect it to be installed in a virtualenv rooted out of */usr/local/bpbroker*.  We have scripts to replicate this install via two methods.
-
-Either download the shell script available *(HERE-tbd)[#]* and include in any packaging you're creating, or download it as part of your package execution.  An example of the latter is:
-
-```shell
-> curl https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/bp_broker_a/Blueprints/Public%20Blueprint%20Source/BP%20Broker/Linux/install_bpbroker.sh | bash
-```
-
 # bpmailer
 
+The bpmailer tool, part of the [bpbroker](README.md) suite, facilitates easily adding emailing customers and support personnel as part of an application installation.
+As with all items in the bpbroker toolset, this is cross-platform and designed as a drop-in tool to decrease the complexity of deployments by providing a standard set of
+success oriented tools.
 
-## Usage
+# Installing
+See [bpbroker](README.md#installing).
+
+
+# Usage
+```shell
+> bpmailer
+usage: bpmailer [-h] --config CONFIG --to TO_ADDR --subject SUBJECT
+                --template TEMPLATE [--from FROM_ADDR] [--css CSS]
+                [--variables VARIABLES]
+
+> bpmailer --help
+usage: bpmailer.py [-h] --config CONFIG --to TO_ADDR --subject SUBJECT
+                   --template TEMPLATE [--from FROM_ADDR] [--css CSS]
+                   [--variables VARIABLES]
+
+bpmailer tool
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --config CONFIG, -c CONFIG
+                        Path to non-default configuration file
+  --to TO_ADDR          Destination email address
+  --subject SUBJECT     Email subject
+  --template TEMPLATE   Path to mail template file
+  --from FROM_ADDR      Source email address
+  --css CSS             Path to optional css files not referenced in template
+  --variables VARIABLES
+                        Path to optional key=value variables files or '-' for
+                        stdin.
+```
+
 Example executing by passing variables through stdin on Linux using a HERE document.
-
 ```shell
 > /bpmailer.py --config bpmailer.json  --to toaddr@example.com --subject "Test Message" --template examples/bpmailer_example_message_template \
                --css examples/bpmailer_example_css --from "John Smith <john@example.com>" --variables - <<HERE
@@ -37,7 +46,7 @@ foo=bar
 HERE
 ```
 
-## Configuraton
+# Configuraton
 Configuration can be made through any combination of the following methods in increasing order of priority.
 * Hardcoded defaults
 * json configuration file
