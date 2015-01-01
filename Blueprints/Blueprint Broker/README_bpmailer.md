@@ -5,6 +5,13 @@ The bpmailer tool, part of the [bpbroker](README.md) suite, facilitates easily a
 As with all items in the bpbroker toolset, this is cross-platform and designed as a drop-in tool to decrease the complexity of deployments by providing a standard set of
 success oriented tools.
 
+# Contents
+* [Installing](#installing)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Variable Substitution](#variable-substitution)
+* [Quickstart Example](#quickstart-example)
+
 # Installing
 See [bpbroker installation](README.md#installing).
 
@@ -85,6 +92,27 @@ The following environment variables are interpreted:
 * SMTP_USER
 * SMTP_PASSWORD
 * MAIL_FROM_ADDRESS
+
+# Variable Substitution
+Key/Value pairs passed into the bpmailer tool are substituted for variable placeholders within the html message file to support content customization.
+
+Variable input via either stdin (specified as `-`) or a file specified in the `--variables` parameter.
+
+Variables formated as key/value pairs with a newline seperating each.  A single value can span multiple lines but  the next variable must start
+on a new line.  For example:
+
+```shell
+# correct
+foo=bar
+
+# correct
+foo=bar
+foo2=bar2
+extra line
+
+# incorrect
+foo=barr foo2=bar2
+```
 
 # Quickstart Example
 Example execution by passing variables through stdin on Linux using a HERE document.  Variables can be read via a file or specify `-` for stdin (as shown below).
