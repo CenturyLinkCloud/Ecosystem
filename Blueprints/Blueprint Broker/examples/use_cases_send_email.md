@@ -8,6 +8,8 @@ Doing so across both Windows and Linux platforms can be difficult
 
 # Solution
 
+Use the bpmailer tool.
+
 # Install bpbroker
 Perform a bpbroker installation for your platform as documented [here](../README.md#installing)
 
@@ -51,11 +53,11 @@ A basic template can look like the following:
   <body>
     <p>Thank you %NAME% for installing our product.<p>
 
-	<p>Please find access details below:</p>
-	<ul>
-	  <li>Server is accessible from <b>https://%SERVER_IP</b>
-	  <li>Help is available from http://www.eample.com/quick_start
-	</ul>
+    <p>Please find access details below:</p>
+    <ul>
+      <li>Server is accessible from <b>https://%SERVER_IP</b>
+      <li>Help is available from http://www.eample.com/quick_start
+    </ul>
   </body>
 </html>
 ```
@@ -64,18 +66,26 @@ A basic template can look like the following:
 # Send email
 Our example message has two variables we need to substitute - we can do so by passing this information to stdin or we can save to a file.
 
-Linux:
+Linux using stdin:
 ```shell
-> bpmailer --config isv_custom.json  --to prospect@example.com \
-		   --subject "Database Ready for Testing" \
-		   --template isv_message_template \
-		   --from "ISV Inc <john@example.com>" --variables - << HERE
+> /usr/local/bpbroker/bin/bpmailer \
+           --config isv_custom.json  --to prospect@example.com \
+           --subject "Database Ready for Testing" \
+           --template isv_message_template \
+           --from "ISV Inc <john@example.com>" --variables - << HERE
 NAME=John Smith
 SERVER_IP=10.50.100.10
 HERE
 ```
 
-Windows:
+Windows writing to a file:
 ```powershell
+$config = @"
+NAME=John Smith
+SERVER_IP=10.50.100.10
+"@
+$ini| "vars_config" -encoding ascii
+
+&"$env:programfiles" --config isv_custom.json  --to prospect@example.com \ --subject "Database Ready for Testing" \ --template isv_message_template \ --from "ISV Inc <john@example.com>" --variables vars_config
 ```
 
