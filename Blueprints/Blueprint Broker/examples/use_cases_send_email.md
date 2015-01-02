@@ -55,7 +55,7 @@ A basic template can look like the following:
 
     <p>Please find access details below:</p>
     <ul>
-      <li>Server is accessible from <b>https://%SERVER_IP</b>
+      <li>Server is accessible from <b>https://%SERVER_IP%</b>
       <li>Help is available from http://www.eample.com/quick_start
     </ul>
   </body>
