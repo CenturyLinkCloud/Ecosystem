@@ -10,12 +10,8 @@ success oriented tools.
 * [Installing](#installing)
 * [Usage](#usage)
 * [Configuration](#configuration)
-* [Network Communication](#network-communication)
-* [Access Keys](#access-keys) - optional authorization
-* [Discovery](#discover) - self-discovery of bpbroker nodes
-* [Ping](#ping) - end-to-end connectivity check
-* [Service](#service) - durable key/value service broker store
-* [Execute](#execute) - extending the bpbroker suite with custom modules
+* [Built-in Services](#built-in-services) - Disover, Ping, durable key/value store
+* [Extending functionality with Custom Services](#extending-functionality-with-custom-services)
 
 
 # Installing
@@ -24,14 +20,14 @@ See [bpbroker installation](README.md#installing).
 
 # Usage
 ```shell
-> bpbroker.py
-usage: bpbroker.py [-h] [--config CONFIG]
+> bpbroker
+usage: bpbroker [-h] [--config CONFIG]
 
                    {start,install-service,uninstall-service,install-extension,configure}
                    ...
 
-> bpbroker.py -h
-usage: bpbroker.py [-h] [--config CONFIG]
+> bpbroker -h
+usage: bpbroker [-h] [--config CONFIG]
 
                    {start,install-service,uninstall-service,install-extension,configure}
                    ...
@@ -79,7 +75,7 @@ by bpbroker after enabling the extension in the configuration.  See [Extending f
 for details on how to implement these extensions including working examples.
 
 ```shell
-> bpbroker.py install-extension --script FILENAME
+> bpbroker install-extension --script FILENAME
 ```
 
 ## configure
@@ -92,11 +88,11 @@ net new variables are applied and existing configurations remain untouched.
 ```shell
 # supply configuration via filename
 > sudo service bpbroker stop
-> bpbroker.py configure --config-file FILENAME
+> bpbroker configure --config-file FILENAME
 > sudo service bpbroker start
 
 # supply configuration via stdin
-> bpbroker.py configure <<HERE
+> bpbroker configure <<HERE
 {
 	"services": {
 		"_access_key": "secret"
@@ -159,7 +155,7 @@ the `access-key` parameter.  Optional access keys are defined within the configu
 
 # Built-in Services
 
-# Discover
+## Discover
 The bpbroker/bpbroker suite is built to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
 the same subnet as the **bpclient** tool there is no need for apriori knowledge of the bpbroker IP address.
 
@@ -169,10 +165,10 @@ request and developing a split-brain scenario best practices are to use a unique
 `foo-cluster1` and another `foo-cluster2`.  
 
 
-# Ping
+## Ping
 The ping method is used to verify end-to-end connectivity.  Will respond by echoing the `data` parameter supplied in the UDP packet.
 
-# Service
+## Service
 Provide access to the key/value service broker data store.  Data stored here is durable across bpbroker service restarts.  Available methods are:
 * Register
 * Replace
