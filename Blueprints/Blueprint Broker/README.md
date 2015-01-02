@@ -5,6 +5,7 @@ This repository contains a cross-platform toolset to decrease the complexity of 
 * Encrypted key/value store with transparent authentication - for example use to facilitate bootstrapping a multi-server cluster or hot-adding additional nodes) to extend for file transfer and to facilitate server operations on demand
 * Send richly formatted emails customized based on script-provided variables - increase customer success by notifying users how to access and interact with the instance of your software they just installed
 
+![overview](md_assets/bpbroker_overview.png)
 
 ## Contents
 
