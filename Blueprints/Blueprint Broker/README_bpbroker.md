@@ -182,17 +182,88 @@ Provide access to the key/value service broker data store.  Data stored here is 
 
 
 # Extending functionality with Custom Services
+This built in discovery and durable key/value service broker are compatible with a great many use cases.  However extended functionality is often
+required if work tasks need to be run executed on the local server itself.  Custom services can be easily adapted from the 
+[provided example extension module](examples/example_extension_module.py).
 
-# Execute
-Execute custom modules implemented on the server side.  An example of this is the **OSSEC** implementation with a custom Python module in [this github repo](../Public Blueprint Source/OSSEC/noarch).  We also have a sample module in the [examples](examples/example_extension_module.py) directory.
-
-These custom modules are accessible to bpbroker after successful installation on the bpbroker instance by specifying the module and method name using the `--method`` parameter.
-If there are errors with the access key or if the module is not enabled within the bpbroker service then bpbroker will exist with a non-zero error status and provide an error
-message.
+## Extension Namespace and Accessing from bpclient
 
 
-```shell
-> bpbroker --bpbroker $BPBROKER_IP:20443 --access-key "$OSSEC_KEY" \
-           execute --method ossec.AddAgent --data $HOSTNAME
+## Python server-side interface
+Your custom module should look similar to the example below.  If it a function with a single parameter (extended http request handler).  You will
+have access to a lot of information about the request itself from the handler.
+
+Your extension must set two parameters:
+* rh.status - http return status code.  If not 200 then also set rh.status_message
+* rh.data - if returning a 200 status code (success) populate this with the data you want your client to revieve
+
+```python
+def Test(rh):
+	"""Echo source host and querystring back in response. """
+
+	# A successful return is clean and looks like this:
+	rh.data = json.dumps(rh.qs)
+
+	# Where you to choose an errored response you may set the following:
+	#rh.status = 500
+	#rh.status_message = "End client visible message text explaining 500 error"
+```
+
+Clients have access to the extension only if all of the following are true:
+* Extension is defined in the json configuration file (whitelist)
+* Extension does not have a `_` at the start of the method name (used to hide "private" functions from this RPC)
+* Access key matches (if one is provided)
+* Module can be imported without error
+* Method exists
+
+
+## Working example using OSSEC
+A working example that implements the server-side functions to register an **OSSEC** agent is available in [this github repo](../Public Blueprint Source/OSSEC/noarch) and below:
+
+```python
+def AddAgent(rh):
+	"""Add agent to local ossec manager and return key."""
+
+	global OSSEC_DIR
+
+	# Make sure not already registered
+	with open("%s/etc/client.keys" % OSSEC_DIR) as f:  client_keys = f.readlines()
+
+	if 'data' not in rh.qs or re.search("^a-z0-9\-",rh.qs['data'].lower()):
+		rh.status = 500
+		rh.status_message = "Invalid source host name content"
+	elif re.search("\s%s\s" % rh.RequestingHost(),''.join(client_keys)):
+		rh.status = 500
+		rh.status_message = "Unable to add requested host IP in use"
+
+	else:
+		# Find next agent
+		try:
+			id = str(int(re.sub("\s.*","",sorted(client_keys)[-1]))+1).zfill(3)
+		except IndexError:
+			id = "001"
+
+		# Generate key
+		key = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(64))
+
+		# Append to client_keys file
+		with bpbroker.config.rlock:
+			with open("%s/etc/client.keys" % OSSEC_DIR,"aw") as f:
+				f.write("%s %s %s %s\n" % (id,rh.qs['data'],rh.RequestingHost(),key))
+			subprocess.Popen(["%s/bin/ossec-control" % OSSEC_DIR, "restart"], stdout=subprocess.PIPE).communicate()
+
+		# Export encoded key
+		rh.data = "%s %s %s %s" % (id,rh.qs['data'],rh.RequestingHost(),key)
+```
+
+The associated configuration file is relatively terse.  It includes the minimum which is a top-level definition of the `ossec` namespace
+and in this case also keeps a placeholder for an `access_key`.
+
+```json
+{
+	"ossec":  {
+		"_access_key": ""
+	}
+}
 ```
 
