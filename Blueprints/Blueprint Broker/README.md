@@ -10,9 +10,14 @@ This repository contains a cross-platform toolset to decrease the complexity of 
 ## Contents
 
 * [Installing](#installing)
-* [bpbroker](README_bpbroker.md) tool with native service broker capabilities for state management that's easily extendable to decrease Blueprint complexity
-* [bpclient](README_bpclient.md) client-side tool that interacts with server-side bpbroker
-* [bpmailer](README_bpmailer.md) client-side tool to facilitate rich email with successful transactional delivery routing
+* Tools
+  * [bpbroker](README_bpbroker.md) tool with native service broker capabilities for state management that's easily extendable to decrease Blueprint complexity
+  * [bpclient](README_bpclient.md) client-side tool that interacts with server-side bpbroker
+  * [bpmailer](README_bpmailer.md) client-side tool to facilitate rich email with successful transactional delivery routing
+* Drop-in use cases
+  * [Easily send an email](examples/use_cases_send_email.md) (e.g. cross-platform and use a trusted SMTP relay)
+  * [Find cluster master IP](examples/use_cases_find_master_ip.md) (e.g. find IP address where a specific service is running)
+  * [Register a new client node into my software](examples/use_cases_register_client.md) (e.g. execute custom RPC)
 
 
 ## Installing
