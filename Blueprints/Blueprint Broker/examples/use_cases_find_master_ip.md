@@ -48,6 +48,7 @@ Start-Service bpbroker
 
 Linux:
 ```shell
+> BPBROKER_IP=`/usr/local/bpbroker/bin/bpclient discover --name "database-master-$OPTIONAL_CLUSTER_ID"`
 ```
 
 Windows:
@@ -58,7 +59,7 @@ $psi.UseShellExecute = $false
 $psi.RedirectStandardOutput = $true 
 $psi.RedirectStandardError = $true 
 $psi.FileName = "C:\Program Files\bpbroker\Python27\Scripts\bpclient.exe" 
-$psi.Arguments = @("discover","--name","ossec-manager-x") 
+$psi.Arguments = @("discover","--name","database-master-$OPTIONAL_CLUSTER_ID") 
 $process = New-Object System.Diagnostics.Process 
 $process.StartInfo = $psi 
 [void]$process.Start()
