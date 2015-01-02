@@ -93,11 +93,10 @@ can be extended by using the `configure` execution mode and the `--config-file` 
 The configuration file contains both configuration options as well as any data stored within the service registry.
 
 
-
 # Network communication
 The toolset uses two modes of network communciation
-* [Discovery](#discover) sends plaintext UDP packets to the broadcast domain port 20443/UDP
-* All other communications occur over SSL encrypted traffic by default on 20443/TCP
+* [Discovery](#discover) binds to 20443/UDP and responds with plaintext UDP packets received from the broadcast domain
+* Binds to 20443/TCP and responds with SSL encrypted http traffic
 
 We recommend retaining the default port assignments to maximize compatibility.
 
