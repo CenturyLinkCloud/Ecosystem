@@ -6,6 +6,8 @@ How can I can this IP address?
 
 # Solution
 
+Use the bpbroker and bpclient tool in discover mode.
+
 # Install bpbroker
 Perform a bpbroker installation for your platform as documented [here](../README.md#installing)
 
@@ -23,65 +25,45 @@ Include the package or download then unzip:
 ```
 
 
-# Create SMTP configuration file
-Store this file locally with your package.  If it contains credentials make sure it is removed from the remporary directory after execution.
-If sending via CenturyLink Cloud SMTP relay then create relay credentials (follow the 
-[SMTP Relay Services](https://t3n.zendesk.com/entries/20902593-SMTP-Relay-Services-Simple-) KB) and use the following configuration.
-```json
-{
-    "_bpmailer":  {
-        "smtp_server": "relay.t3mx.com",
-        "smtp_user": "username",
-        "smtp_password": "password"
-    }
-}
-```
+# Start bpbroker on the master server and register the key
 
-
-# Customize message file
-For a simple message you can use something as basic as the below example, though starting with the [example template](bpmailer_example_message_template) and 
-[example css](bpmailer_example_message_css) will provide a better looking foundation.
-
-A basic template can look like the following:
-
-```html
-<html>
-  <body>
-    <p>Thank you %NAME% for installing our product.<p>
-
-    <p>Please find access details below:</p>
-    <ul>
-      <li>Server is accessible from <b>https://%SERVER_IP</b>
-      <li>Help is available from http://www.eample.com/quick_start
-    </ul>
-  </body>
-</html>
-```
-
-
-# Send email
-Our example message has two variables we need to substitute - we can do so by passing this information to stdin or we can save to a file.
-
-Linux using stdin:
+Linux:
 ```shell
-> /usr/local/bpbroker/bin/bpmailer \
-           --config isv_custom.json  --to prospect@example.com \
-           --subject "Database Ready for Testing" \
-           --template isv_message_template \
-           --from "ISV Inc <john@example.com>" --variables - << HERE
-NAME=John Smith
-SERVER_IP=10.50.100.10
-HERE
+> /usr/local/bpbroker/bin/bpbroker install-service
+> service bpbroker start
+> /usr/local/bpbroker/bin/bpclient --bpbroker 127.0.0.1:20443 \
+                                   --access-key "$OPTIONAL_ACCESS_KEY" service replace \
+                                   --name "database-master-$OPTIONAL_CLUSTER_ID" \
+                                   --data "x" >/dev/null
 ```
 
-Windows writing to a file:
+Windows:
 ```powershell
-$config = @"
-NAME=John Smith
-SERVER_IP=10.50.100.10
-"@
-$ini| "vars_config" -encoding ascii
+"./$env:programfiles/bpbroker/bin/bpbroker.lnk" install-service
+Start-Service bpbroker
+"./$env:programfiles/bpbroker/bin/bpclient.lnk" --bpbroker 127.0.0.1:20443 \ --access-key "$OPTIONAL_ACCESS_KEY" service replace \ --name "database-master-$OPTIONAL_CLUSTER_ID" \ --data "x" >/dev/null
+```
 
-&"$env:programfiles" --config isv_custom.json  --to prospect@example.com \ --subject "Database Ready for Testing" \ --template isv_message_template \ --from "ISV Inc <john@example.com>" --variables vars_config
+# Run discover mode on bpclient
+
+Linux:
+```shell
+```
+
+Windows:
+```powershell
+$psi = New-object System.Diagnostics.ProcessStartInfo 
+$psi.CreateNoWindow = $true 
+$psi.UseShellExecute = $false 
+$psi.RedirectStandardOutput = $true 
+$psi.RedirectStandardError = $true 
+$psi.FileName = "C:\Program Files\bpbroker\Python27\Scripts\bpclient.exe" 
+$psi.Arguments = @("discover","--name","ossec-manager-x") 
+$process = New-Object System.Diagnostics.Process 
+$process.StartInfo = $psi 
+[void]$process.Start()
+$output = $process.StandardOutput.ReadToEnd() 
+$process.WaitForExit()
+$BPBROKER_IP = $output -replace "`t|`n|`r",""
 ```
 
