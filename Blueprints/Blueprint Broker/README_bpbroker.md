@@ -62,7 +62,7 @@ and distribution specific tools are used to enable startup at common runlevels. 
 this command does **not** start the service.
 
 ```shell
-TODO
+> bpbroker install-service
 ```
 
 ## uninstall-service
@@ -70,7 +70,7 @@ Under Windows this stops then removes the `bpbroker` service.  Not currently imp
 
 
 ## install-extension
-Installs a custom extension in the system bpbroker directory (`/usr/local/bpbroker/lib` and `%programfiles\bpbroker\lib`) so it can be found
+Installs a custom extension in the system bpbroker directory (`/usr/local/bpbroker/lib` and `%programfiles%\bpbroker\lib`) so it can be found
 by bpbroker after enabling the extension in the configuration.  See [Extending functionality with Custom Services](#extending-functionality-with-custom-services)
 for details on how to implement these extensions including working examples.
 
@@ -79,7 +79,7 @@ for details on how to implement these extensions including working examples.
 ```
 
 ## configure
-Imports specified configuration and save with the global configuration file (or a local file if the `--config` option is used).  
+Imports specified configuration and saves with the global configuration file (or a local file if the `--config` option is used).  
 Can be safely run multiple times with the same data or with differing data.  bpbroker configuration is strictly additive so only
 net new variables are applied and existing configurations remain untouched.
 
@@ -179,14 +179,14 @@ Provide access to the key/value service broker data store.  Data stored here is 
 
 # Extending functionality with Custom Services
 This built in discovery and durable key/value service broker are compatible with a great many use cases.  However extended functionality is often
-required if work tasks need to be run executed on the local server itself.  Custom services can be easily adapted from the 
+required if work tasks need to be executed on the local server itself.  Custom services can be easily adapted from the 
 [provided example extension module](examples/example_extension_module.py).
 
 ## Extension Namespace and Accessing from bpclient
 
 
 ## Python server-side interface
-Your custom module should look similar to the example below.  If it a function with a single parameter (extended http request handler).  You will
+Your custom module should look similar to the example below.  It requires a function with a single parameter (extended http request handler).  You will
 have access to a lot of information about the request itself from the handler.
 
 Your extension must set two parameters:
@@ -215,6 +215,10 @@ Clients have access to the extension only if all of the following are true:
 
 ## Working example using OSSEC
 A working example that implements the server-side functions to register an **OSSEC** agent is available in [this github repo](../Public Blueprint Source/OSSEC/noarch) and below:
+
+The filename is `ossec.py` and the method name is `AddAgent` which means:
+* bpbroker needs a configuration whitelist entry of `ossec`
+* bpclient executes the method `ossec.AddAgent`
 
 ```python
 def AddAgent(rh):

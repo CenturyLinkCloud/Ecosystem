@@ -30,6 +30,7 @@ def Start():
 	discover_thread.start()
 
 
+	signal.signal(signal.SIGHUP,Shutdown)
 	signal.signal(signal.SIGINT,Shutdown)
 	while True:  time.sleep(5)
 
