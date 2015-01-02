@@ -45,7 +45,7 @@ optional arguments:
 ```
 
 
-# Configuraton
+# Configuration
 Configuration can be made through any combination of the following methods in increasing order of priority.
 * Hardcoded defaults
 * json configuration file

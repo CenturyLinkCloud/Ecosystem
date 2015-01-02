@@ -52,8 +52,60 @@ Commands:
     configure           Apply additional configuration to bpbroker service
 ```
 
+## start
+Executes bpbroker in server mode.  Will keep the process running in the foreground.  Accepts optional
+`--config` parameter to load configuration from a non-default location.  On SIGINT will write configuration.
 
-# Configuraton
+```shell
+> bpbroker start
+```
+
+## install-service
+Performs a multi-platform service installation and configures service to start at boot.  Under Linux the file `/etc/init.d/bpbroker` is created
+and distribution specific tools are used to enable startup at common runlevels.  Under Windows `nssm.exe` is used to register the service.  Running
+this command does **not** start the service.
+
+```shell
+TODO
+```
+
+## uninstall-service
+Under Windows this stops then removes the `bpbroker` service.  Not currently implemented for Linux hosts.
+
+
+## install-extension
+Installs a custom extension in the system bpbroker directory (`/usr/local/bpbroker/lib` and `%programfiles\bpbroker\lib`) so it can be found
+by bpbroker after enabling the extension in the configuration.  See [Extending functionality with Custom Services](#extending-functionality-with-custom-services)
+for details on how to implement these extensions including working examples.
+
+```shell
+> bpbroker.py install-extension --script FILENAME
+```
+
+## configure
+Imports specified configuration and save with the global configuration file (or a local file if the `--config` option is used).  
+Can be safely run multiple times with the same data or with differing data.  bpbroker configuration is strictly additive so only
+net new variables are applied and existing configurations remain untouched.
+
+**This should not be executed with the `bpbroker` service is running as changes will be overwritten.**
+
+```shell
+# supply configuration via filename
+> sudo service bpbroker stop
+> bpbroker.py configure --config-file FILENAME
+> sudo service bpbroker start
+
+# supply configuration via stdin
+> bpbroker.py configure <<HERE
+{
+	"services": {
+		"_access_key": "secret"
+	}
+}
+HERE
+```
+
+# Configuration
 Configuration can be made through any combination of the following methods in increasing order of priority.
 * Hardcoded defaults
 * Global json configuration file (`/usr/local/bpbrokr/etc/bpbroker.json` Linux and `%programfiles%\bpbroker\etc\bpbroker.json` Windows)
@@ -105,7 +157,7 @@ the `access-key` parameter.  Optional access keys are defined within the configu
 ```
 
 
-# Built-in Modules
+# Built-in Services
 
 # Discover
 The bpbroker/bpbroker suite is built to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
@@ -129,7 +181,7 @@ Provide access to the key/value service broker data store.  Data stored here is 
 * Get
 
 
-# Extending functionality with Custom Modules
+# Extending functionality with Custom Services
 
 # Execute
 Execute custom modules implemented on the server side.  An example of this is the **OSSEC** implementation with a custom Python module in [this github repo](../Public Blueprint Source/OSSEC/noarch).  We also have a sample module in the [examples](examples/example_extension_module.py) directory.
