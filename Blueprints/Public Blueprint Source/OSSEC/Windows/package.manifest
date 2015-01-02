@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Manifest>
     <Metadata>
-        <UUID>f8f2d734-ca35-4c89-87a6-b6a63cc8b3e4</UUID>
+        <UUID>f8f2d934-ca35-4c89-87a6-b6a63cc8b3e4</UUID>
         <Name>Security - Install OSSEC Agent for Windows</Name>
         <Description>
 		Installs the Open Source OSSEC agent v2.7.1 onto a Windows machine and registers with the OSSEC manager.

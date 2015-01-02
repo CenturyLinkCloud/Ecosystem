@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Manifest>
     <Metadata>
-        <UUID>400a3b17-cf33-4e00-84ba-9c187cdf69d6</UUID>
+        <UUID>407a3b17-cf33-4e00-84ba-9c187cdf69d6</UUID>
         <Name>Security - Install OSSEC Agent for Linux</Name>
         <Description>
 		Installs the Open Source OSSEC agent v2.7.1 onto a Linux machine and registers with the OSSEC manager.
