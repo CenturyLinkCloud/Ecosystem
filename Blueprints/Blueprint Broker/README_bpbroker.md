@@ -156,7 +156,7 @@ the `access-key` parameter.  Optional access keys are defined within the configu
 # Built-in Services
 
 ## Discover
-The bpbroker/bpbroker suite is built to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
+The bpbroker/bpclient suite is built to support discovery of service brokers located within the local broadcast domain.  If the **bpbroker** service is running wihtin
 the same subnet as the **bpclient** tool there is no need for apriori knowledge of the bpbroker IP address.
 
 Since multiple broker services may exist within the same subnet the discovery protocol is tagged with a specific key.  If the bpbroker contains that key in its
