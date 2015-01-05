@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Manifest>
     <Metadata>
-        <UUID>77abb844-579d-4c8d-8955-c69a94a2ba1a</UUID>
+        <UUID>77ab3844-579d-4c8d-8955-c69a94a2ba1a</UUID>
         <Name>Linux Update</Name>
         <Description>CenturyLink Cloud Blueprint that brings server to latest patch level.  Executes a yum or apt-get as appropriate.</Description>
     </Metadata>
