@@ -23,7 +23,7 @@ cssutils.log.setLevel(logging.CRITICAL)
 
 class Mailer(object):
 
-	def __init__(self,template_file,to_addr,subject,css_file=None,cc_addrs=[],from_addr=None,variables={}):
+	def __init__(self,template_file,to_addr,subject,css_file=None,cc_addrs=[],from_addr=None,html=False,variables={}):
 		self.css_file = css_file
 		self.subject = subject
 		self.to_addr = to_addr
@@ -34,7 +34,9 @@ class Mailer(object):
 		self.template = open(template_file).read()
 		self.ApplyVariables()
 		self.InlineCSS()
-		self.Deliver()
+
+		if html:  print self.message
+		else:  self.Deliver()
 
 
 	def AddCC(self,cc_addrs):

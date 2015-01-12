@@ -4,6 +4,7 @@ import argparse
 import ConfigParser
 import re
 import os
+import json
 import sys
 import bpmailer
 
@@ -28,10 +29,11 @@ class Args:
 		########## Global ###########
 		parser.add_argument('--config', '-c', required=True, help='Path to non-default configuration file')
 		parser.add_argument('--to', dest="to_addr", required=True, help='Destination email address')
+		parser.add_argument('--from', dest="from_addr", help='Source email address')
 		parser.add_argument('--subject', required=True, help='Email subject')
 		parser.add_argument('--template', required=True, help='Path to mail template file')
-		parser.add_argument('--from', dest="from_addr", help='Source email address')
 		parser.add_argument('--css', help='Path to optional css files not referenced in template')
+		parser.add_argument('--html', action="store_true", help='Instead of mailing write HTML to stdout')
 		parser.add_argument('--variables', help="Path to optional key=value variables files or '-' for stdin.")
 		# TODO - add optional delimited for variables if not =
 		self.args = parser.parse_args()
@@ -62,15 +64,19 @@ class ExecCommand():
 		try:
 			# Read and parse variables into dict #
 			if bpmailer.args.args.variables=='-': bpmailer.args.args.variables = sys.stdin.read()
-			elif bpmailer.args.args.variables:  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
+			elif os.path.isfile(bpmailer.args.args.variables):  bpmailer.args.args.variables = open(bpmailer.args.args.variables).read()
 			variables = {}
-			for key,var in re.findall("(.*?)=([^=]+)\n",bpmailer.args.args.variables): variables[key] = var
+			try:
+				for key,var in re.findall("(.*?)=([^=]+)\n",bpmailer.args.args.variables):  variables[key] = var
+			except TypeError:
+				sys.stderr.write("Error parsing variables")
 
 			msg = bpmailer.mailer.Mailer(css_file=bpmailer.args.args.css,
 			                             template_file=bpmailer.args.args.template,
 										 subject=bpmailer.args.args.subject,
 										 to_addr=bpmailer.args.args.to_addr,
-										 variables=variables)
+										 variables=variables,
+										 html=bpmailer.args.args.html)
 		except:
 			raise
 			sys.stderr.write("Fatal error: %s\n" % sys.exc_info()[1])

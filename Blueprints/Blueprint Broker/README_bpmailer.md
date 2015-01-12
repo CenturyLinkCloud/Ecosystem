@@ -21,12 +21,12 @@ See [bpbroker installation](README.md#installing).
 > bpmailer
 usage: bpmailer [-h] --config CONFIG --to TO_ADDR --subject SUBJECT
                 --template TEMPLATE [--from FROM_ADDR] [--css CSS]
-                [--variables VARIABLES]
+                [--variables VARIABLES] [--html]
 
 > bpmailer --help
 usage: bpmailer.py [-h] --config CONFIG --to TO_ADDR --subject SUBJECT
                    --template TEMPLATE [--from FROM_ADDR] [--css CSS]
-                   [--variables VARIABLES]
+                   [--variables VARIABLES] [--html]
 
 bpmailer tool
 
@@ -42,6 +42,7 @@ optional arguments:
   --variables VARIABLES
                         Path to optional key=value variables files or '-' for
                         stdin.
+  --html                Instead of mailing write HTML to stdout
 ```
 
 
