@@ -40,7 +40,7 @@ The current Windows scripts to not download pre-reqs but instead bundle them in.
 Binaries are available to execute rooted out of `%programfiles%\bpbroker\bin\`.
 
 
-### Via Pyhton's pip
+### Via Python's pip
 Cross-platform installation is available via pypi.  Requires **Python 2.7** - this is not currently compatible with Python 3.
 If you have pip already installed the following command will get you running.  Other tools built to interact with bpbroker
 often expect it to be rooted in `/usr/local/bpbroker` (Linux) or `%programfiles%\bpbroker` (Windows).
