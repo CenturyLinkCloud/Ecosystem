@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>c34b60a1-e609-47aa-9e50-dc487adc6b37</UUID>
+        <Name>Utilities - Install BP Broker for Linux</Name>
+        <Description>Installs the CenturyLink Cloud Blueprint Broker engine.  This tool faciliates stateful communications across complicate Blueprint deployments.</Description>
+    </Metadata>
+    <Parameters>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install_bpbroker.sh</Command>
+    </Execution>
+</Manifest>
