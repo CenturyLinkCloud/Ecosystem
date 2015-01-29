@@ -13,6 +13,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="package_manifest_builder.css">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -34,8 +35,8 @@
 
 	    <div id="actions">
 		  <button type="button" id="export_xml_btn" class="btn btn-default">Export Package XML</button>
-		  <button type="button" id="export_xml_btn" class="btn btn-default">Export Package XML</button>
-		  <button type="button" id="export_xml_btn" class="btn btn-default">Export Package XML</button>
+		  <button type="button" id="export_bash_btn" class="btn btn-default">Export Bash Template</button>
+		  <button type="button" id="export_powershell_btn" class="btn btn-default">Export Powershell Template</button>
 
 		</div>
 	  </div><!-- end build col -->
@@ -48,7 +49,18 @@
     </div><!-- end container row-->
 
 
+    <!-- builder el template -->
+	<div class="builder_el row" id="builder_el_tpl">
+	  <div class="el_controls col-md-1">
+	  </div>
 
+	  <div class="el col-md-6">
+	  </div>
+
+	  <div class="el_help col-md-5">
+	  </div>
+	</div>
+    <!-- end builder el template -->
 
 
     <!-- Latest compiled and minified JavaScript -->
