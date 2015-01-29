@@ -11,6 +11,7 @@
     <title>Package Manifest Builder | CenturyLink Cloud</title>
 
     <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="package_manifest_builder.css">
@@ -52,6 +53,15 @@
     <!-- builder el template -->
 	<div class="builder_el row" id="builder_el_tpl">
 	  <div class="el_controls col-md-1">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" class="delete_btn">Delete</a></li>
+            <li><a href="#" class="clone_btn">Clone</a></li>
+          </ul>
+        </div>
 	  </div>
 
 	  <div class="el col-md-6">
@@ -64,8 +74,10 @@
 
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="package_manifest_builder.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="package_manifest_builder.js"></script>
   </body>
 </html>
 
