@@ -53,31 +53,36 @@
 
 
     <!-- builder el template -->
-	<div class="builder_el row" id="builder_el_tpl">
-	  <div class="el_controls col-md-1">
-        <div class="btn-group">
+	<div class="builder_el panel panel-default" id="builder_el_tpl">
+	  <div class="el_heading panel-heading">
+        <div class="btn-group col-md-1">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu">
+          <ul class="el_btn_menu dropdown-menu" role="menu">
             <li><a href="#" class="delete_btn">Delete</a></li>
             <li><a href="#" class="clone_btn">Clone</a></li>
           </ul>
         </div>
-	  </div>
 
-	  <div class="el col-md-6">
-	    <div class="el_visible">
-		  <input type="text" class="name" placeholder="Name">
-		  <input type="text" class="example_field disabled">
-		</div>
-		<div class="el_details">
-		</div>
-	  </div>
+	    <div class="el col-md-11">
+	      <div class="el_visible">
+		    <input type="text" class="name" placeholder="Name">
+		    <input type="text" class="example_field disabled">
+		  </div>
+	    </div>
+	  <br style="clear:both;">
+	  </div><!-- end el_heading -->
 
-	  <div class="el_help col-md-5">
-	    Example help text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-		ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+	  <div class="el_body panel-body">
+		<div class="el_details col-md-5">
+		  zzzzzzzzzz
+		</div>
+
+	    <div class="el_help col-md-offset-1 col-md-5">
+	      Example help text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+		  ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+	    </div>
 	  </div>
 	</div>
     <!-- end builder el template -->
