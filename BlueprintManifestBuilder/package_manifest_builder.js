@@ -113,6 +113,7 @@ $("#built_els").on("click",".delete_btn",function(){
 
 
 /******* Bootstrap ******/
+/*
 uuid_el = $("#builder_el_tpl").clone().removeAttr("id");
 uuid_el.find(".el_btn_menu").html("");
 uuid_el.find(".name_span").html("UUID").show();
@@ -142,4 +143,5 @@ description_el.find("input.example_field").remove();
 description_el.find(".el_help").remove();
 description_el.find(".el_details").removeClass("col-md-5").addClass("col-md-12").html("<textarea style='width: 100%; height: 6em;' placeholder='Enter package description'></textarea>");
 description_el.appendTo("#built_els");
+*/
 
