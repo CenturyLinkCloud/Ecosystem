@@ -21,7 +21,33 @@ $("#built_els").droppable({
 	drop:  function(event,ui){
 		switch(ui.draggable[0].id)  {
 			case 'param_string':
-				GenerateParamString();
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Free-form string.");
+				break;
+			case 'param_numeric':
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.");
+				break;
+			case 'param_password':
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.");
+				break;
+			case 'param_network':
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available network.");
+				break;
+			case 'param_serverip':
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the IP address of the selected server.");
+				break;
+			case 'param_server':
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the name selected server.");
+				break;
+
+			/* TODO - system variable handlers.  don't need any el_details */
+			case 'param_user':
+			case 'param_name':
+			case 'param_password':
+
+			/* TODO unique handler */
+			case 'param_select':
+			case 'param_option':
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.");
 				break;
 		};
 	},
@@ -29,14 +55,13 @@ $("#built_els").droppable({
 
 
 
-function GenerateParamString()
+function GenerateGenericParamEl(src_id,example_el,help_text)
 {
 	/* TODO - apply regex option */
-	name_el = $("#builder_el_tpl").clone().removeAttr("id").addClass("param_string");
-	name_el.find("input.example_field").remove();
-	//name_el.find(".el_details").remove();
-	name_el.find(".el_help").prepend("Free-form string.");
-	name_el.appendTo("#built_els");
+	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
+	el.find(".example_field").append(example_el[0].innerHTML);
+	el.find(".el_help").prepend(help_text);
+	el.appendTo("#built_els");
 }
 
 
