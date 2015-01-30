@@ -11,6 +11,11 @@
 /******* Setup parameters ******/
 $("#chooser_container .parameter").draggable();
 
+$("#built_els").droppable({
+	accept: ".parameter",
+	hoverClass: "built_parameter_hover",
+});
+
 
 /******* Bootstrap ******/
 uuid_el = $("#builder_el_tpl").clone().removeAttr("id");

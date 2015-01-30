@@ -2,6 +2,9 @@
 #builder_el_tpl  {
 	display: none;
 }
+.built_parameter_hover  {
+	border: 5px solid rgb(0,133,63);
+}
 
 .name_span  {
 	display: none;
@@ -20,4 +23,6 @@
 #chooser_container .parameter input[type=checkbox]  {
 	width: inherit;
 }
+
+
 
