@@ -9,12 +9,18 @@
 */
 
 /******* Setup parameters ******/
-$("#chooser_container .parameter").draggable();
+$("#chooser_container .parameter").draggable({
+	revert: "invalid",
+	helper: "clone",
+	cancel: "",
+});
 
 $("#built_els").droppable({
 	accept: ".parameter",
 	hoverClass: "built_parameter_hover",
 });
+
+
 
 
 /******* Bootstrap ******/

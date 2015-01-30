@@ -2,8 +2,12 @@
 #builder_el_tpl  {
 	display: none;
 }
+
+#built_els  {
+	border: 5px solid white;
+}
 .built_parameter_hover  {
-	border: 5px solid rgb(0,133,63);
+	border: 5px solid rgb(0,133,63) !important;
 }
 
 .name_span  {
