@@ -42,26 +42,28 @@
      
      	   <div class="el_body panel-body">
      		 <div class="el_details">
-     		   <div class="form-group frm_hint">
+     		   <div class="form-group">
      		     <label>Package Name:</label>
      			 <input type="text" class="form-control" name="package_name">
+				 <p class="help-block">
+				   Package name.  This is searchable and displayed when choosing the package.  CenturyLink has defined a 
+				   <a href='https://t3n.zendesk.com/entries/56566304-Creating-Public-Blueprint-Packages'>naming standard for public packages</a> 
+				   which you may leverage.
+				 </p>
+			   </div>
+     		   <div class="form-group">
+     		     <label>Package Description:</label>
+				 <textarea class="form-control" style="height: 5em;" placeholder='Enter package description'></textarea>
      		   </div>
-     		   <div class="form-group frm_required">
-     		     <label>Required:</label>
-     			 <select name="required" class="form-control">
-     			   <option value="Yes" selected>Yes
-     			   <option value="No">No
-     			 </select>
-     		   </div>
-     		   <div class="form-group frm_prompt">
-     		     <label>Prompt:</label>
-     			 <select name="prompt" class="form-control">
-     			   <option value="None">None
-     			   <option value="Build" selected>Build
-     			   <option value="Design">Design
-     			   <option value="Global">Global
-     			 </select>
-     		   </div>
+     		   <div class="form-group">
+     		     <label>UUID:</label>
+     			 <input type="text" class="form-control" name="package_name">
+				 <p class="help-block">
+				   Each package must have a globally unique 32 character GUID.  A new value has been generated for you.  If this is replacing 
+				   an existing package place update with your current GUID.  Blueprints connect to Packages using this GUID so to prevent breaking 
+				   for minior changes reuse the GUID.  Likewise to create a new incompatible package release choose a new GUID.
+				 </p>
+			   </div>
      		   <div class="form-group frm_default">
      		     <label>Default:</label>
      			 <input type="text" class="form-control" name="default">
