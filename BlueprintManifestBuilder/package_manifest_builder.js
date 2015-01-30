@@ -18,6 +18,11 @@ $("#chooser_container .parameter").draggable({
 $("#built_els").droppable({
 	accept: ".parameter",
 	hoverClass: "built_parameter_hover",
+	drop:  function(event,ui){
+		switch(ui.draggable[0].id)  {
+			case 'param_string':
+		};
+	},
 });
 
 
