@@ -20,6 +20,7 @@ $("#built_els").droppable({
 	hoverClass: "built_parameter_hover",
 	drop:  function(event,ui){
 		switch(ui.draggable[0].id)  {
+			// Standard Params
 			case 'param_string':
 				/* TODO - move to custom and apply regex option */
 				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Free-form string.");
@@ -40,7 +41,7 @@ $("#built_els").droppable({
 				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the name selected server.");
 				break;
 
-			/* TODO - system variable handlers.  don't need any el_details */
+			// System params.  These don't need any el_details
 			case 'param_user':
 				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the control portal username that is initiating the deployment.");
 				break;
