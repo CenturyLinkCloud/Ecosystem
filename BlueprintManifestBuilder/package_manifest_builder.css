@@ -17,4 +17,7 @@
 #chooser_container .parameter input  {
 	width: 100%;
 }
+#chooser_container .parameter input[type=checkbox]  {
+	width: inherit;
+}
 
