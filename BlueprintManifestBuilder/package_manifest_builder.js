@@ -98,8 +98,12 @@ function GenerateOptionParamEl(src_id,example_el,help_text)
 
 
 
-/******* Button handlers  ******/
-$("#built_els").on("click",".remove_option_btn",function(){
+/******* Button click handlers  ******/
+$("#built_els").on("click",".delete_btn",function(){
+	$(this).parents(".builder_el").remove();
+}).on("click",".clone_btn",function(){
+	$(this).parents(".builder_el").clone().insertAfter($(this).parents(".builder_el"));
+}).on("click",".remove_option_btn",function(){
 	$(this).parent().remove();
 }).on("click",".add_option_btn",function(){
 	el = $(this).prev().clone();
