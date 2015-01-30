@@ -21,6 +21,7 @@ $("#built_els").droppable({
 	drop:  function(event,ui){
 		switch(ui.draggable[0].id)  {
 			case 'param_string':
+				/* TODO - move to custom and apply regex option */
 				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Free-form string.");
 				break;
 			case 'param_numeric':
@@ -41,8 +42,17 @@ $("#built_els").droppable({
 
 			/* TODO - system variable handlers.  don't need any el_details */
 			case 'param_user':
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the control portal username that is initiating the deployment.");
+				break;
 			case 'param_name':
-			case 'param_password':
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the name of server deployment is executing on.");
+				break;
+			case 'param_ip':
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the IP of server deployment is executing on.");
+				break;
+			case 'param_serverpassword':
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the password for the server on which the deployment is executing.");
+				break;
 
 			/* TODO unique handler */
 			case 'param_select':
@@ -57,10 +67,19 @@ $("#built_els").droppable({
 
 function GenerateGenericParamEl(src_id,example_el,help_text)
 {
-	/* TODO - apply regex option */
 	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
 	el.find(".example_field").append(example_el[0].innerHTML);
 	el.find(".el_help").prepend(help_text);
+	el.appendTo("#built_els");
+}
+
+
+function GenerateSystemParamEl(src_id,example_el,help_text)
+{
+	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
+	el.find(".example_field").append(example_el[0].innerHTML);
+	el.find(".el_details").remove();
+	el.find(".el_help").removeClass("col-md-offset-1").removeClass("col-md-5").addClass("col-md-11").html(help_text);
 	el.appendTo("#built_els");
 }
 
