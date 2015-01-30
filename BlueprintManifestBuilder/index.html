@@ -55,6 +55,14 @@
      		     <label>Package Description:</label>
 				 <textarea class="form-control" style="height: 5em;" name="package_description" placeholder='Enter package description'></textarea>
      		   </div>
+		       <div class="form-group frm_prompt">
+		         <label>Mode:</label>
+			     <select name="prompt" class="form-control">
+			       <option value="Command">Command (Windows)
+			       <option value="PowerShell">PowerShell (Windows)
+			       <option value="SSH">SSH (Linux)
+			     </select>
+		       </div>
      		   <div class="form-group">
      		     <label>UUID:</label>
      			 <input type="text" class="form-control" name="package_uuid" id="uuid">
