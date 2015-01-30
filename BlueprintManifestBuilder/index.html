@@ -53,34 +53,25 @@
 			   </div>
      		   <div class="form-group">
      		     <label>Package Description:</label>
-				 <textarea class="form-control" style="height: 5em;" placeholder='Enter package description'></textarea>
+				 <textarea class="form-control" style="height: 5em;" name="package_description" placeholder='Enter package description'></textarea>
      		   </div>
      		   <div class="form-group">
      		     <label>UUID:</label>
-     			 <input type="text" class="form-control" name="package_name">
+     			 <input type="text" class="form-control" name="package_uuid" id="uuid">
 				 <p class="help-block">
 				   Each package must have a globally unique 32 character GUID.  A new value has been generated for you.  If this is replacing 
 				   an existing package place update with your current GUID.  Blueprints connect to Packages using this GUID so to prevent breaking 
 				   for minior changes reuse the GUID.  Likewise to create a new incompatible package release choose a new GUID.
 				 </p>
 			   </div>
-     		   <div class="form-group frm_default">
-     		     <label>Default:</label>
-     			 <input type="text" class="form-control" name="default">
-     		   </div>
      		 </div>
+
+			 <!-- TODO:
+			 	o persistant
+				o reboot on success
+				o explicitly ID command mode?
+			 -->
       
-     	     <div class="el_help col-md-offset-1 col-md-5">
-     		   <div class="text-muted">
-     			 <hr>
-     		     <b>Help</b> is a descriptive string shown to customers when entering this data.<br>
-     			 <b>Required</b> sets whether parameter must be populated.<br>
-     			 <b>Prompt</b> assigns when data is prompted (none - default value must be supplied, build - at deploy time,
-     			 design - when adding package to a new blueprint design, global - at deploy time and parameter can be visible
-     			 to all packages in a blueprint).<br>
-     			 <b>Default</b> is the default value if user doesn't specify a value.
-     		   </div>
-     	     </div>
      	   </div>
      	 </div>
          <!-- end preamble -->
