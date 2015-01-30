@@ -122,20 +122,35 @@
 		<div class="el_details col-md-5">
 		  <div class="form-group frm_hint">
 		    <label>Help:</label>
-			<input type="text" name="hint">
+			<input type="text" class="form-control" name="hint">
 		  </div>
 		  <div class="form-group frm_required">
 		    <label>Required:</label>
-			<select name="required">
+			<select name="required" class="form-control">
 			  <option value="Yes" selected>Yes
 			  <option value="No">No
+			</select>
+		  </div>
+		  <div class="form-group frm_prompt">
+		    <label>Prompt:</label>
+			<select name="prompt" class="form-control">
+			  <option value="None">None
+			  <option value="Build" selected>Build
+			  <option value="Design">Design
+			  <option value="Global">Global
 			</select>
 		  </div>
 		</div>
 
 	    <div class="el_help col-md-offset-1 col-md-5">
-	      Example help text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-		  ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+		  <div class="text-muted">
+			<hr>
+		    <b>Help</b> is a descriptive string shown to customers when entering this data.<br>
+			<b>Required</b> sets whether parameter must be populated.<br>
+			<b>Prompt</b> assigns when data is prompted (none - default value must be supplied, build - at deploy time,
+			design - when adding package to a new blueprint design, global - at deploy time and parameter can be visible
+			to all packages in a blueprint).
+		  </div>
 	    </div>
 	  </div>
 	</div>
