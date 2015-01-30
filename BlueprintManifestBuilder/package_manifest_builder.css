@@ -3,6 +3,13 @@
 	display: none;
 }
 
+.builder_el.inactive .panel-body  {
+	display: none;
+}
+.builder_el .panel-heading  {
+	cursor: pointer;
+}
+
 #built_els  {
 	border: 5px solid white;
 }

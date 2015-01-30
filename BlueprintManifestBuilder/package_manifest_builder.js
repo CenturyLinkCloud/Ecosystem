@@ -98,6 +98,17 @@ function GenerateOptionParamEl(src_id,example_el,help_text)
 
 
 
+/******* Panel accordions ******/
+$("#built_els").on("click",".builder_el .panel-heading",function(){
+	if ($(this).parents(".builder_el").hasClass("inactive"))  {
+		$("#built_els .builder_el").addClass("inactive").removeClass("panel-info");
+		$(this).parents(".builder_el").toggleClass("inactive").toggleClass("panel-info");
+	}  else  {
+		$(this).parents(".builder_el").toggleClass("inactive").toggleClass("panel-info");
+	}
+});
+
+
 /******* Button click handlers  ******/
 $("#built_els").on("click",".delete_btn",function(){
 	$(this).parents(".builder_el").remove();
