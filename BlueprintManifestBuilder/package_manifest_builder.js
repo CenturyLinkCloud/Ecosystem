@@ -87,6 +87,15 @@ function GenerateSystemParamEl(src_id,example_el,help_text)
 }
 
 
+function GenerateGenericParamEl(src_id,example_el,help_text)
+{
+	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
+	el.find(".example_field").append(example_el[0].innerHTML);
+	el.find(".el_help").prepend(help_text);
+	el.appendTo("#built_els");
+}
+
+
 
 
 /******* Bootstrap ******/
