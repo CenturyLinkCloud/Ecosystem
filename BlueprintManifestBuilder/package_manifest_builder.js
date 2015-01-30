@@ -55,10 +55,12 @@ $("#built_els").droppable({
 				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the password for the server on which the deployment is executing.");
 				break;
 
-			/* TODO unique handler */
+			// Option params
 			case 'param_select':
+				GenerateOptionParamEl(ui.draggable[0].id,ui.helper,"Select one option from a list of several.");
+				break;
 			case 'param_option':
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.");
+				GenerateOptionParamEl(ui.draggable[0].id,ui.helper,"Select zero or more options from a list of several.");
 				break;
 		};
 	},
