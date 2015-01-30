@@ -36,6 +36,62 @@
 		<!-- TODO - button drop down to deploy some standard configs rather than blank? -->
 
 	    <div id="built_els" class="droppable">
+         <!-- preamble -->
+     	 <div class="builder_el panel panel-default" id="builder_el_preamble">
+     	   <div class="el_heading panel-heading">
+     	     <div class="el col-md-11">
+     	       <div class="el_visible">
+     			 <span class="name_span col-md-2"></span>
+     		     <input type="text" class="name col-md-2" placeholder="Name">
+     		     <div class="col-md-10 example_field"></div>
+     		   </div>
+     	     </div>
+     	   <br style="clear:both;">
+     	   </div><!-- end el_heading -->
+     
+     	   <div class="el_body panel-body">
+     		 <div class="el_details col-md-5">
+     		   <div class="form-group frm_hint">
+     		     <label>Help:</label>
+     			 <input type="text" class="form-control" name="hint">
+     		   </div>
+     		   <div class="form-group frm_required">
+     		     <label>Required:</label>
+     			 <select name="required" class="form-control">
+     			   <option value="Yes" selected>Yes
+     			   <option value="No">No
+     			 </select>
+     		   </div>
+     		   <div class="form-group frm_prompt">
+     		     <label>Prompt:</label>
+     			 <select name="prompt" class="form-control">
+     			   <option value="None">None
+     			   <option value="Build" selected>Build
+     			   <option value="Design">Design
+     			   <option value="Global">Global
+     			 </select>
+     		   </div>
+     		   <div class="form-group frm_default">
+     		     <label>Default:</label>
+     			 <input type="text" class="form-control" name="default">
+     		   </div>
+     		 </div>
+      
+     	     <div class="el_help col-md-offset-1 col-md-5">
+     		   <div class="text-muted">
+     			 <hr>
+     		     <b>Help</b> is a descriptive string shown to customers when entering this data.<br>
+     			 <b>Required</b> sets whether parameter must be populated.<br>
+     			 <b>Prompt</b> assigns when data is prompted (none - default value must be supplied, build - at deploy time,
+     			 design - when adding package to a new blueprint design, global - at deploy time and parameter can be visible
+     			 to all packages in a blueprint).<br>
+     			 <b>Default</b> is the default value if user doesn't specify a value.
+     		   </div>
+     	     </div>
+     	   </div>
+     	 </div>
+         <!-- end preamble -->
+
 		</div>
 
 	    <div id="actions">
@@ -161,7 +217,7 @@
 	</div>
     <!-- end builder el template -->
 
-    <!-- builder el template -->
+    <!-- options el template -->
 	<div class="options_container" id="options_tpl">
 	  <hr>
 	  <div class="option_container row form-group">
@@ -171,7 +227,7 @@
 	  </div>
 	  <button class="btn btn-xs btn-default add_option_btn"><span class="glyphicon glyphicon-add"> Add Option</button>
 	</div>
-    <!-- end builder el template -->
+    <!-- end options el template -->
 
     <!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
