@@ -98,6 +98,15 @@ function GenerateOptionParamEl(src_id,example_el,help_text)
 
 
 
+/******* Button handlers  ******/
+$("#built_els").on("click",".remove_option_btn",function(){
+	$(this).parent().remove();
+}).on("click",".add_option_btn",function(){
+	el = $(this).prev().clone();
+	el.find("input").val("");
+	el.insertBefore(this);
+});
+
 
 /******* Bootstrap ******/
 uuid_el = $("#builder_el_tpl").clone().removeAttr("id");
