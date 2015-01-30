@@ -8,6 +8,9 @@
    });
 */
 
+/******* Setup parameters ******/
+$("#chooser_container .parameter").draggable();
+
 
 /******* Bootstrap ******/
 uuid_el = $("#builder_el_tpl").clone().removeAttr("id");

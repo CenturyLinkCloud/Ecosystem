@@ -7,8 +7,14 @@
 	display: none;
 }
 
+#chooser_container  {
+}
 #chooser_container h5  {
-	margin-right: 1em;
-	text-align: right;
+}
+#chooser_container .parameter  {
+	margin-right: 1em
+}
+#chooser_container .parameter input  {
+	width: 100%;
 }
 
