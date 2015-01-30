@@ -21,9 +21,22 @@ $("#built_els").droppable({
 	drop:  function(event,ui){
 		switch(ui.draggable[0].id)  {
 			case 'param_string':
+				GenerateParamString();
+				break;
 		};
 	},
 });
+
+
+
+function GenerateParamString()
+{
+	name_el = $("#builder_el_tpl").clone().removeAttr("id").addClass("param_string");
+	name_el.find("input.example_field").remove();
+	//name_el.find(".el_details").remove();
+	name_el.find(".el_help").html("Free-form string");
+	name_el.appendTo("#built_els");
+}
 
 
 
