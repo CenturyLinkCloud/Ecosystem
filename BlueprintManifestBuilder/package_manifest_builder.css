@@ -1,4 +1,25 @@
 
+/******** Bootstrap override **********/
+
+.panel-primary, .panel-primary.panel-info  {
+	border-color: rgb(0,133,63) !important;
+}
+.panel-primary .panel-heading, .panel-primary.panel-info .panel-heading  {
+	background-color: rgb(0,133,63);
+	background-image: inherit;
+	color: #FFF;
+}
+.panel-info  {
+	border-color: rgb(255,99,25);
+}
+.panel-info .panel-heading  {
+	background-color: rgb(255,99,25);
+	background-image: inherit;
+}
+
+/**************************************/
+
+
 #builder_el_tpl, #options_tpl  {
 	display: none;
 }
