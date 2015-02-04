@@ -158,19 +158,7 @@ $("#export_xml_btn").click(function(){
 				});
 				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\">\n"+options.join("")+"        </Parameter>\n");
 				break;
-			/*
-			case 'Option':
-			case 'MultiSelect':
-				'options': options,
-				'name': name, 
-				'hint': $(this).find(".frm_hint input[name=hint]").val(),
-				'required': $(this).find(".frm_required select[name=required]").val(),
-				'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
-				'default': $(this).find(".frm_default input[name=default]").val(),
-				'type': $(this).find("input[name=type]").val(),
-			*/
 		};
-		console.log(this);
 	});
 	manifest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 	          +"<Manifest>\n"
