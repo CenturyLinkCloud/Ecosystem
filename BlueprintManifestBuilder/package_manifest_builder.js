@@ -152,7 +152,11 @@ $("#export_xml_btn").click(function(){
 
 			case 'Option':
 			case 'MultiSelect':
-				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
+				options = Array()
+				$.each(this.options,function(){
+					options.push("            <Option Name=\""+this.name+"\" Value=\""+this.value+"\"/>\n");
+				});
+				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\">\n"+options.join("")+"        </Parameter>\n");
 				break;
 			/*
 			case 'Option':
@@ -217,7 +221,7 @@ function BuildManifest()
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
 		}
-		manifest.execution.command += " ${"+name+"}"
+		manifest.execution.command += " '${"+name+"}'"
 		switch (true)  {
 			// Standard Params
 			case ($(this).hasClass('param_string')):
