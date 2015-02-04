@@ -171,6 +171,7 @@ $("#export_xml_btn").click(function(){
 						'required': $(this).find(".form_prompt select[name=required]").val(),
 						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
 						'default': $(this).find(".form_default input[name=default]").val(),
+						'type': $(this).find("input[name=type]".val(),
 				});
 
 			// System params.  These don't need any el_details
@@ -179,28 +180,37 @@ $("#export_xml_btn").click(function(){
 			case ($(this).hasClass('param_ip')):
 			case ($(this).hasClass('param_serverpassword')):
 				manifest.parameters.push({
-						'name': name
+						'name': name,
+						'prompt': "None",
+						'type': $(this).find("input[name=type]".val(),
 				});
 				break;
 
 			// Option params
 			case ($(this).hasClass('param_select')):
 			case ($(this).hasClass('param_option')):
+				options = Array()
+				$(this).find(".option_container").each(function(){
+					name = $(this).find("input.lable").val()
+					value = $(this).find("input.value").val()
+					if (!name.length || !value.length)  {
+						$("#alerts").append("<div class='alert alert-danger' role='alert'>Must populate both fields for all options ("+name+").</div>");
+						return (false);
+					}  else  options.push({'name': name, 'value': value});
+				});
+
 				manifest.parameters.push({
 						'name': name, 
 						'hint': $(this).find(".form_hint input[name=hint]").val(),
 						'required': $(this).find(".form_prompt select[name=required]").val(),
 						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
 						'default': $(this).find(".form_default input[name=default]").val(),
-						'options': 
+						'options': options,
+						'type': xxxxx,
 				});
 				break;
 		}
 	});
-
-	// TODO finalize execution command
-	//if (manifest.execution.mode == "Ssh")  manifest.execution.command = "install.sh"
-	//else  manifest.execution.command = "install.ps1"
 
 	// Exit if errors
 	if ($("#alerts").html().length)  return(false);

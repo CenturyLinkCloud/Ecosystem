@@ -146,6 +146,7 @@
 
     <!-- builder el template -->
 	<div class="builder_el panel panel-default inactive" id="builder_el_tpl">
+	  <input type="hidden" name="type" value="">
 	  <div class="el_heading panel-heading">
         <div class="el_btn_menu btn-group col-md-1">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -172,7 +173,7 @@
 		  <!-- TODO - add field for display name to seperate from variable name -->
 		  <div class="form-group frm_hint">
 		    <label>Help:</label>
-			<input type="text" class="form-control" name="hint">
+			<input type="text" class="form-control" value="" name="hint">
 		  </div>
 		  <div class="form-group frm_required">
 		    <label>Required:</label>
@@ -192,7 +193,7 @@
 		  </div>
 		  <div class="form-group frm_default">
 		    <label>Default:</label>
-			<input type="text" class="form-control" name="default">
+			<input type="text" class="form-control" value="" name="default">
 		  </div>
 		</div>
 
