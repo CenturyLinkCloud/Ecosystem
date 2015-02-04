@@ -127,3 +127,23 @@ $("#uuid").val('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
 	return v.toString(16);
 }));
 
+
+/******* Data extract ******/
+$("#export_xml_btn").click(function(){
+	// Foundational els
+	manifest = {
+		'metadata': {
+			'name': $("input[name=package_name]").val(),
+	     	'description': $("textarea[name=package_description]").val(),
+	     	'uuid': $("input[name=package_uuid]").val(),
+		},
+		'execution': {
+			'mode': $("select[name=package_mode]").val()
+		},
+	};
+
+	console.log(manifest);
+
+});
+
+
