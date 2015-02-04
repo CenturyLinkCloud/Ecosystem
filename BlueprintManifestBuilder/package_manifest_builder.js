@@ -142,6 +142,12 @@ $("#export_xml_btn").click(function(){
 		},
 	};
 
+	// variable parameters
+	$(".builder_el:not(#builder_el_preamble)").each(function(){
+	});
+
+	// TODO finalize execution command
+
 	console.log(manifest);
 
 });
