@@ -17,22 +17,22 @@ $("#built_els").droppable({
 			// Standard Params
 			case 'param_string':
 				/* TODO - move to custom and apply regex option */
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Free-form string.");
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Free-form string.","String");
 				break;
 			case 'param_numeric':
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.");
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.","Numeric");
 				break;
 			case 'param_password':
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.");
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Numeric string.","Password");
 				break;
 			case 'param_network':
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available network.");
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available network.","Network");
 				break;
 			case 'param_serverip':
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the IP address of the selected server.");
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the IP address of the selected server.","ServerIP");
 				break;
 			case 'param_server':
-				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the name selected server.");
+				GenerateGenericParamEl(ui.draggable[0].id,ui.helper,"Drop down to select an available server - both already existing and those scheduled to be built with the current Blueprint.  Returns the name selected server.","Server");
 				break;
 
 			// System params.  These don't need any el_details
@@ -179,11 +179,14 @@ $("#export_xml_btn").click(function(){
 			case ($(this).hasClass('param_name')):
 			case ($(this).hasClass('param_ip')):
 			case ($(this).hasClass('param_serverpassword')):
+				/* No-op */
+				/*
 				manifest.parameters.push({
 						'name': name,
-						'prompt': "None",
+						'prompt': "false",
 						'type': $(this).find("input[name=type]".val(),
 				});
+				*/
 				break;
 
 			// Option params
