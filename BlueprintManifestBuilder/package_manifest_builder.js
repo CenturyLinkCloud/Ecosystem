@@ -38,16 +38,16 @@ $("#built_els").droppable({
 			// System params.  These don't need any el_details
 			// TODO - add hidden name parameter to these on construction
 			case 'param_user':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the control portal username that is initiating the deployment.");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the control portal username that is initiating the deployment.","T3.Identity.User");
 				break;
 			case 'param_name':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the name of server deployment is executing on.");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the name of server deployment is executing on.","T3.Identity.Name");
 				break;
 			case 'param_ip':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the IP of server deployment is executing on.");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the IP of server deployment is executing on.","T3.Identity.IPAddress");
 				break;
 			case 'param_serverpassword':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the password for the server on which the deployment is executing.");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the password for the server on which the deployment is executing.","T3.Identity.Password");
 				break;
 
 			// Option params
@@ -63,29 +63,32 @@ $("#built_els").droppable({
 
 
 
-function GenerateGenericParamEl(src_id,example_el,help_text)
+function GenerateGenericParamEl(src_id,example_el,help_text,type)
 {
 	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
 	el.find(".example_field").append(example_el[0].innerHTML);
+	el.find("input[name=type]").val(type);
 	el.find(".el_help").prepend(help_text);
 	el.appendTo("#built_els");
 }
 
 
-function GenerateSystemParamEl(src_id,example_el,help_text)
+function GenerateSystemParamEl(src_id,example_el,help_text,name)
 {
 	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
 	el.find(".example_field").append(example_el[0].innerHTML);
+	el.find("input[name=name]").val(name).attr("disabled","true");
 	el.find(".el_details").remove();
 	el.find(".el_help").removeClass("col-md-offset-1").removeClass("col-md-5").addClass("col-md-11").html(help_text);
 	el.appendTo("#built_els");
 }
 
 
-function GenerateOptionParamEl(src_id,example_el,help_text)
+function GenerateOptionParamEl(src_id,example_el,help_text,type)
 {
 	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
 	el.find(".example_field").append(example_el[0].innerHTML);
+	el.find("input[name=type]").val(type);
 	el.find(".el_help").prepend(help_text);
 	el.find(".el_details").append($("#options_tpl").clone().removeAttr("id"));
 	el.appendTo("#built_els");
@@ -135,6 +138,7 @@ $("#export_xml_btn").click(function(){
 	$("#alerts").html("");
 
 	// Foundational els
+	// TODO - validate foundational els
 	manifest = {
 		'metadata': {
 			'name': $("input[name=package_name]").val(),
@@ -171,7 +175,7 @@ $("#export_xml_btn").click(function(){
 						'required': $(this).find(".form_prompt select[name=required]").val(),
 						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
 						'default': $(this).find(".form_default input[name=default]").val(),
-						'type': $(this).find("input[name=type]".val(),
+						'type': $(this).find("input[name=type]").val(),
 				});
 
 			// System params.  These don't need any el_details
