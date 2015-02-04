@@ -142,8 +142,12 @@ $("#export_xml_btn").click(function(){
 	$.each(manifest_obj.parameters,function(){
 		switch (this.type)  {
 			case 'String':
-				//parameters.append("<Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
-				console.log("x");
+			case 'Numeric':
+			case 'Network':
+			case 'Password':
+			case 'Server':
+			case 'ServerIP':
+				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
 				break;
 			/*
 			case 'Option':
