@@ -143,7 +143,29 @@ $("#export_xml_btn").click(function(){
 	};
 
 	// variable parameters
-	$(".builder_el:not(#builder_el_preamble)").each(function(){
+	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
+		console.log(this);
+		switch (true):
+			// Standard Params
+			case ($(this).hasClass('param_string'):
+			case ($(this).hasClass('param_numeric'):
+			case ($(this).hasClass('param_password'):
+			case ($(this).hasClass('param_network'):
+			case ($(this).hasClass('param_serverip'):
+			case ($(this).hasClass('param_server'):
+				break;
+
+			// System params.  These don't need any el_details
+			case ($(this).hasClass('param_user'):
+			case ($(this).hasClass('param_name'):
+			case ($(this).hasClass('param_ip'):
+			case ($(this).hasClass('param_serverpassword'):
+				break;
+
+			// Option params
+			case ($(this).hasClass('param_select'):
+			case ($(this).hasClass('param_option'):
+				break;
 	});
 
 	// TODO finalize execution command
