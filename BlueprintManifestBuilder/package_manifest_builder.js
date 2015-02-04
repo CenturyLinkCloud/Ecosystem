@@ -36,6 +36,7 @@ $("#built_els").droppable({
 				break;
 
 			// System params.  These don't need any el_details
+			// TODO - add hidden name parameter to these on construction
 			case 'param_user':
 				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the control portal username that is initiating the deployment.");
 				break;
@@ -185,6 +186,14 @@ $("#export_xml_btn").click(function(){
 			// Option params
 			case ($(this).hasClass('param_select')):
 			case ($(this).hasClass('param_option')):
+				manifest.parameters.push({
+						'name': name, 
+						'hint': $(this).find(".form_hint input[name=hint]").val(),
+						'required': $(this).find(".form_prompt select[name=required]").val(),
+						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
+						'default': $(this).find(".form_default input[name=default]").val(),
+						'options': 
+				});
 				break;
 		}
 	});
