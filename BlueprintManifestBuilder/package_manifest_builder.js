@@ -138,37 +138,44 @@ $("#export_xml_btn").click(function(){
 	     	'uuid': $("input[name=package_uuid]").val(),
 		},
 		'execution': {
-			'mode': $("select[name=package_mode]").val()
+			'mode': $("select[name=package_mode]").val(),
+			'command': $("select[name=package_mode]")=="SSH"? "install.sh":"install.ps1",
 		},
 	};
 
 	// variable parameters
+	names = Array();
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		console.log(this);
-		switch (true):
+		names.push($(this).find("input[name=name]").val())
+		switch (true)  {
 			// Standard Params
-			case ($(this).hasClass('param_string'):
-			case ($(this).hasClass('param_numeric'):
-			case ($(this).hasClass('param_password'):
-			case ($(this).hasClass('param_network'):
-			case ($(this).hasClass('param_serverip'):
-			case ($(this).hasClass('param_server'):
-				break;
+			case ($(this).hasClass('param_string')):
+			case ($(this).hasClass('param_numeric')):
+			case ($(this).hasClass('param_password')):
+			case ($(this).hasClass('param_network')):
+			case ($(this).hasClass('param_serverip')):
+			case ($(this).hasClass('param_server')):
+				name = $(this).find("input[name=name]").val();
+				hint = $(this).find("input[name=name]").val();
 
 			// System params.  These don't need any el_details
-			case ($(this).hasClass('param_user'):
-			case ($(this).hasClass('param_name'):
-			case ($(this).hasClass('param_ip'):
-			case ($(this).hasClass('param_serverpassword'):
+			case ($(this).hasClass('param_user')):
+			case ($(this).hasClass('param_name')):
+			case ($(this).hasClass('param_ip')):
+			case ($(this).hasClass('param_serverpassword')):
 				break;
 
 			// Option params
-			case ($(this).hasClass('param_select'):
-			case ($(this).hasClass('param_option'):
+			case ($(this).hasClass('param_select')):
+			case ($(this).hasClass('param_option')):
 				break;
+		}
 	});
 
 	// TODO finalize execution command
+	//if (manifest.execution.mode == "Ssh")  manifest.execution.command = "install.sh"
+	//else  manifest.execution.command = "install.ps1"
 
 	console.log(manifest);
 
