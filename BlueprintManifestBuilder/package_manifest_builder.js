@@ -138,18 +138,18 @@ $("#export_bash_btn").click(function(){
 	if (!manifest_obj)  return(false);
 
 	// Generate Shell
-	install_tpl = ""
+	var install_tpl = ""
 	$.get("install_sh_tpl", function(response) {
 		install_tpl = response;
 	});
 	console.log(install_tpl)
 
 	// Edit content
-	names = Array();
-	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(i){
-		names.push = "$"+$(this).find("input[name=name]").val().toUpperCase()+" = ;
+	variables = Array();
+	$.each(manifest_obj.variables,function(i){
+		variables.push("$"+this+" = $"+(i+1)+"\n");
 	});
-	console.log(names.join("\n"));
+	install_tpl.replace(/<BEGINVARIABLES>/g,variables.join(""));
 
 
 	// Publish Gist
@@ -162,7 +162,7 @@ $("#export_bash_btn").click(function(){
 			public: true,
 			files: {
 				'package.manifest': {
-					content: manifest,
+					content: install_tpl,
 				}
 			}
 		}),
@@ -260,7 +260,7 @@ function BuildManifest()
 	// variable parameters
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		name = $(this).find("input[name=name]").val();  manifest.names.push(name);
-		variable = name.replace("/[^a-z0-1_]/gi","_");  manifest.variables.push(variable);
+		variable = name.replace(/[^a-z0-1_]/gi,"_");  manifest.variables.push(variable);
 		if (name=="")  {
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
