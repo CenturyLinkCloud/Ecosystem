@@ -134,6 +134,13 @@ $("#uuid").val('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
 
 /******* Data extract ******/
 $("#export_xml_btn").click(function(){
+	manifest = BuildManifest();
+	if (!manifest)  return(false);
+});
+
+
+function BuildManifest()
+{
 	// Clear any existing alerts
 	$("#alerts").html("");
 
@@ -221,9 +228,7 @@ $("#export_xml_btn").click(function(){
 
 	// Exit if errors
 	if ($("#alerts").html().length)  return(false);
-
-	console.log(manifest);
-
+	else  return(manifest);
 });
 
 
