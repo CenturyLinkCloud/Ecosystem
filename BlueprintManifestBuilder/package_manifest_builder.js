@@ -179,6 +179,17 @@ $("#export_xml_btn").click(function(){
 
 	// Publish Gist
 	console.log(manifest);
+	$.post("https://api.github.com/gists/",{
+		description: manifest_obj.metadata.name+" package.manifest File",
+		public: true,
+		files: {
+			'package.manifest': {
+				content: manifest,
+			}
+		},
+	},function(o){
+		console.log(o);
+	});
 });
 
 
