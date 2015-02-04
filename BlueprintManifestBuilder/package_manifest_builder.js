@@ -133,6 +133,33 @@ $("#uuid").val('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
 
 
 /******* Data extract ******/
+$("#export_bash_btn").click(function(){
+	manifest_obj = BuildManifest();
+	if (!manifest_obj)  return(false);
+
+	// Generate Shell
+
+
+	// Publish Gist
+	console.log(manifest);
+	$.ajax({
+		url: "https://api.github.com/gists",
+		type: "POST",
+		data: JSON.stringify({
+			description: manifest_obj.metadata.name+" install.sh Template File",
+			public: true,
+			files: {
+				'package.manifest': {
+					content: manifest,
+				}
+			}
+		}),
+		success: function(o){
+			$("#alerts").append("<div class='alert alert-success' role='alert'>install.sh temaplate file to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
+		}})
+});
+
+
 $("#export_xml_btn").click(function(){
 	manifest_obj = BuildManifest();
 	if (!manifest_obj)  return(false);
