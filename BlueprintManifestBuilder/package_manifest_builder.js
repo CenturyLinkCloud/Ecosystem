@@ -192,7 +192,7 @@ $("#export_xml_btn").click(function(){
 			}
 		}),
 		success: function(o){
-			console.log(o);
+			$("#alerts").append("<div class='alert alert-success' role='alert'>package.manifest exported to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
 		}})
 });
 
