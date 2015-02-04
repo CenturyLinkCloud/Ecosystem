@@ -145,6 +145,11 @@ $("#export_bash_btn").click(function(){
 	console.log(install_tpl)
 
 	// Edit content
+	names = Array();
+	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(i){
+		names.push = "$"+$(this).find("input[name=name]").val().toUpperCase()+" = ;
+	});
+	console.log(names.join("\n"));
 
 
 	// Publish Gist
@@ -248,11 +253,14 @@ function BuildManifest()
 			'command': $("select[name=package_mode]").val()=="SSH"? "install.sh":"install.ps1",
 		},
 		'parameters': [],
+		'names': [],
+		'variables': [],
 	};
 
 	// variable parameters
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
-		name = $(this).find("input[name=name]").val();
+		name = $(this).find("input[name=name]").val();  manifest.names.push(name);
+		variable = name.replace("/[^a-z0-1_]/gi","_");  manifest.variables.push(variable);
 		if (name=="")  {
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
@@ -273,6 +281,7 @@ function BuildManifest()
 						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
 						'default': $(this).find(".frm_default input[name=default]").val(),
 						'type': $(this).find("input[name=type]").val(),
+						'variable': variable,
 				});
 
 			// System params.  These don't need any el_details
@@ -311,6 +320,7 @@ function BuildManifest()
 						'default': $(this).find(".frm_default input[name=default]").val(),
 						'options': options,
 						'type': $(this).find("input[name=type]").val(),
+						'variable': variable,
 				});
 				break;
 		}
