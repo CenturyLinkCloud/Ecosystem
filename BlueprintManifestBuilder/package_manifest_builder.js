@@ -130,6 +130,9 @@ $("#uuid").val('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
 
 /******* Data extract ******/
 $("#export_xml_btn").click(function(){
+	// Clear any existing alerts
+	$("#alerts").html("");
+
 	// Foundational els
 	manifest = {
 		'metadata': {
@@ -147,7 +150,13 @@ $("#export_xml_btn").click(function(){
 	names = Array();
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		console.log(this);
-		names.push($(this).find("input[name=name]").val())
+		name = $(this).find("input[name=name]").val();
+		if (name=="")  {
+			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
+			return (false);
+		}
+		names.push(name)
+		manifest.execution.command += " ${"+name+"}"
 		switch (true)  {
 			// Standard Params
 			case ($(this).hasClass('param_string')):
@@ -156,7 +165,6 @@ $("#export_xml_btn").click(function(){
 			case ($(this).hasClass('param_network')):
 			case ($(this).hasClass('param_serverip')):
 			case ($(this).hasClass('param_server')):
-				name = $(this).find("input[name=name]").val();
 				hint = $(this).find("input[name=name]").val();
 
 			// System params.  These don't need any el_details
@@ -176,6 +184,9 @@ $("#export_xml_btn").click(function(){
 	// TODO finalize execution command
 	//if (manifest.execution.mode == "Ssh")  manifest.execution.command = "install.sh"
 	//else  manifest.execution.command = "install.ps1"
+
+	// Exit if errors
+	if ($("#alerts").html().length)  return(false);
 
 	console.log(manifest);
 
