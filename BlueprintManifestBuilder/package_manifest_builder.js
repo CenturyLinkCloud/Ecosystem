@@ -140,6 +140,8 @@ $("#export_xml_btn").click(function(){
 	// Generate XML
 	parameters = Array();
 	$.each(manifest_obj.parameters,function(){
+		switch (parameter.type)  {
+		};
 		console.log(this);
 	});
 	manifest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
