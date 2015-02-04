@@ -134,8 +134,25 @@ $("#uuid").val('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
 
 /******* Data extract ******/
 $("#export_xml_btn").click(function(){
-	manifest = BuildManifest();
-	if (!manifest)  return(false);
+	manifest_obj = BuildManifest();
+	if (!manifest_obj)  return(false);
+
+	// Generate XML
+	manifest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+	          +"<Manifest>\n"
+			  +"    <Metadata>\n"
+			  +     metadata + "\n"
+			  +"    </Metadata>\n"
+			  +"    <Parameters>\n"
+			  +     parameters + "\n"
+			  +"    </Parameters>\n"
+			  +"    <Execution>\n"
+			  +     execution + "\n"
+			  +"    </Execution>\n"
+	          +"</Manifest>\n"
+
+
+	// Publish Gist
 });
 
 
