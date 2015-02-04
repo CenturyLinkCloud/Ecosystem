@@ -138,10 +138,17 @@ $("#export_bash_btn").click(function(){
 	if (!manifest_obj)  return(false);
 
 	// Generate Shell
+	install_tpl = ""
+	$.get("install_sh_tpl", function(response) {
+		install_tpl = response;
+	});
+	console.log(install_tpl)
+
+	// Edit content
 
 
 	// Publish Gist
-	console.log(manifest);
+	// TODO - publish first, add link to manifest, then edit original
 	$.ajax({
 		url: "https://api.github.com/gists",
 		type: "POST",
@@ -205,7 +212,6 @@ $("#export_xml_btn").click(function(){
 
 
 	// Publish Gist
-	console.log(manifest);
 	$.ajax({
 		url: "https://api.github.com/gists",
 		type: "POST",
