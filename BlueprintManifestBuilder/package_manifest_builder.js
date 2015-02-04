@@ -143,13 +143,13 @@ $("#export_xml_btn").click(function(){
 		switch (parameter.type)  {
 			case 'Option':
 			case 'MultiSelect':
-						'name': name, 
-						'hint': $(this).find(".frm_hint input[name=hint]").val(),
-						'required': $(this).find(".frm_required select[name=required]").val(),
-						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
-						'default': $(this).find(".frm_default input[name=default]").val(),
-						'options': options,
-						'type': $(this).find("input[name=type]").val(),
+				'options': options,
+				'name': name, 
+				'hint': $(this).find(".frm_hint input[name=hint]").val(),
+				'required': $(this).find(".frm_required select[name=required]").val(),
+				'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
+				'default': $(this).find(".frm_default input[name=default]").val(),
+				'type': $(this).find("input[name=type]").val(),
 		};
 		console.log(this);
 	});
