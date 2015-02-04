@@ -138,6 +138,10 @@ $("#export_xml_btn").click(function(){
 	if (!manifest_obj)  return(false);
 
 	// Generate XML
+	parameters = Array();
+	$.each(manifest_obj.parameters,function(){
+		console.log(this);
+	});
 	manifest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 	          +"<Manifest>\n"
 			  +"    <Metadata>\n"
@@ -152,7 +156,7 @@ $("#export_xml_btn").click(function(){
 			  +"        <Mode>"+manifest_obj.execution.mode+"</Mode>\n"
 			  +"        <Command>"+manifest_obj.execution.command+"</Command>\n"
 			  +"    </Execution>\n"
-	          +"</Manifest>\n"
+	          +"</Manifest>\n";
 
 
 	// Publish Gist
@@ -181,7 +185,6 @@ function BuildManifest()
 
 	// variable parameters
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
-		console.log(this);
 		name = $(this).find("input[name=name]").val();
 		if (name=="")  {
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
@@ -249,6 +252,6 @@ function BuildManifest()
 	// Exit if errors
 	if ($("#alerts").html().length)  return(false);
 	else  return(manifest);
-});
+};
 
 
