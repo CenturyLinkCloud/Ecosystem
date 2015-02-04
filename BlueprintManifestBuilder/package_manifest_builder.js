@@ -171,10 +171,10 @@ $("#export_xml_btn").click(function(){
 			case ($(this).hasClass('param_server')):
 				manifest.parameters.push({
 						'name': name, 
-						'hint': $(this).find(".form_hint input[name=hint]").val(),
-						'required': $(this).find(".form_prompt select[name=required]").val(),
-						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
-						'default': $(this).find(".form_default input[name=default]").val(),
+						'hint': $(this).find(".frm_hint input[name=hint]").val(),
+						'required': $(this).find(".frm_required select[name=required]").val(),
+						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
+						'default': $(this).find(".frm_default input[name=default]").val(),
 						'type': $(this).find("input[name=type]").val(),
 				});
 
@@ -208,12 +208,12 @@ $("#export_xml_btn").click(function(){
 
 				manifest.parameters.push({
 						'name': name, 
-						'hint': $(this).find(".form_hint input[name=hint]").val(),
-						'required': $(this).find(".form_prompt select[name=required]").val(),
-						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
-						'default': $(this).find(".form_default input[name=default]").val(),
+						'hint': $(this).find(".frm_hint input[name=hint]").val(),
+						'required': $(this).find(".frm_required select[name=required]").val(),
+						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
+						'default': $(this).find(".frm_default input[name=default]").val(),
 						'options': options,
-						'type': xxxxx,
+						'type': $(this).find("input[name=type]").val(),
 				});
 				break;
 		}
