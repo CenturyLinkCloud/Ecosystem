@@ -16,6 +16,9 @@
 	background-color: rgb(255,99,25);
 	background-image: inherit;
 }
+.panel-info .panel-heading .text-muted {
+	color: #F7DEB1;
+}
 
 /**************************************/
 

@@ -93,8 +93,12 @@ function GenerateOptionParamEl(src_id,example_el,help_text)
 
 
 /******* Panel accordions ******/
-$("#built_els").on("click",".builder_el .panel-heading",function(){
-	if ($(this).parents(".builder_el").hasClass("inactive"))  {
+$("#built_els").on("click",".builder_el .panel-heading",function(e){
+	if ($(e.target).hasClass(".el_btn_menu") || $(e.target).parents(".el_btn_menu").length)  {
+		// no-op - clicking the button menu
+	}  else if ($(e.target).hasClass("name") && !$(this).parents(".builder_el").hasClass("inactive"))  {
+		// no-op - editting name field and already expanded
+	}  else if ($(this).parents(".builder_el").hasClass("inactive"))  {
 		$("#built_els .builder_el").addClass("inactive").removeClass("panel-info");
 		$(this).parents(".builder_el").toggleClass("inactive").toggleClass("panel-info");
 	}  else  {
