@@ -140,7 +140,12 @@ $("#export_xml_btn").click(function(){
 	// Generate XML
 	parameters = Array();
 	$.each(manifest_obj.parameters,function(){
-		switch (parameter.type)  {
+		switch (this.type)  {
+			case 'String':
+				//parameters.append("<Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
+				console.log("x");
+				break;
+			/*
 			case 'Option':
 			case 'MultiSelect':
 				'options': options,
@@ -150,6 +155,7 @@ $("#export_xml_btn").click(function(){
 				'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
 				'default': $(this).find(".frm_default input[name=default]").val(),
 				'type': $(this).find("input[name=type]").val(),
+			*/
 		};
 		console.log(this);
 	});
@@ -161,7 +167,7 @@ $("#export_xml_btn").click(function(){
 			  +"        <Description>"+manifest_obj.metadata.description+"</Description>\n"
 			  +"    </Metadata>\n"
 			  +"    <Parameters>\n"
-			  +     parameters + "\n"
+			  +     parameters.join("\n") + "\n"
 			  +"    </Parameters>\n"
 			  +"    <Execution>\n"
 			  +"        <Mode>"+manifest_obj.execution.mode+"</Mode>\n"
@@ -171,6 +177,7 @@ $("#export_xml_btn").click(function(){
 
 
 	// Publish Gist
+	console.log(manifest);
 });
 
 
@@ -189,7 +196,7 @@ function BuildManifest()
 		},
 		'execution': {
 			'mode': $("select[name=package_mode]").val(),
-			'command': $("select[name=package_mode]")=="SSH"? "install.sh":"install.ps1",
+			'command': $("select[name=package_mode]").val()=="SSH"? "install.sh":"install.ps1",
 		},
 		'parameters': [],
 	};
