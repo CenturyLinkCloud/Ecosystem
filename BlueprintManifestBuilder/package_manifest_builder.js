@@ -144,10 +144,10 @@ $("#export_xml_btn").click(function(){
 			'mode': $("select[name=package_mode]").val(),
 			'command': $("select[name=package_mode]")=="SSH"? "install.sh":"install.ps1",
 		},
+		'parameters': [],
 	};
 
 	// variable parameters
-	names = Array();
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		console.log(this);
 		name = $(this).find("input[name=name]").val();
@@ -155,7 +155,6 @@ $("#export_xml_btn").click(function(){
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
 		}
-		names.push(name)
 		manifest.execution.command += " ${"+name+"}"
 		switch (true)  {
 			// Standard Params
@@ -165,6 +164,12 @@ $("#export_xml_btn").click(function(){
 			case ($(this).hasClass('param_network')):
 			case ($(this).hasClass('param_serverip')):
 			case ($(this).hasClass('param_server')):
+				manifest.parameters.push({
+						'name': name, 
+						'hint': $(this).find(".form_hint input[name=hint]").val(),
+						'required': $(this).find(".form_prompt select[name=hint]").val(),
+						'default': $(this).find(".form_default select[name=hint]").val()
+				});
 				hint = $(this).find("input[name=name]").val();
 
 			// System params.  These don't need any el_details
