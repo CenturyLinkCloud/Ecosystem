@@ -167,16 +167,19 @@ $("#export_xml_btn").click(function(){
 				manifest.parameters.push({
 						'name': name, 
 						'hint': $(this).find(".form_hint input[name=hint]").val(),
-						'required': $(this).find(".form_prompt select[name=hint]").val(),
-						'default': $(this).find(".form_default select[name=hint]").val()
+						'required': $(this).find(".form_prompt select[name=required]").val(),
+						'prompt': $(this).find(".form_prompt select[name=prompt]").val(),
+						'default': $(this).find(".form_default input[name=default]").val(),
 				});
-				hint = $(this).find("input[name=name]").val();
 
 			// System params.  These don't need any el_details
 			case ($(this).hasClass('param_user')):
 			case ($(this).hasClass('param_name')):
 			case ($(this).hasClass('param_ip')):
 			case ($(this).hasClass('param_serverpassword')):
+				manifest.parameters.push({
+						'name': name
+				});
 				break;
 
 			// Option params
