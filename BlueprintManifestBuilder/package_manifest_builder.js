@@ -149,6 +149,11 @@ $("#export_xml_btn").click(function(){
 			case 'ServerIP':
 				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
 				break;
+
+			case 'Option':
+			case 'MultiSelect':
+				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
+				break;
 			/*
 			case 'Option':
 			case 'MultiSelect':
