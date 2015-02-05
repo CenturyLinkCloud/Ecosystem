@@ -153,22 +153,8 @@ $("#export_bash_btn").click(function(){
 	});
 	install_sh = install_sh.replace(/<BEGINVARIABLES>/g,variables.join(""));
 
-
 	// Publish Gist
-	// TODO - publish first, add link to manifest, then edit original
-	// TODO - publish all files as a single gist each with a different file
-	data: {
-		description: manifest_obj.metadata.name+" "+manifest.metadata.command_script+" Template File",
-		public: true,
-		files: {}
-	};
-	$.ajax({
-		url: "https://api.github.com/gists",
-		type: "POST",
-		data: JSON.stringify(data),
-		success: function(o){
-			$("#alerts").append("<div class='alert alert-success' role='alert'>"+manifest.metadata.command_script+" template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
-		}})
+	PublishGist(manifest_obj.execution.command_script,manifest_obj.metadata.name+" "+manifest.execution.command_script+" Template File",install_sh)
 });
 
 
@@ -184,24 +170,8 @@ $("#export_powershell_btn").click(function(){
 	});
 	install_ps1 = install_ps1.replace(/<BEGINVARIABLES>/g,variables.join(",\n"));
 
-
 	// Publish Gist
-	// TODO - publish first, add link to manifest, then edit original
-	$.ajax({
-		url: "https://api.github.com/gists",
-		type: "POST",
-		data: JSON.stringify({
-			description: manifest_obj.metadata.name+" "+manifest.metadata.command_script+" Template File",
-			public: true,
-			files: {
-				manifest.metadata.command_script: {
-					content: install_ps1,
-				}
-			}
-		}),
-		success: function(o){
-			$("#alerts").append("<div class='alert alert-success' role='alert'>"+manifest.metadata.command_script+" template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
-		}})
+	PublishGist(manifest_obj.execution.command_script,manifest_obj.metadata.name+" "+manifest.execution.command_script+" Template File",install_ps1)
 });
 
 
@@ -248,34 +218,20 @@ $("#export_xml_btn").click(function(){
 			  +"    </Execution>\n"
 	          +"</Manifest>\n";
 
-
 	// Publish Gist
-	$.ajax({
-		url: "https://api.github.com/gists",
-		type: "POST",
-		data: JSON.stringify({
-			description: manifest_obj.metadata.name+" package.manifest File",
-			public: true,
-			files: {
-				'package.manifest': {
-					content: manifest,
-				}
-			}
-		}),
-		success: function(o){
-			$("#alerts").append("<div class='alert alert-success' role='alert'>package.manifest exported to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
-		}})
+	PublishGist('package.manifest',manifest_obj.metadata.name+" package.manifest File",manifest)
 });
 
 
 function PublishGist(filename,description,content)
 {
-	data: {
-		description: description
+	// TODO - publish first, add link to manifest, then edit original
+	data = {
+		description: description,
 		public: true,
-		files: {}
+		files: {},
 	};
-	data[files][filename] = { content: content };
+	data['files'][filename] = { content: content };
 	$.ajax({
 		url: "https://api.github.com/gists",
 		type: "POST",
@@ -301,8 +257,8 @@ function BuildManifest()
 		},
 		'execution': {
 			'mode': $("select[name=package_mode]").val(),
-			'command': $("select[name=package_command]").val(),
-			'command_script': $("select[name=package_command]").val(),
+			'command': $("input[name=package_command]").val(),
+			'command_script': $("input[name=package_command]").val(),
 		},
 		'parameters': [],
 		'names': [],
