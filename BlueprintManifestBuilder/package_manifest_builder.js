@@ -273,7 +273,7 @@ function BuildManifest()
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
 		}
-		manifest.execution.command += " '${"+name+"}'"
+		manifest.execution.command += " '${"+variable+"}'"
 		switch (true)  {
 			// Standard Params
 			case ($(this).hasClass('param_string')):
@@ -298,13 +298,6 @@ function BuildManifest()
 			case ($(this).hasClass('param_ip')):
 			case ($(this).hasClass('param_serverpassword')):
 				/* No-op */
-				/*
-				manifest.parameters.push({
-						'name': name,
-						'prompt': "false",
-						'type': $(this).find("input[name=type]".val(),
-				});
-				*/
 				break;
 
 			// Option params
