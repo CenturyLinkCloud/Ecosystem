@@ -137,19 +137,13 @@ $("#export_bash_btn").click(function(){
 	manifest_obj = BuildManifest();
 	if (!manifest_obj)  return(false);
 
-	// Generate Shell
-	var install_tpl = ""
-	$.get("install_sh_tpl", function(response) {
-		install_tpl = response;
-	});
-	console.log(install_tpl)
-
 	// Edit content
+	install_sh = install_sh_tpl
 	variables = Array();
 	$.each(manifest_obj.variables,function(i){
 		variables.push("$"+this+" = $"+(i+1)+"\n");
 	});
-	install_tpl.replace(/<BEGINVARIABLES>/g,variables.join(""));
+	install_sh = install_sh.replace(/<BEGINVARIABLES>/g,variables.join(""));
 
 
 	// Publish Gist
@@ -162,12 +156,12 @@ $("#export_bash_btn").click(function(){
 			public: true,
 			files: {
 				'package.manifest': {
-					content: install_tpl,
+					content: install_sh,
 				}
 			}
 		}),
 		success: function(o){
-			$("#alerts").append("<div class='alert alert-success' role='alert'>install.sh temaplate file to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
+			$("#alerts").append("<div class='alert alert-success' role='alert'>install.sh template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
 		}})
 });
 
@@ -260,7 +254,7 @@ function BuildManifest()
 	// variable parameters
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		name = $(this).find("input[name=name]").val();  manifest.names.push(name);
-		variable = name.replace(/[^a-z0-1_]/gi,"_");  manifest.variables.push(variable);
+		variable = name.replace(/[^a-z0-1_]/gi,"_").toUpperCase();  manifest.variables.push(variable);
 		if (name=="")  {
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
@@ -304,12 +298,12 @@ function BuildManifest()
 			case ($(this).hasClass('param_option')):
 				options = Array()
 				$(this).find(".option_container").each(function(){
-					name = $(this).find("input.lable").val()
-					value = $(this).find("input.value").val()
-					if (!name.length || !value.length)  {
+					opt_name = $(this).find("input.lable").val()
+					opt_value = $(this).find("input.value").val()
+					if (!opt_name.length || !opt_value.length)  {
 						$("#alerts").append("<div class='alert alert-danger' role='alert'>Must populate both fields for all options ("+name+").</div>");
 						return (false);
-					}  else  options.push({'name': name, 'value': value});
+					}  else  options.push({'name': opt_name, 'value': opt_value});
 				});
 
 				manifest.parameters.push({

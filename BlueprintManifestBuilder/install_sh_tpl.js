@@ -1,4 +1,4 @@
-#!/bin/bash
+var install_sh_tpl = (function () {/*#!/bin/bash
 
 #
 #     _____            _                    _     _       _      _____ _                 _ 
@@ -25,4 +25,4 @@
 # Add custom script elements below this line ---
 
 
-
+*/}).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
