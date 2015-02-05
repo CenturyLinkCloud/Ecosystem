@@ -189,7 +189,7 @@ $("#export_xml_btn").click(function(){
 			case 'Password':
 			case 'Server':
 			case 'ServerIP':
-				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
+				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.variable+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
 				break;
 
 			case 'Option':
@@ -198,7 +198,7 @@ $("#export_xml_btn").click(function(){
 				$.each(this.options,function(){
 					options.push("            <Option Name=\""+this.name+"\" Value=\""+this.value+"\"/>\n");
 				});
-				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.name+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\">\n"+options.join("")+"        </Parameter>\n");
+				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.variable+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\">\n"+options.join("")+"        </Parameter>\n");
 				break;
 		};
 	});
