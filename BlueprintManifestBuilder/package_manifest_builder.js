@@ -148,6 +148,7 @@ $("#export_bash_btn").click(function(){
 
 	// Publish Gist
 	// TODO - publish first, add link to manifest, then edit original
+	// TODO - publish all files as a single gist each with a different file
 	$.ajax({
 		url: "https://api.github.com/gists",
 		type: "POST",
@@ -155,13 +156,46 @@ $("#export_bash_btn").click(function(){
 			description: manifest_obj.metadata.name+" install.sh Template File",
 			public: true,
 			files: {
-				'package.manifest': {
+				'install.sh': {
 					content: install_sh,
 				}
 			}
 		}),
 		success: function(o){
 			$("#alerts").append("<div class='alert alert-success' role='alert'>install.sh template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
+		}})
+});
+
+
+$("#export_powershell_btn").click(function(){
+	manifest_obj = BuildManifest();
+	if (!manifest_obj)  return(false);
+
+	// Edit content
+	install_ps1 = install_ps1_tpl
+	variables = Array();
+	$.each(manifest_obj.variables,function(i){
+		variables.push("$"+this+" = $"+(i+1)+"\n");
+	});
+	install_ps1 = install_ps1.replace(/<BEGINVARIABLES>/g,variables.join(""));
+
+
+	// Publish Gist
+	// TODO - publish first, add link to manifest, then edit original
+	$.ajax({
+		url: "https://api.github.com/gists",
+		type: "POST",
+		data: JSON.stringify({
+			description: manifest_obj.metadata.name+" install.ps1 Template File",
+			public: true,
+			files: {
+				'install.ps1': {
+					content: install_ps1,
+				}
+			}
+		}),
+		success: function(o){
+			$("#alerts").append("<div class='alert alert-success' role='alert'>install.ps1 template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
 		}})
 });
 

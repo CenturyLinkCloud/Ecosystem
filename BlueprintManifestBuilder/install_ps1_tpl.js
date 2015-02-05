@@ -1,6 +1,4 @@
-var install_sh_tpl = (function () {/*#!/bin/bash
-
-#
+var install_ps1_tpl = (function () {/*#
 #     _____            _                    _     _       _      _____ _                 _ 
 #     /  __ \          | |                  | |   (_)     | |    /  __ \ |               | |
 #     | /  \/ ___ _ __ | |_ _   _ _ __ _   _| |    _ _ __ | | __ | /  \/ | ___  _   _  __| |
@@ -16,7 +14,12 @@ var install_sh_tpl = (function () {/*#!/bin/bash
 
 
 ## Set variables configured in package.manifest
-<BEGINVARIABLES>
+param (
+	[string]$OSSEC_ID = "",
+	[string]$OSSEC_KEY = "",
+	[string]$BPBROKER_IP = ""
+	<BEGINVARIABLES>
+)
 
 
 #####################################################
