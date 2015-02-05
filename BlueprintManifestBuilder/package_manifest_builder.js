@@ -112,6 +112,11 @@ $("#built_els").on("click",".builder_el .panel-heading",function(e){
 
 
 /******* Button click handlers  ******/
+$("#foundation_advanced_btn").click(function(){
+	$(this).remove();
+	$("#builder_el_preamble .advanced").show();
+});
+
 $("#built_els").on("click",".delete_btn",function(){
 	$(this).parents(".builder_el").remove();
 }).on("click",".clone_btn",function(){
