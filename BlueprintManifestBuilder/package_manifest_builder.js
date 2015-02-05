@@ -116,6 +116,9 @@ $("#foundation_advanced_btn").click(function(){
 	$(this).remove();
 	$("#builder_el_preamble .advanced").show();
 });
+$("#mode").change(function(){
+	$("#command").val($("select[name=package_mode]").val()=="SSH"? "install.sh":"install.ps1");
+});
 
 $("#built_els").on("click",".delete_btn",function(){
 	$(this).parents(".builder_el").remove();
@@ -158,16 +161,16 @@ $("#export_bash_btn").click(function(){
 		url: "https://api.github.com/gists",
 		type: "POST",
 		data: JSON.stringify({
-			description: manifest_obj.metadata.name+" install.sh Template File",
+			description: manifest_obj.metadata.name+" "+manifest.metadata.command_script+" Template File",
 			public: true,
 			files: {
-				'install.sh': {
+				manifest.metadata.command_script: {
 					content: install_sh,
 				}
 			}
 		}),
 		success: function(o){
-			$("#alerts").append("<div class='alert alert-success' role='alert'>install.sh template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
+			$("#alerts").append("<div class='alert alert-success' role='alert'>"+manifest.metadata.command_script+" template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
 		}})
 });
 
@@ -191,16 +194,16 @@ $("#export_powershell_btn").click(function(){
 		url: "https://api.github.com/gists",
 		type: "POST",
 		data: JSON.stringify({
-			description: manifest_obj.metadata.name+" install.ps1 Template File",
+			description: manifest_obj.metadata.name+" "+manifest.metadata.command_script+" Template File",
 			public: true,
 			files: {
-				'install.ps1': {
+				manifest.metadata.command_script: {
 					content: install_ps1,
 				}
 			}
 		}),
 		success: function(o){
-			$("#alerts").append("<div class='alert alert-success' role='alert'>install.ps1 template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
+			$("#alerts").append("<div class='alert alert-success' role='alert'>"+manifest.metadata.command_script+" template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
 		}})
 });
 
@@ -283,7 +286,8 @@ function BuildManifest()
 		},
 		'execution': {
 			'mode': $("select[name=package_mode]").val(),
-			'command': $("select[name=package_mode]").val()=="SSH"? "install.sh":"install.ps1",
+			'command': $("select[name=package_command]").val(),
+			'command_script': $("select[name=package_command]").val(),
 		},
 		'parameters': [],
 		'names': [],

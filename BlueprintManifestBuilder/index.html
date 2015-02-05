@@ -54,7 +54,7 @@
      		   </div>
 		       <div class="form-group frm_prompt">
 		         <label>Mode:</label>
-			     <select name="package_mode" class="form-control">
+			     <select name="package_mode" class="form-control" id="mode">
 			       <option value="Command">Command (Windows)
 			       <option value="PowerShell">PowerShell (Windows)
 			       <option value="SSH">SSH (Linux)
@@ -70,14 +70,19 @@
 				   for minior changes reuse the GUID.  Likewise to create a new incompatible package release choose a new GUID.
 				 </p>
 			   </div>
+     		   <div class="form-group advanced">
+     		     <label>Command:</label>
+     			 <input type="text" class="form-control" value="install.ps1" id="command" name="package_command">
+				 <p class="help-block">
+				   Script command to be executed when running blueprint package.  
+				   Any parameters you create will be automatically appended to the end of this command and made available to your script.
+				 </p>
+			   </div>
      		 </div>
 
 			 <!-- TODO:
-				o move uuid and hide behind an "advanced" link
-				o command
 			 	o persistant
 				o reboot on success
-				o explicitly ID command mode?
 			 -->
       
      	   </div>
