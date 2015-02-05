@@ -268,6 +268,24 @@ $("#export_xml_btn").click(function(){
 });
 
 
+function PublishGist(filename,description,content)
+{
+	data: {
+		description: description
+		public: true,
+		files: {}
+	};
+	data[files][filename] = { content: content };
+	$.ajax({
+		url: "https://api.github.com/gists",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function(o){
+			$("#alerts").append("<div class='alert alert-success' role='alert'>"+filename+" template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
+		}})
+}
+
+
 function BuildManifest()
 {
 	// Clear any existing alerts
