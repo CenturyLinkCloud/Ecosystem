@@ -157,18 +157,15 @@ $("#export_bash_btn").click(function(){
 	// Publish Gist
 	// TODO - publish first, add link to manifest, then edit original
 	// TODO - publish all files as a single gist each with a different file
+	data: {
+		description: manifest_obj.metadata.name+" "+manifest.metadata.command_script+" Template File",
+		public: true,
+		files: {}
+	};
 	$.ajax({
 		url: "https://api.github.com/gists",
 		type: "POST",
-		data: JSON.stringify({
-			description: manifest_obj.metadata.name+" "+manifest.metadata.command_script+" Template File",
-			public: true,
-			files: {
-				manifest.metadata.command_script: {
-					content: install_sh,
-				}
-			}
-		}),
+		data: JSON.stringify(data),
 		success: function(o){
 			$("#alerts").append("<div class='alert alert-success' role='alert'>"+manifest.metadata.command_script+" template file saved to <a href=\""+o.html_url+"\" target=\"_blank\">"+o.html_url+"</a>.</div>");
 		}})
