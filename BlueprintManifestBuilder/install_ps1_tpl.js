@@ -15,10 +15,7 @@ var install_ps1_tpl = (function () {/*#
 
 ## Set variables configured in package.manifest
 param (
-	[string]$OSSEC_ID = "",
-	[string]$OSSEC_KEY = "",
-	[string]$BPBROKER_IP = ""
-	<BEGINVARIABLES>
+<BEGINVARIABLES>
 )
 
 

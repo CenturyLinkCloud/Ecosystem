@@ -175,9 +175,9 @@ $("#export_powershell_btn").click(function(){
 	install_ps1 = install_ps1_tpl
 	variables = Array();
 	$.each(manifest_obj.variables,function(i){
-		variables.push("$"+this+" = $"+(i+1)+"\n");
+		variables.push("	[string]$"+this+" = \"\"");
 	});
-	install_ps1 = install_ps1.replace(/<BEGINVARIABLES>/g,variables.join(""));
+	install_ps1 = install_ps1.replace(/<BEGINVARIABLES>/g,variables.join(",\n"));
 
 
 	// Publish Gist
