@@ -117,7 +117,7 @@ $("#foundation_advanced_btn").click(function(){
 	$("#builder_el_preamble .advanced").show();
 });
 $("#mode").change(function(){
-	$("#command").val($("select[name=package_mode]").val()=="SSH"? "install.sh":"install.ps1");
+	$("#command").val($("select[name=package_mode]").val()=="Ssh"? "install.sh":"install.ps1");
 });
 
 $("#built_els").on("click",".delete_btn",function(){
@@ -261,8 +261,8 @@ function BuildManifest()
 			'mode': $("select[name=package_mode]").val(),
 			'command': $("input[name=package_command]").val(),
 			'command_script': $("input[name=package_command]").val(),
-			'reboot_on_success': $("input[name=package_reboot]").val(),
-			'persistent': $("input[name=package_persistent]").val(),
+			'reboot_on_success': $("select[name=package_reboot]").val(),
+			'persistent': $("select[name=package_persistent]").val(),
 		},
 		'parameters': [],
 		'names': [],
