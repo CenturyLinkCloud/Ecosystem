@@ -78,15 +78,31 @@
 				   Any parameters you create will be automatically appended to the end of this command and made available to your script.
 				 </p>
 			   </div>
-     		 </div>
-
-			 <!-- TODO:
-			 	o persistant
-				o reboot on success
-			 -->
-      
+   		       <div class="form-group frm_reboot advanced">
+		         <label>Reboot:</label>
+			     <select name="package_reboot" class="form-control">
+			       <option value="false" selected>No
+			       <option value="true">Yes
+			     </select>
+				 <p class="help-block">
+				   If yes will reboot the server after this package successfully executes.  Use of this is strongly recommended in
+				   lieu of rebooting as part of your scripts for proper tracking of server state.
+				 </p>
+		       </div>
+   		       <div class="form-group frm_persistent advanced">
+		         <label>Persistent:</label>
+			     <select name="package_persistent" class="form-control">
+			       <option value="false" selected>No
+			       <option value="true">Yes
+			     </select>
+				 <p class="help-block">
+				   If no the package will be removed after successful execution.  To keep package binaries and configuration on the
+				   server after execution set to Yes.  This is typically only enabled to support debugging.
+				 </p>
+		       </div>
+     	     </div>
      	   </div>
-     	 </div>
+  		 </div>
          <!-- end preamble -->
 
 		</div>
@@ -167,8 +183,8 @@
 	    <div class="el col-md-11">
 	      <div class="el_visible">
 			<span class="name_span col-md-2"></span>
-		    <input type="text" class="name col-md-2" name="name" placeholder="Name">
-		    <div class="col-md-10 example_field"></div>
+		    <input type="text" class="name col-md-5" name="name" placeholder="Name">
+		    <div class="col-md-5 example_field"></div>
 		  </div>
 	    </div>
 	  <br style="clear:both;">

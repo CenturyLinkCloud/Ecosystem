@@ -215,6 +215,8 @@ $("#export_xml_btn").click(function(){
 			  +"    <Execution>\n"
 			  +"        <Mode>"+manifest_obj.execution.mode+"</Mode>\n"
 			  +"        <Command>"+manifest_obj.execution.command+"</Command>\n"
+			  +"        <Persistent>"+manifest_obj.execution.persistent+"</Persistent>\n"
+			  +"        <RebootOnSuccess>"+manifest_obj.execution.reboot_on_success+"</RebootOnSuccess>\n"
 			  +"    </Execution>\n"
 	          +"</Manifest>\n";
 
@@ -259,6 +261,8 @@ function BuildManifest()
 			'mode': $("select[name=package_mode]").val(),
 			'command': $("input[name=package_command]").val(),
 			'command_script': $("input[name=package_command]").val(),
+			'reboot_on_success': $("input[name=package_reboot]").val(),
+			'persistent': $("input[name=package_persistent]").val(),
 		},
 		'parameters': [],
 		'names': [],
