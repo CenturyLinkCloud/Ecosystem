@@ -9,11 +9,12 @@
 # Python pre-req
 command -v python >/dev/null 2>&1 || { echo >&2 "Cannot locate python, required to pre-requisite"; exit 1; }
 
+yum -y install gcc python-devel libxml2-devel libxslt-devel || (apt-get update && apt-get -y install gcc python-devel libxml2-devel libxslt-devel)
 
 # pip pre-req (Python package manager)
 command -v pip >/dev/null 2>&1 || { 
 	echo >&2 "Cannot locate pip, installing"; 
-	yum -y install curl || (apt-get update && apt-get -y install curl)
+	yum -y install curl gcc || (apt-get update && apt-get -y install curl gcc)
 	curl https://bootstrap.pypa.io/get-pip.py | python;
 	pip install --upgrade pip;
 	}
