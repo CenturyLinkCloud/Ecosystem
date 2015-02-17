@@ -272,7 +272,7 @@ function BuildManifest()
 	// variable parameters
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		name = $(this).find("input[name=name]").val();  manifest.names.push(name);
-		variable = name.replace(/[^a-z0-1_]/gi,"_").toUpperCase();  manifest.variables.push(variable);
+		variable = name.replace(/[^a-z0-9_]/gi,"_").toUpperCase();  manifest.variables.push(variable);
 		if (name=="")  {
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
