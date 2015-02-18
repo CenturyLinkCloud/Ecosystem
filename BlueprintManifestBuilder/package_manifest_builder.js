@@ -189,7 +189,7 @@ $("#export_xml_btn").click(function(){
 			case 'Password':
 			case 'Server':
 			case 'ServerIP':
-				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.variable+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\"/>");
+				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.variable+"\" Prompt=\""+this.prompt+"\" Global=\""+this.global+"\" Required=\""+this.required+"\"/>");
 				break;
 
 			case 'Option':
@@ -293,6 +293,7 @@ function BuildManifest()
 						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
 						'default': $(this).find(".frm_default input[name=default]").val(),
 						'type': $(this).find("input[name=type]").val(),
+						'global': $(this).find(".frm_prompt select[name=prompt]").val()=='Global'? 'true':'false',
 						'variable': variable,
 				});
 
