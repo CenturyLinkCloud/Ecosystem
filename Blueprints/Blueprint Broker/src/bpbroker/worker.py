@@ -43,6 +43,7 @@ class WorkerThread(threading.Thread):
 		self.health_queue = health_queue
 		self._stop_event = threading.Event()
 		self.config = dict(list(default_config.items()) + list(config.items()))
+		self.backup_ts = time.time()
 
 
 	def join(self,timeout=None):
@@ -51,15 +52,23 @@ class WorkerThread(threading.Thread):
 
 
 	def run(self):
-		self.discover_server = TimeoutBaseUDPServer((self.config['listen_ip'], self.config['listen_port']), DiscoverUDPHandler)
 
 		while not self._stop_event.is_set():
-			self.discover_server.handle_request()
-			self.HealthCheck()
+			#"backup_freq_secs": 3600, "backup_retain_n": 24
+			with bpbroker.config.rlock:
+				if time.time()>self.backup_ts+bpbroker.config.data['backup_freq_secs']:
+					self.Backup()
+
+			time.sleep(5)
+			#self.HealthCheck()
+
+
+	def Backup(self):
+		self.backup_ts = time.time()
 
 
 	def HealthCheck(self):
-		self.health_queue.put_nowait({'thread': 'discover', 'ts': int(time.time())})
+		self.health_queue.put_nowait({'thread': 'worker', 'ts': int(time.time())})
 
 
 
