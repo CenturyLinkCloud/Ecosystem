@@ -21,6 +21,7 @@ from bpbroker.shell import Args, ExecCommand
 import bpbroker.cli as cli
 import bpbroker.server as server
 import bpbroker.api as API
+import bpbroker.worker as worker
 import bpbroker.discover as discover
 import bpbroker.ping as ping
 import bpbroker.services as services

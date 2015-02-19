@@ -19,21 +19,6 @@ default_config = {
 #####################################################
 
 
-class TimeoutBaseUDPServer(SocketServer.UDPServer):
-    timeout = 1
-
-
-
-class DiscoverUDPHandler(SocketServer.BaseRequestHandler):
-
-	def handle(self):
-		data = self.request[0].strip()
-		with bpbroker.config.rlock:
-			socket = self.request[1]
-			if data in bpbroker.config.data['services']:
-				socket.sendto("Key Exists\n", self.client_address)
-
-
 
 class WorkerThread(threading.Thread):
 
@@ -54,9 +39,8 @@ class WorkerThread(threading.Thread):
 	def run(self):
 
 		while not self._stop_event.is_set():
-			#"backup_freq_secs": 3600, "backup_retain_n": 24
 			with bpbroker.config.rlock:
-				if time.time()>self.backup_ts+bpbroker.config.data['backup_freq_secs']:
+				if time.time()>self.backup_ts+bpbroker.config.data['_config']['backup_freq_secs']:
 					self.Backup()
 
 			time.sleep(5)
@@ -64,7 +48,8 @@ class WorkerThread(threading.Thread):
 
 
 	def Backup(self):
-		self.backup_ts = time.time()
+		# TODO - backup file rotation
+		bpbroker.config.Save()
 
 
 	def HealthCheck(self):
