@@ -89,7 +89,7 @@ class Config(object):
 			with self.rlock:
 				try:
 					with open(self.source,"w") as fp:
-						self.data = json.dump(self.data,fp)
+						json.dump(self.data,fp)
 				except Exception as e:
 					raise(Exception("Error saving configuration file %s: %s" % (self.source,str(e))))
 
