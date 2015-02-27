@@ -60,7 +60,7 @@ class Mailer(object):
 		msg['CC'] = str(Header(unicode("; ".join(self.cc_addrs)), "UTF-8"))
 
 		s = smtplib.SMTP(bpmailer.config.data['_bpmailer']['smtp_server'],bpmailer.config.data['_bpmailer']['smtp_port'])
-		if 'smtp_user' in bpmailer.config.data['_bpmailer']:
+		if 'smtp_user' in bpmailer.config.data['_bpmailer'] and len(bpmailer.config.data['_bpmailer']['smtp_user']):
 			s.login(str(bpmailer.config.data['_bpmailer']['smtp_user']),str(bpmailer.config.data['_bpmailer']['smtp_password']))
 		s.sendmail(bpmailer.config.data["_bpmailer"]['mail_from_address'], self.to_addr, msg.as_string())
 		s.quit()
