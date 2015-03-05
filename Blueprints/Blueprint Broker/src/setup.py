@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = "bpbroker",
-	version = "0.20",
+	version = "0.21",
 	packages = find_packages("."),
 
 	package_data = {
