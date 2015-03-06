@@ -31,7 +31,7 @@ case $ALIAS in
 		;;
 	GOGO)
 		uuid="76f15d6c-a60c-4f2a-8064-104640a9436e"
-		package_prefix="DEV "
+		package_prefix=""
 		;;
 	*)
 		echo "Specify alias"
