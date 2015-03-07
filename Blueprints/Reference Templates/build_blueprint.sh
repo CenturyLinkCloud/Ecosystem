@@ -56,7 +56,7 @@ echo "Building version $release"
 
 # Create package
 zip PACKAGENAME.zip  \
-zip ${ALIAS}_${PACKAGE_NAME}.zip
+zip ${ALIAS}_${PACKAGE_NAME}.zip \
 	install.sh \
 	package.manifest
 
