@@ -133,7 +133,7 @@ class APIThread(threading.Thread):
 												  )
 		while not self._stop_event.is_set():
 			self.api_server.handle_request()
-			self.HealthCheck()
+			#self.HealthCheck()
 
 
 	def HealthCheck(self):

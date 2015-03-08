@@ -29,6 +29,9 @@ def Start():
 	discover_thread = bpbroker.discover.DiscoverThread(queue_worker,queue_health)
 	discover_thread.start()
 
+	worker_thread = bpbroker.worker.WorkerThread(queue_worker,queue_health)
+	worker_thread.start()
+
 
 	signal.signal(signal.SIGHUP,Shutdown)
 	signal.signal(signal.SIGINT,Shutdown)

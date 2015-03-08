@@ -84,6 +84,8 @@ See [Example bpmailer_config.json](examples/bpmailer_example_config.json) also s
 }
 ```
 
+Disable SMTP authentication by removing or unsetting the `smtp_user` key.
+
 ## Available environment variables
 The following environment variables are interpreted:
 * MAIL_FROM_ADDRESS

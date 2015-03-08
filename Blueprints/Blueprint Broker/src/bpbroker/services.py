@@ -54,6 +54,7 @@ def Register(rh):
 			else:  
 				bpbroker.config.data['services'][rh.qs['name']] = \
 					dict(data.items() + {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
+				bpbroker.config.Save()
 				Get(rh)
 
 
@@ -130,6 +131,7 @@ def Update(rh):
 			bpbroker.config.data['services'][rh.qs['name']] = \
 				dict(bpbroker.config.data['services'][rh.qs['name']].items() + data.items() + 
 				     {'last_write_ip': rh.RequestingHost(), 'last_write_ts': int(time.time())}.items())
+			bpbroker.config.Save()
 			Get(rh)
 
 

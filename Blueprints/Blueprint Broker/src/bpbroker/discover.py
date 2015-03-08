@@ -63,7 +63,7 @@ class DiscoverThread(threading.Thread):
 
 		while not self._stop_event.is_set():
 			self.discover_server.handle_request()
-			self.HealthCheck()
+			#self.HealthCheck()
 
 
 	def HealthCheck(self):

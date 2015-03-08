@@ -16,8 +16,9 @@ BPBROKER_DIR="/usr/local/bpbroker"
 #
 # Pre-reqs
 #
-./install_bpbroker.sh
 yum -y install gcc curl || (apt-get update && apt-get -y install build-essential curl)
+curl https://raw.githubusercontent.com/CenturyLinkCloud/Ecosystem/master/Blueprints/Public%20Blueprint%20Source/BP%20Broker/Linux/install_bpbroker.sh | bash
+
 
 
 #
