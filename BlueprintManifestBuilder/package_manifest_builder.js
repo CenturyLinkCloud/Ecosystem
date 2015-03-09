@@ -78,9 +78,19 @@ function GenerateSystemParamEl(src_id,example_el,help_text,name)
 	el = $("#builder_el_tpl").clone().removeAttr("id").addClass(src_id);
 	el.find(".example_field").append(example_el[0].innerHTML);
 	el.find("input[name=name]").val(name).attr("disabled","true");
-	el.find(".el_details").remove();
+	el.find(".el_details").hide();
 	el.find(".el_help").removeClass("col-md-offset-1").removeClass("col-md-5").addClass("col-md-11").html(help_text);
+	el.find("select[name=prompt]").val("None");
+	el.find("input[name=type]").val("String");
 	el.appendTo("#built_els");
+						/*
+						'hint': $(this).find(".frm_hint input[name=hint]").val(),
+						'required': $(this).find(".frm_required select[name=required]").val(),
+						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
+						'default': $(this).find(".frm_default input[name=default]").val(),
+						'type': $(this).find("input[name=type]").val(),
+						'global': $(this).find(".frm_prompt select[name=prompt]").val()=='Global'? 'true':'false',
+						*/
 }
 
 
@@ -286,6 +296,12 @@ function BuildManifest()
 			case ($(this).hasClass('param_network')):
 			case ($(this).hasClass('param_serverip')):
 			case ($(this).hasClass('param_server')):
+
+			// System params.  
+			case ($(this).hasClass('param_user')):
+			case ($(this).hasClass('param_name')):
+			case ($(this).hasClass('param_ip')):
+			case ($(this).hasClass('param_serverpassword')):
 				manifest.parameters.push({
 						'name': name, 
 						'hint': $(this).find(".frm_hint input[name=hint]").val(),
@@ -296,13 +312,6 @@ function BuildManifest()
 						'global': $(this).find(".frm_prompt select[name=prompt]").val()=='Global'? 'true':'false',
 						'variable': variable,
 				});
-
-			// System params.  These don't need any el_details
-			case ($(this).hasClass('param_user')):
-			case ($(this).hasClass('param_name')):
-			case ($(this).hasClass('param_ip')):
-			case ($(this).hasClass('param_serverpassword')):
-				/* No-op */
 				break;
 
 			// Option params
