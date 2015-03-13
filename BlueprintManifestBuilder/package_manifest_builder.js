@@ -159,7 +159,7 @@ $("#export_bash_btn").click(function(){
 	install_sh = install_sh_tpl
 	variables = Array();
 	$.each(manifest_obj.variables,function(i){
-		variables.push(this+"=\"${"+(i+1)+"}\"\n");
+		variables.push(this.toUpperCase()+"=\"${"+(i+1)+"}\"\n");
 	});
 	install_sh = install_sh.replace(/<BEGINVARIABLES>/g,variables.join(""));
 
@@ -176,7 +176,7 @@ $("#export_powershell_btn").click(function(){
 	install_ps1 = install_ps1_tpl
 	variables = Array();
 	$.each(manifest_obj.variables,function(i){
-		variables.push("	[string]$"+this+" = \"\"");
+		variables.push("	[string]$"+this.toUpperCase()+" = \"\"");
 	});
 	install_ps1 = install_ps1.replace(/<BEGINVARIABLES>/g,variables.join(",\n"));
 
@@ -282,7 +282,7 @@ function BuildManifest()
 	// variable parameters
 	$(".builder_el:not(#builder_el_preamble):not(#builder_el_tpl)").each(function(){
 		name = $(this).find("input[name=name]").val();  manifest.names.push(name);
-		variable = name.replace(/[^a-z0-9_]/gi,"_").toUpperCase();  manifest.variables.push(variable);
+		variable = name.replace(/[^a-z0-9_\.]/gi,"_");  manifest.variables.push(variable);
 		if (name=="")  {
 			$("#alerts").append("<div class='alert alert-danger' role='alert'>Must assign a name to all parameters before exporting.</div>");
 			return (false);
