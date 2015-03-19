@@ -83,14 +83,6 @@ function GenerateSystemParamEl(src_id,example_el,help_text,name)
 	el.find("select[name=prompt]").val("None");
 	el.find("input[name=type]").val("String");
 	el.appendTo("#built_els");
-						/*
-						'hint': $(this).find(".frm_hint input[name=hint]").val(),
-						'required': $(this).find(".frm_required select[name=required]").val(),
-						'prompt': $(this).find(".frm_prompt select[name=prompt]").val(),
-						'default': $(this).find(".frm_default input[name=default]").val(),
-						'type': $(this).find("input[name=type]").val(),
-						'global': $(this).find(".frm_prompt select[name=prompt]").val()=='Global'? 'true':'false',
-						*/
 }
 
 
@@ -100,6 +92,7 @@ function GenerateOptionParamEl(src_id,example_el,help_text,type)
 	el.find(".example_field").append(example_el[0].innerHTML);
 	el.find("input[name=type]").val(type);
 	el.find(".el_help").prepend(help_text);
+	if (type == "MultiSelect")  el.find(".frm_default").hide();
 	el.find(".el_details").append($("#options_tpl").clone().removeAttr("id"));
 	el.appendTo("#built_els");
 }
@@ -191,24 +184,24 @@ $("#export_xml_btn").click(function(){
 
 	// Generate XML
 	parameters = Array();
-	$.each(manifest_obj.parameters,function(){
-		switch (this.type)  {
+	$.each(manifest_obj.parameters,function(i,o){
+		switch (o.type)  {
 			case 'String':
 			case 'Numeric':
 			case 'Network':
 			case 'Password':
 			case 'Server':
 			case 'ServerIP':
-				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.variable+"\" Prompt=\""+this.prompt+"\" Global=\""+this.global+"\" Required=\""+this.required+"\"/>");
+				parameters.push("        <Parameter Name=\""+o.name+"\" Hint=\""+o.hint+"\" Type=\""+o.type+"\" Variable=\""+o.variable+"\" Prompt=\""+o.prompt+"\" Global=\""+o.global+"\" Default=\""+o.default+"\" Required=\""+o.required+"\"/>");
 				break;
 
 			case 'Option':
 			case 'MultiSelect':
 				options = Array()
-				$.each(this.options,function(){
+				$.each(o.options,function(){
 					options.push("            <Option Name=\""+this.name+"\" Value=\""+this.value+"\"/>\n");
 				});
-				parameters.push("        <Parameter Name=\""+this.name+"\" Hint=\""+this.hint+"\" Type=\""+this.type+"\" Variable=\""+this.variable+"\" Prompt=\""+this.prompt+"\" Required=\""+this.required+"\">\n"+options.join("")+"        </Parameter>\n");
+				parameters.push("        <Parameter Name=\""+o.name+"\" Hint=\""+o.hint+"\" Type=\""+o.type+"\" Variable=\""+o.variable+"\" Prompt=\""+o.prompt+"\" Global=\""+o.global+"\" Default=\""+o.default+"\" Required=\""+o.required+"\">\n"+options.join("")+"        </Parameter>\n");
 				break;
 		};
 	});
@@ -335,6 +328,7 @@ function BuildManifest()
 						'default': $(this).find(".frm_default input[name=default]").val(),
 						'options': options,
 						'type': $(this).find("input[name=type]").val(),
+						'global': $(this).find(".frm_prompt select[name=prompt]").val()=='Global'? 'true':'false',
 						'variable': variable,
 				});
 				break;
