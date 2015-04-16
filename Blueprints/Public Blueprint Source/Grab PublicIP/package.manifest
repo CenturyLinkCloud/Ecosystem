@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+  <Metadata>
+    <UUID>A53C360E-5979-47B1-9835-105494108304</UUID>
+    <Name>Grab PublicIP</Name>
+    <Description>Queries the CenturyLink Cloud API to pull a server's Public IP</Description>
+  </Metadata>
+  <Parameters>
+    <Parameter Name="Server Name" Type="String" Variable="T3.Server.Name" Prompt="false"/>
+    <Parameter Name="Control Username" Type="String" Variable="T3.Identity.User" Prompt="false"/>
+    <Parameter Name="Account Alias" Type="String" Variable="T3.Identity.Account" Prompt="false"/>
+    <Parameter Name="Current Control User Password" Type="Password" Variable="T3.ServerInfo.UserPassword"/>
+  </Parameters>
+  <Execution>
+    <Mode>Ssh</Mode>
+    <Command>get_publicip.sh ${T3.Identity.User} ${T3.ServerInfo.UserPassword} ${T3.Identity.Account} ${T3.Server.Name}</Command>
+    <Persistent>false</Persistent>
+  </Execution>
+</Manifest>
