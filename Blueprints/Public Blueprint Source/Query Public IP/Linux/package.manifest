@@ -2,8 +2,8 @@
 <Manifest>
   <Metadata>
     <UUID>A53C360E-5979-47B1-9835-105494108304</UUID>
-    <Name>Grab PublicIP</Name>
-    <Description>Queries the CenturyLink Cloud API to pull a server's Public IP</Description>
+    <Name>Query Public IP Address on Linux</Name>
+    <Description>Queries the CenturyLink Cloud API to pull a server's Public IP.  IP address will be available in the file /tmp/publicip</Description>
   </Metadata>
   <Parameters>
     <Parameter Name="Server Name" Type="String" Variable="T3.Server.Name" Prompt="false"/>
