@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 set -e
 
 # Take parameters from command line
@@ -7,8 +7,7 @@ PASSWORD="$2"   # Password for this user
 ACCOUNT="$3"    # The account alias to query in the API (Example: TSTB)
 SERVERID="$4"   # The server ID to query in the API (Example: CA2TSTBRR01)
 
-apt-get -y update
-apt-get -y install jq
+yum -y install jq || (apt-get -y update; apt-get -y install jq)
 
 # Names of value keys to get from JSON responses
 TOKENKEY="bearerToken"
@@ -36,3 +35,5 @@ SRVRESP=`curl -s -H "Authorization: Bearer $TOKEN" $GETSRVURL`
 
 # Write information to given file name
 echo -e "$SRVRESP" | jq -r '.details.ipAddresses[1].public' > /tmp/publicip
+
+echo "Server Public IP: `cat /tmp/publicip`"
