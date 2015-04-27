@@ -10,7 +10,7 @@
 command -v python >/dev/null 2>&1 || { echo >&2 "Cannot locate python, required to pre-requisite"; exit 1; }
 
 yum -y install gcc python-devel libxml2-devel libxslt-devel || \
-	(apt-get update && apt-get -y install zlib1g-dev gcc pip libxml2-dev libxslt1-dev python-dev python-dev libxslt1-dev python-lxml)
+	(apt-get update && apt-get -y install zlib1g-dev gcc libxml2-dev libxslt1-dev python-dev python-dev libxslt1-dev python-lxml)
 
 # pip pre-req (Python package manager)
 command -v pip >/dev/null 2>&1 || { 
