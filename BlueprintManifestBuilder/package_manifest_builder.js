@@ -41,13 +41,13 @@ $("#built_els").droppable({
 				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the control portal username that is initiating the deployment.","T3.Identity.User");
 				break;
 			case 'param_name':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the name of server deployment is executing on.","T3.Identity.Name");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the name of server deployment is executing on.","T3.Server.Name");
 				break;
 			case 'param_ip':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the IP of server deployment is executing on.","T3.Identity.IPAddress");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the IP of server deployment is executing on.","T3.Server.IPAddress");
 				break;
 			case 'param_serverpassword':
-				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the password for the server on which the deployment is executing.","T3.Identity.Password");
+				GenerateSystemParamEl(ui.draggable[0].id,ui.helper,"Include the password for the server on which the deployment is executing.","T3.Server.Password");
 				break;
 
 			// Option params
