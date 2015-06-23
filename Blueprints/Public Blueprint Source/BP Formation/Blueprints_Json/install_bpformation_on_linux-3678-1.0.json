@@ -1,0 +1,31 @@
+{
+    "execute": {},
+    "metadata": {
+        "description": "Gain access to a command line interface CLI that interacts with the CenturyLink Cloud Blueprints packaging and workflow services. Query, change, add, and execute CenturyLink Cloud automation using a cross-platform CLI and definitions defined in common json files.",
+        "id": "3678",
+        "name": "Install bpformation on Linux",
+        "owner": "CenturyLink Cloud Ecosystem",
+        "version": "1.0",
+        "visibility": "public"
+    },
+    "tasks": [
+        {
+            "cpu": "1",
+            "description": "bpformation",
+            "id": "2323f777-fd53-4e7b-bfcc-4ec4f27c0cb7",
+            "name": "BP",
+            "ram": "1",
+            "tasks": [
+                {
+                    "id": "4893aa85-f0b1-4fc3-b869-3d2bff464233",
+                    "name": "Install bpformation on Linux",
+                    "type": "package",
+                    "uuid": "c3278a6e-02f9-413e-935f-bb7d19497e2c"
+                }
+            ],
+            "template": "CENTOS-6-64-TEMPLATE",
+            "type": "server",
+            "uuid": "cb9762b3-61a6-4cfb-af97-96bf7dbfc359"
+        }
+    ]
+}
