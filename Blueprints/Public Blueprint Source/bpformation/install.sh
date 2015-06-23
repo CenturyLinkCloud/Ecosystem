@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
  
 #
 #     _____            _                    _     _       _      _____ _                 _ 
@@ -19,8 +19,6 @@
  
 #####################################################
 
-echo "$0 version <VERSION>"
-
 
 yum -y update
 
@@ -28,10 +26,10 @@ yum -y update
 yum -y install gcc python-devel libxslt-devel
 
 # Install pip
-curl https://bootstrap.pypa.io/get-pip.py | sudo python
+curl https://bootstrap.pypa.io/get-pip.py | /usr/bin/python
 
 ## Install bpformation
-pip install bpformation
+/usr/bin/pip install bpformation
 
 ## Set documentation
 cat >> /etc/motd <<EOF
