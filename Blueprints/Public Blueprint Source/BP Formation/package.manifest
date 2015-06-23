@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>c3288a6e-02f9-413e-935f-bb7d19497e2c</UUID>
+        <Name>BP Formation</Name>
+        <Description>Gain access to a command line interface CLI that interacts with the CenturyLink Cloud Blueprints packaging and workflow services. Query, change, add, and execute CenturyLink Cloud automation using a cross-platform CLI and definitions defined in common json files.</Description>
+    </Metadata>
+    <Parameters>
+ 
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install.sh</Command>
+        <Persistent>false</Persistent>
+        <RebootOnSuccess>false</RebootOnSuccess>
+    </Execution>
+</Manifest>
