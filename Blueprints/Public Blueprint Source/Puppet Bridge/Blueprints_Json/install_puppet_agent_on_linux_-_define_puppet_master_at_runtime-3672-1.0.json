@@ -1,0 +1,22 @@
+{
+    "execute": {
+        "PuppetMaster": ""
+    },
+    "metadata": {
+        "description": "Install the latest Puppet agent onto a Linux system and point towards a master server.  Acts as a bridge between the CenturyLink Cloud Blueprinting orchestration and your existing investment in Puppet configuration management.",
+        "id": "3672",
+        "name": "Install Puppet Agent on Linux - Define Puppet Master at Runtime",
+        "owner": "CenturyLink Cloud Ecosystem",
+        "version": "1.0",
+        "visibility": "public"
+    },
+    "tasks": [
+        {
+            "id": "79de77e0-0464-4467-952e-9b291a35c341",
+            "name": "Install Puppet Agent Bridge on Linux - Define Puppet Master at Runtime",
+            "server": "${79de77e0-0464-4467-952e-9b291a35c341.TaskServer}",
+            "type": "package",
+            "uuid": "775bc824-579d-4c8d-8955-c69a94a2ba1a"
+        }
+    ]
+}
