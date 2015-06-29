@@ -18,7 +18,7 @@ case $ALIAS in
 		package_visibility="Private"
 		;;
 	ECO)
-		uuid="d1de37d8-320b-4e0e-992a-3cd5690d5ef9"
+		uuid="c3278a6e-02f9-413e-935f-bb7d19497e2c"
 		package_prefix=""
 		package_visibility="Public"
 		;;
@@ -44,6 +44,7 @@ echo "Building version $release"
 
 
 # Create package
+echo "Creating ${ALIAS}_${package_os}_${package_type}_${PWD##*/}.zip"
 zip Blueprints_Completed_Packages/${ALIAS}_${package_os}_${package_type}_${PWD##*/}.zip  \
 	install.sh \
 	package.manifest \
