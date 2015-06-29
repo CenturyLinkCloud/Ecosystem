@@ -65,4 +65,5 @@ if [ "${package_prefix}" = "DEV " ]; then
 			--type $package_type --visibility $package_visibility --os $package_os
 fi
 
+rm -f Blueprints_Completed_Packages/${ALIAS}_${package_os}_${package_type}_${PWD##*/}.zip
 
