@@ -19,6 +19,7 @@
  
 #####################################################
 
+echo "$0 version <VERSION>"
 
 yum -y update
 
@@ -52,6 +53,10 @@ Getting started:
 Happy Blueprinting!
 
 EOF
+
+
+## Register Install
+./slack_logger.py bpformation keith_resar 0
 
 exit 0
 
