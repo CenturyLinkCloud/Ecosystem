@@ -6,11 +6,13 @@
         <Description>Gain access to a command line interface CLI that interacts with the CenturyLink Cloud Blueprints packaging and workflow services. Query, change, add, and execute CenturyLink Cloud automation using a cross-platform CLI and definitions defined in common json files.</Description>
     </Metadata>
     <Parameters>
- 
+        <Parameter Name="T3.Identity.Account" Hint="" Type="String" Variable="T3.Identity.Account" Prompt="None" Global="false" Default="" Required="true"/>
+        <Parameter Name="T3.Server.Password" Hint="" Type="String" Variable="T3.Server.Password" Prompt="None" Global="false" Default="" Required="true"/>
+        <Parameter Name="Email" Hint="Email address" Type="String" Variable="Email" Prompt="Build" Global="false" Default="" Required="true"/>
     </Parameters>
     <Execution>
         <Mode>Ssh</Mode>
-        <Command>install.sh</Command>
+        <Command>install.ps1 '${T3.Identity.Account}' '${T3.Server.Password}' '${Email}'</Command>
         <Persistent>false</Persistent>
         <RebootOnSuccess>false</RebootOnSuccess>
     </Execution>
