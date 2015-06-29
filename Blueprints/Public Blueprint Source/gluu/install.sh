@@ -30,6 +30,23 @@ elif [ -f /etc/debian_version ]; then
 fi
 
 
+echo "deb http://repo.gluu.org/ubuntu/ trusty main" > /etc/apt/sources.list.d/gluu-repo.list 
+curl http://repo.gluu.org/ubuntu/gluu-apt.key | apt-key add -
+apt-get update 
+apt-get install gluu-server 
+
+
+service gluu-server start 
+service gluu-server login 
+
+
+cd /install/community-edition-setup/
+
+cat > setup.properties <<EOF
+EOF
+
+./setup.py 
+
 ## Register Install
 ./slack_logger.py 'Gluu (community)' keith_resar 0
 
