@@ -21,42 +21,17 @@
 
 echo "$0 version <VERSION>"
 
-yum -y update
-
-# Install pre-reqs
-yum -y install gcc python-devel libxslt-devel
-
-# Install pip
-curl https://bootstrap.pypa.io/get-pip.py | /usr/bin/python
-
-## Install bpformation
-/usr/bin/pip install bpformation
-
-## Set documentation
-cat >> /etc/motd <<EOF
-
-BPFORMATION has been installed on this host.
-
-Getting started:
-
-1. Complete configuration by modifying your ~/.bpformation configuration file:
-   (example file: https://github.com/CenturyLinkCloud/bpformation/blob/master/examples/example_config.ini)
-
-2. Execute bpformation from the command line:
-
-   > bpformation package list
-   > bpformation blueprint download --id 1234
-
-3. Help and references available at: https://github.com/CenturyLinkCloud/bpformation
-
-
-Happy Blueprinting!
-
-EOF
+# Update OS
+if [ -f /etc/redhat-release ]; then
+	/usr/bin/yum -y update
+elif [ -f /etc/debian_version ]; then
+	apt-get -y update
+	apt-get -y upgrade
+fi
 
 
 ## Register Install
-./slack_logger.py bpformation keith_resar 0
+./slack_logger.py 'Gluu (community)' keith_resar 0
 
 exit 0
 
