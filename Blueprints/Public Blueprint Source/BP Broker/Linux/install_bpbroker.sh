@@ -19,6 +19,8 @@ command -v pip >/dev/null 2>&1 || {
         curl https://bootstrap.pypa.io/get-pip.py | python;
         pip install --upgrade pip;
         }
+PATH="/usr/local/bin:$PATH"
+export PATH
 
 # Virtualenv to fence this from the system libraries
 echo "Installing and creating virtualenv"
