@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>1aae231d-fe78-4c58-8055-2d87e6011303</UUID>
+        <Name>Utilities - Create/Update Public IP NAT to Primary Private IP Address on Linux</Name>
+        <Description>
+		  Create a new or update an existing Public IP NAT with the server's primary private IP address.
+		  The newly created IP address is stored on the filesystem in /sysadmin/public_IP.
+		</Description>
+    </Metadata>
+    <Parameters>
+		<Parameter Name="Control Username" Type="String" Variable="T3.Identity.User" Prompt="false"/>
+		<Parameter Name="Account Alias" Type="String" Variable="T3.Identity.Account" Prompt="false"/>
+		<Parameter Name="Public IP Ports" Type="String" Variable="port_groups" Prompt="Global" Global="true" Hint="Space seperated port/protocol tuples, e.g. 80/TCP, 100-200/UDP."/>
+		<Parameter Name="Current Control User Password" Type="Password" Prompt="Global" Global="true" Variable="T3.ServerInfo.User_Password"/>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install.sh '${T3.Identity.Account}' '${T3.Identity.User}' '${T3.ServerInfo.User_Password}' '${port_groups}'</Command>
+    </Execution>
+</Manifest>
