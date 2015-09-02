@@ -16,6 +16,6 @@
     </Parameters>
     <Execution>
         <Mode>Command</Mode>
-        <Command>install.bat '${T3.Identity.Account}' '${T3.Identity.User}' '${T3.ServerInfo.User_Password}' '${port_groups}'</Command>
+        <Command>install.bat ${T3.Identity.Account} ${T3.Identity.User} ${T3.ServerInfo.User_Password} "${port_groups}"</Command>
     </Execution>
 </Manifest>

@@ -26,6 +26,10 @@ import requests
 #	pass
 
 
+# Packaging Windows as .exe can't find cacert so SSL fails
+if os.name=='nt':  os.environ['REQUESTS_CA_BUNDLE'] = "%s\cacert.pem" % getattr(sys, '_MEIPASS', os.path.abspath("."))
+
+
 # clc set creds
 try:
 	clc.v2.SetCredentials(os.environ['CONTROL_USER'],os.environ['CONTROL_PASSWD'])
@@ -36,7 +40,8 @@ except KeyError:
 
 # clc get self
 try:
-	s = clc.v2.Server(id=socket.gethostname(),alias=os.environ['CONTROL_ALIAS'])
+	#s = clc.v2.Server(id=socket.gethostname(),alias=os.environ['CONTROL_ALIAS'])
+	s = clc.v2.Server(id="ca1krapip04",alias="KRAP")
 	p = s.PublicIPs()
 except:
 	raise
@@ -47,7 +52,11 @@ except:
 # build port/proto request
 try:
 	ports_req = []
-	for kv in sys.argv[1:]:
+	if os.name=='nt':  kvs = sys.argv[1].replace("'","").split(" ")
+	else:  kvs = sys.argv[1:]
+
+	print kvs
+	for kv in kvs:
 		(port_group,protocol) = re.split("/",kv)
 
 		if protocol.upper() not in ('TCP','UDP'):  raise(Exception())
@@ -60,6 +69,7 @@ except:
 	sys.stderr.write("Invalid port/protocol syntax\n")
 	sys.exit(1)
 
+sys.exit()
 
 # clc add/update public IP
 if 'public' not in s.ip_addresses[0].keys():
@@ -70,7 +80,7 @@ else:
 
 # clc refresh self
 try:
-	if os.name=='bt': file_path = 'c:\sysadmin\public_ip'
+	if os.name=='nt': file_path = 'c:\sysadmin\public_ip'
 	else: file_path = '/sysadmin/public_ip'
 
 	with open(file_path,'w') as fh:
