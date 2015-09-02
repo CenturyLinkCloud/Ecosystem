@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-CONTROL_USER="${1}"
-CONTROL_PASSWD="${2}"
+CONTROL_ALIAS="${1}"
+CONTROL_USER="${2}"
+CONTROL_PASSWD="${3}"
 
 
 echo "$0 version <VERSION>"
@@ -15,5 +16,5 @@ echo "$0 version <VERSION>"
 #
 # Exec api call
 #
-CONTROL_USER="${CONTROL_USER}" CONTROL_PASSWD="${CONTROL_PASSWD}" clc_api_nat_ip.py
+CONTROL_ALIAS="${CONTROL_ALIAS}" CONTROL_USER="${CONTROL_USER}" CONTROL_PASSWD="${CONTROL_PASSWD}" clc_api_nat_ip.py
 
