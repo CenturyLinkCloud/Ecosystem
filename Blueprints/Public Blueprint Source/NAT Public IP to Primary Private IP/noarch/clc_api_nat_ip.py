@@ -40,8 +40,7 @@ except KeyError:
 
 # clc get self
 try:
-	#s = clc.v2.Server(id=socket.gethostname(),alias=os.environ['CONTROL_ALIAS'])
-	s = clc.v2.Server(id="ca1krapip04",alias="KRAP")
+	s = clc.v2.Server(id=socket.gethostname(),alias=os.environ['CONTROL_ALIAS'])
 	p = s.PublicIPs()
 except:
 	raise
@@ -52,10 +51,9 @@ except:
 # build port/proto request
 try:
 	ports_req = []
-	if os.name=='nt':  kvs = sys.argv[1].replace("'","").split(" ")
+	if os.name=='nt':  kvs = sys.argv[1].split(" ")
 	else:  kvs = sys.argv[1:]
 
-	print kvs
 	for kv in kvs:
 		(port_group,protocol) = re.split("/",kv)
 
@@ -69,7 +67,6 @@ except:
 	sys.stderr.write("Invalid port/protocol syntax\n")
 	sys.exit(1)
 
-sys.exit()
 
 # clc add/update public IP
 if 'public' not in s.ip_addresses[0].keys():
