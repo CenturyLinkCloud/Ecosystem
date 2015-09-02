@@ -9,8 +9,6 @@
 # Python pre-req
 command -v python >/dev/null 2>&1 || { echo "Cannot locate python, required to pre-requisite" >&2; exit 1; }
 
-#yum -y install gcc python-devel libxml2-devel libxslt-devel || \
-#        ( apt-get -y update ; apt-get -y install zlib1g-dev gcc libxml2-dev libxslt1-dev python-dev python-dev libxslt1-dev python-lxml )
 
 # pip pre-req (Python package manager)
 command -v pip >/dev/null 2>&1 || {
@@ -22,12 +20,14 @@ command -v pip >/dev/null 2>&1 || {
 PATH="/usr/local/bin:$PATH"
 export PATH
 
+
 # Virtualenv to fence this from the system libraries
 echo "Installing and creating virtualenv"
 #pip --no-cache install virtualenv
 pip install virtualenv
 virtualenv ./clc_api
 source ./clc_api/bin/activate
+
 
 # Installing/Upgrading bpbroker package
 echo "Installing clc-sdk"
