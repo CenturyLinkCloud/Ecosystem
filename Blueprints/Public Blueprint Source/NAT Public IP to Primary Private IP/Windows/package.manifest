@@ -11,7 +11,7 @@
     <Parameters>
 		<Parameter Name="Control Username" Type="String" Variable="T3.Identity.User" Prompt="false"/>
 		<Parameter Name="Account Alias" Type="String" Variable="T3.Identity.Account" Prompt="false"/>
-		<Parameter Name="Public IP Ports" Type="String" Variable="port_groups" Prompt="Design" Global="true" Hint="Space seperated port/protocol tuples, e.g. 80/TCP 100-200/UDP."/>
+		<Parameter Name="Public IP Ports" Type="String" Variable="port_groups" Prompt="Design" Hint="Space seperated port/protocol tuples, e.g. 80/TCP 100-200/UDP."/>
 		<Parameter Name="Current Control User Password" Type="Password" Prompt="Global" Global="true" Variable="T3.ServerInfo.User_Password"/>
     </Parameters>
     <Execution>
