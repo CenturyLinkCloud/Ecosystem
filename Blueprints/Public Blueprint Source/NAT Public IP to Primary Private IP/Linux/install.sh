@@ -6,7 +6,7 @@ CONTROL_PASSWD="${3}"
 PORTS="${4}"
 
 
-echo "$0 version 3 (build Wed Sep  2 13:59:25 CDT 2015)"
+echo "$0 version <VERSION>"
 
 #
 # Create python sandbox
