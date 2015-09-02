@@ -2,11 +2,9 @@
 
 ALIAS="${1}"
 
-# Import external pre-reqs
-cp "../../BP Broker/Windows/python-2.7.9.zip" .
 
 # Update version counter
-cp install.ps1 install.ps1.$$
+cp install.bat install.bat.$$
 if [ ! -f .build_version ]; then
     echo "0" > .build_version
 	git add .build_version
@@ -40,18 +38,15 @@ perl -p -i -e "s/<UUID>.*?<\/UUID>/<UUID>$uuid<\/UUID>/ig" package.manifest
 rm -f ../Blueprints_Completed_Packages/${ALIAS}_Windows_nat_primary_ip.zip
 zip ../Blueprints_Completed_Packages/${ALIAS}_Windows_nat_primary_ip.zip  \
 	package.manifest \
-	install.ps1 \
-	install_clc_sdk.ps1 \
-	clc_api_nat_ip.py \
-	python-2.7.9.zip
+	install.bat \
+	install_clc_sdk.bat \
+	clc_api_nat_ip.exe 
 ls -l ../Blueprints_Completed_Packages/${ALIAS}_Windows_nat_primary_ip.zip
 
 
 # Cleanup
-rm python-2.7.9.zip clc_api_nat_ip.py install.ps1
-
 mv package.manifest.$$ package.manifest
-mv install.ps1.$$ install.ps1
+mv install.bat.$$ install.bat
 
 
 # Publish

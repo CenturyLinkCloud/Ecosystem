@@ -1,3 +1,4 @@
+@echo off
 
 copy ..\noarch\clc_api_nat_ip.py .
 c:\python27\scripts\pyinstaller.exe --noconfirm --clean --onefile clc_api_nat_ip.spec

@@ -30,7 +30,7 @@ import requests
 try:
 	clc.v2.SetCredentials(os.environ['CONTROL_USER'],os.environ['CONTROL_PASSWD'])
 except KeyError:
-	sys.stderr.write("Must set the environment variables CONTROL_USER and CONTROL_PASSWD\n")
+	sys.stderr.write("Must set the environment variables CONTROL_ALIAS, CONTROL_USER and CONTROL_PASSWD\n")
 	sys.exit(1)
 
 
@@ -39,6 +39,7 @@ try:
 	s = clc.v2.Server(id=socket.gethostname(),alias=os.environ['CONTROL_ALIAS'])
 	p = s.PublicIPs()
 except:
+	raise
 	sys.stderr.write("Unable to access server or public IP.  Validate credentials are correct\n")
 	sys.exit(1)
 
