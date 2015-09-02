@@ -40,9 +40,10 @@ perl -p -i -e "s/<UUID>.*?<\/UUID>/<UUID>$uuid<\/UUID>/ig" package.manifest
 
 # Create package
 rm -f ../Blueprints_Completed_Packages/${ALIAS}_Linux_nat_primary_ip.zip
-zip ../Blueprints_Completed_Packages/Linux_nat_primary_ip.zip  \
+zip ../Blueprints_Completed_Packages/${ALIAS}_Linux_nat_primary_ip.zip  \
 	package.manifest \
-	install* \
+	install.sh \
+	install_clc_sdk.sh \
 	get-pip.py \
 	clc_api_nat_ip.py
 ls -l ../Blueprints_Completed_Packages/${ALIAS}_Linux_nat_primary_ip.zip
@@ -59,5 +60,7 @@ mv install.sh.$$ install.sh
 if [ "${package_prefix}" = "DEV " ]; then
     bpformation package upload-and-publish \
             --file ../Blueprints_Completed_Packages/${ALIAS}_Linux_nat_primary_ip.zip \
-            --type Linux --visibility Private --os '*'
+            --type Linux --visibility Private --os 'Debian|Ubuntu|RHEL|CentOS'
 fi
+
+
