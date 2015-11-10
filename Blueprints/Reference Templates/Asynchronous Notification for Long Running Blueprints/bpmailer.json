@@ -1,0 +1,10 @@
+{
+	"_bpmailer":  {
+		"mail_from_address": "noreply@CenturyLinkCloud.com",
+
+		"smtp_server": "relay.t3mx.com",
+		"smtp_port": 25,
+		"smtp_user": "SMTP_USERNAME",
+		"smtp_password": "SMTP_PASSWORD"
+	}
+}

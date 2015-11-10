@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>722041f1-f5ba-46b0-8f11-76f0662d9721</UUID>
+        <Name>Install SERVICE on Linux</Name>
+        <Description>
+		Install SERVICE on Linux
+		</Description>
+    </Metadata>
+    <Parameters>
+		<Parameter Name="Email" Hint="Enter Email Address" Type="String" Variable="email" Prompt="Global" Required="true"/>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install.sh '${email}'</Command>
+    </Execution>
+</Manifest>

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Sourced from: http://zurb.com/playground/responsive-email-templates -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+</head>
+ 
+<body bgcolor="#FFFFFF">
+
+<!-- HEADER -->
+<table class="head-wrap" bgcolor="#000000">
+  <tr>
+    <td></td>
+    <td class="header container" >
+        
+        <div class="content">
+        <table bgcolor="#000000">
+          <tr>
+            <td><img src="http://www.centurylinkcloud.com/assets/images/logo.png" /></td>
+            <td align="right"><h6 class="collapse">Environment is ready</h6></td>
+          </tr>
+        </table>
+        </div>
+        
+    </td>
+    <td></td>
+  </tr>
+</table>
+<table class="head-wrap" bgcolor="#00853f">
+  <tr>
+    <td></td>
+    <td class="header container" > <div class="content">&nbsp;</div> </td>
+    <td></td>
+  </tr>
+</table><!-- /HEADER -->
+
+
+<!-- BODY -->
+<table class="body-wrap">
+  <tr>
+    <td></td>
+    <td class="container" bgcolor="#FFFFFF">
+
+      <div class="content">
+      <table>
+        <tr>
+          <td>
+            <h3>%HOSTNAME% provisioning completed successfully</h3>
+
+            <p class="lead">
+	      Click the link below to connect directly to your server via private IP (you must be connected to the client VPN or have an IPSEC
+	      site-to-site VPN already configured). 
+            </p>
+	    <p class="lead"><a style="text-align: center; display: block; text-decoration: underline;" href="http://%IP_ADDR%">http://%IP_ADDR%/</a></p>
+
+            <p class="lead">
+	      Alternately navigate to CenturyLink Cloud Control and add a public IP address.
+            </p>
+	    <p class="lead"><a style="text-align: center; display: block; text-decoration: underline;" href="https://control.tier3.com/manage#/%DATACENTER%/server/%HOSTNAME%">Add Public IP address to access %HOSTNAME%</a></p>
+
+            
+          </td>
+        </tr>
+      </table>
+      </div><!-- /content -->
+                  
+    </td>
+    <td></td>
+  </tr>
+</table><!-- /BODY -->
+
+<!-- FOOTER -->
+<table class="footer-wrap">
+  <tr>
+    <td></td>
+    <td class="container">
+      
+      <!-- content -->
+      <div class="content">
+        <table>
+          <tr>
+            <td align="center">
+              <p>
+				<!-- Uncomment for Footer -->
+				<!--
+                <a href="#">Terms</a> |
+                <a href="#">Privacy</a> |
+                <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a>
+				-->
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div><!-- /content -->
+        
+    </td>
+    <td></td>
+  </tr>
+</table><!-- /FOOTER -->
+
+</body>
+</html>
