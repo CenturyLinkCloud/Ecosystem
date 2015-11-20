@@ -17,6 +17,7 @@ echo "$0 version 25 (build Wed Sep  2 16:55:47 CDT 2015)"
 #
 # Exec api call
 #
+mkdir -p /sysadmin
 source ./clc_api/bin/activate
 CONTROL_ALIAS="${CONTROL_ALIAS}" CONTROL_USER="${CONTROL_USER}" CONTROL_PASSWD="${CONTROL_PASSWD}" ./clc_api_nat_ip.py ${PORTS}
 echo "Public IP: `cat /sysadmin/public_ip`"
