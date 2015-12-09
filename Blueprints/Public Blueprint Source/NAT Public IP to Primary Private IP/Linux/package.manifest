@@ -16,6 +16,6 @@
     </Parameters>
     <Execution>
         <Mode>Ssh</Mode>
-        <Command>install.sh '${T3.Identity.Account}' '${T3.Identity.User}' '${T3.ServerInfo.User_Password}' '${port_groups}'</Command>
+        <Command>install.sh '${T3.Identity.Account}' '${T3.Server.Name}' '${T3.Identity.User}' '${T3.ServerInfo.User_Password}' '${port_groups}'</Command>
     </Execution>
 </Manifest>

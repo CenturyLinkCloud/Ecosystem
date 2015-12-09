@@ -7,6 +7,7 @@
 #
 
 # Python pre-req
+command -v python >/dev/null 2>&1 || yum -y install python || (apt-get update ; apt-get -y install python); 
 command -v python >/dev/null 2>&1 || { echo "Cannot locate python, required to pre-requisite" >&2; exit 1; }
 
 

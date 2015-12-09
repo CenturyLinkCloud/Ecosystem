@@ -15,6 +15,7 @@ if [ ! -f .build_version ]; then
 fi
 release=$[$(cat .build_version) + 1]
 echo $release > .build_version
+cp install.sh install.sh.$$
 perl -p -i -e "s/<VERSION>/$release (build `date`)/g" install.*
 echo "Building version $release"
 
