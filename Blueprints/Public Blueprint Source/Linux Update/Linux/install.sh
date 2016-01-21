@@ -16,6 +16,6 @@ if [ -f /etc/redhat-release ]; then
 ##
 elif [ -f /etc/debian_version ]; then
 	apt-get -y update
-	apt-get -y upgrade
+	apt-get -y dist-upgrade
 fi
 
