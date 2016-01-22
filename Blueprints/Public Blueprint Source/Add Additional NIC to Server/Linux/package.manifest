@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Manifest>
+    <Metadata>
+        <UUID>x</UUID>
+        <Name>Utilities - Add secondary NIC on Linux</Name>
+        <Description>
+		  Add a secondary NIC to your server.  All servers are built with a single NIC by default, though with
+		  this package a total of up to four NICs can be added.  Each NIC must be on a separate network/VLAN.
+		  If an attempt is made to add a second NIC to the same VLAN this script will return an error.
+		</Description>
+    </Metadata>
+    <Parameters>
+		<Parameter Name="Control Username" Type="String" Variable="T3.Identity.User" Prompt="false"/>
+		<Parameter Name="Account Alias" Type="String" Variable="T3.Identity.Account" Prompt="false"/>
+		<Parameter Name="Network" Hint="" Type="Network" Variable="network" Prompt="Build" Global="false" Default="" Required="true"/>
+		<Parameter Name="Current Control User Password" Type="Password" Prompt="Global" Global="true" Variable="T3.ServerInfo.User_Password"/>
+    </Parameters>
+    <Execution>
+        <Mode>Ssh</Mode>
+        <Command>install.sh '${T3.Identity.Account}' '${T3.Server.Name}' '${T3.Identity.User}' '${T3.ServerInfo.User_Password}' '${network}'</Command>
+    </Execution>
+</Manifest>

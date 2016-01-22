@@ -43,20 +43,9 @@ except:
 
 
 # clc add NIC
-idc = socket.gethostname()[0:2]
-n = clc.v2.Networks(location=idc).Get(os.environ('NETWORK'))
-print "Adding NIC to %s\%s (%s)" % (idc,os.environ('NETWORK'),n.id)
+idc = socket.gethostname()[0:3]
+n = clc.v2.Networks(location=idc).Get(os.environ['NETWORK'])
+print "Adding NIC to %s\%s (%s)" % (idc,os.environ['NETWORK'],n.id)
 s.AddNIC(network_id=n.id,ip='').WaitUntilComplete()
 
-
-# clc refresh self
-try:
-	if os.name=='nt': file_path = 'c:\sysadmin\public_ip'
-	else: file_path = '/sysadmin/public_ip'
-
-	with open(file_path,'w') as fh:
-		fh.write("%s\n" % clc.v2.Server(id=socket.gethostname(),alias=os.environ['CONTROL_ALIAS']).ip_addresses[0]['public'])
-except:
-	sys.stderr.write("Unable to access newly created public IP\n")
-	sys.exit(1)
 
