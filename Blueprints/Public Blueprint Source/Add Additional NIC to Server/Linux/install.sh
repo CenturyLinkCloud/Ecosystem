@@ -19,7 +19,7 @@ echo "$0 version <version>"
 #
 mkdir -p /sysadmin
 source ./clc_api/bin/activate
-CONTROL_ALIAS="${CONTROL_ALIAS}" CONTROL_USER="${CONTROL_USER}" CONTROL_PASSWD="${CONTROL_PASSWD}" NETWORK='${NETWORK}' ./clc_add_nic.py
+CONTROL_ALIAS="${CONTROL_ALIAS}" CONTROL_USER="${CONTROL_USER}" CONTROL_PASSWD="${CONTROL_PASSWD}" NETWORK="${NETWORK}" ./clc_api_add_nic.py
 error=$?
 if [ $error -ne 0 ]; then
 	>&2 echo "`date`    Fatal error, exiting ($error)"

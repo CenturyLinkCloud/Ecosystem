@@ -15,7 +15,6 @@ if [ ! -f .build_version ]; then
 fi
 release=$[$(cat .build_version) + 1]
 echo $release > .build_version
-cp install.sh install.sh.$$
 perl -p -i -e "s/<VERSION>/$release (build `date`)/g" install.*
 echo "Building version $release"
 
@@ -23,11 +22,11 @@ echo "Building version $release"
 # Update uuid
 case $ALIAS in
     KRAP)
-        uuid="53a36a41-e990-41d7-8e17-cddb5afa047f"
+        uuid="83a36a41-e990-41d7-8e17-cddb5afa047f"
         package_prefix="DEV "
         ;;
     T3N)
-        uuid="66222c2a-1a54-45fc-a259-9e92022ec94e"
+        uuid="706865e5-7afb-4cdb-ac35-b200f917758c"
         package_prefix=""
         ;;
     *)
